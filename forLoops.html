@@ -1,0 +1,516 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>For-loops &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
+    <link rel="next" title="Arrays" href="arrays.html" />
+    <link rel="prev" title="L-Systems" href="l_systems.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="arrays.html" title="Arrays"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="l_systems.html" title="L-Systems"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">For-loops</a><ul>
+<li><a class="reference internal" href="#for-each-loops-as-for-loops">For-each Loops as For-loops</a></li>
+<li><a class="reference internal" href="#example-printing-a-numbered-list">Example: Printing a Numbered List</a></li>
+<li><a class="reference internal" href="#which-loop-to-use">Which Loop to Use?</a></li>
+<li><a class="reference internal" href="#questions">Questions</a></li>
+<li><a class="reference internal" href="#the-turtle-class">The Turtle Class</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="l_systems.html"
+                        title="previous chapter">L-Systems</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="arrays.html"
+                        title="next chapter">Arrays</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="for-loops">
+<h1>For-loops<a class="headerlink" href="#for-loops" title="Permalink to this headline">¶</a></h1>
+<p>Consider this turtle graphics program that draws a square:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Turtle</span> <span class="n">t</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Turtle</span><span class="o">();</span>
+  <span class="n">t</span><span class="o">.</span><span class="na">setColor</span><span class="o">(</span><span class="n">color</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">));</span>
+  <span class="n">noLoop</span><span class="o">();</span>  <span class="c1">// only call draw() once</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+  <span class="n">square</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">square</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">t</span><span class="o">.</span><span class="na">forward</span><span class="o">(</span><span class="mi">100</span><span class="o">);</span>
+  <span class="n">t</span><span class="o">.</span><span class="na">right</span><span class="o">(</span><span class="mi">90</span><span class="o">);</span>
+  <span class="n">t</span><span class="o">.</span><span class="na">forward</span><span class="o">(</span><span class="mi">100</span><span class="o">);</span>
+  <span class="n">t</span><span class="o">.</span><span class="na">right</span><span class="o">(</span><span class="mi">90</span><span class="o">);</span>
+  <span class="n">t</span><span class="o">.</span><span class="na">forward</span><span class="o">(</span><span class="mi">100</span><span class="o">);</span>
+  <span class="n">t</span><span class="o">.</span><span class="na">right</span><span class="o">(</span><span class="mi">90</span><span class="o">);</span>
+  <span class="n">t</span><span class="o">.</span><span class="na">forward</span><span class="o">(</span><span class="mi">100</span><span class="o">);</span>
+  <span class="n">t</span><span class="o">.</span><span class="na">right</span><span class="o">(</span><span class="mi">90</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">square()</span></code> could be re-written use a while-loop like this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">square</span><span class="o">()</span> <span class="o">{</span>
+  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">t</span><span class="o">.</span><span class="na">forward</span><span class="o">(</span><span class="mi">100</span><span class="o">);</span>
+    <span class="n">t</span><span class="o">.</span><span class="na">right</span><span class="o">(</span><span class="mi">90</span><span class="o">);</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>This function shows a common pattern of a while-loop usage. There is a single
+variable, <code class="docutils literal"><span class="pre">i</span></code>, that is initialized to 0 just before the loop. The while-loop
+condition checks the value of <code class="docutils literal"><span class="pre">i</span></code>, and then, at the bottom of the loop body,
+<code class="docutils literal"><span class="pre">i</span></code> is incremented by the statement <code class="docutils literal"><span class="pre">i</span> <span class="pre">+=</span> <span class="pre">1</span></code>.</p>
+<p>Let&#8217;s re-write the loop to emphasize this pattern:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>       <span class="c1">// initialization</span>
+<span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="o">)</span> <span class="o">{</span>  <span class="c1">// condition</span>
+    <span class="c1">// ...</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">;</span>      <span class="c1">// increment</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">//</span> <span class="pre">...</span></code> part of the body could be many statements long, and so the the
+condition <code class="docutils literal"><span class="pre">i</span> <span class="pre">&lt;</span> <span class="pre">4</span></code> and the increment <code class="docutils literal"><span class="pre">i</span> <span class="pre">+=</span> <span class="pre">1</span></code> could be very far apart. This
+is a problem because they are logically quite closely related: they both are
+needed to control the loop itself.</p>
+<p>So <a class="reference external" href="http://processing.org/">Processing</a> (i.e. <a class="reference external" href="http://en.wikipedia.org/wiki/Java_(programming_language)">Java</a>),  provides an alternate form of the for-loop that
+puts the initialization, condition, and increment in one place at the top of
+the loop. The following <strong>for-loop</strong> is equivalent to the original while-loop
+from above:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="o">;</span> <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">t</span><span class="o">.</span><span class="na">forward</span><span class="o">(</span><span class="mi">100</span><span class="o">);</span>
+    <span class="n">t</span><span class="o">.</span><span class="na">right</span><span class="o">(</span><span class="mi">90</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>In this kind of for-loop, all the loop-control information is gathered into
+one place at the top of the loop. It&#8217;s easy to see the initial value of <code class="docutils literal"><span class="pre">i</span></code>,
+the condition, and how <code class="docutils literal"><span class="pre">i</span></code> is incremented.</p>
+<p>Traditionally, instead of <code class="docutils literal"><span class="pre">i</span> <span class="pre">+=</span> <span class="pre">1</span></code>, for-loop use the <code class="docutils literal"><span class="pre">++</span></code> operator, e.g.:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>  <span class="c1">// ++i means &quot;add 1 to i&quot;</span>
+    <span class="n">t</span><span class="o">.</span><span class="na">forward</span><span class="o">(</span><span class="mi">100</span><span class="o">);</span>
+    <span class="n">t</span><span class="o">.</span><span class="na">right</span><span class="o">(</span><span class="mi">90</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>In general, a for-loop has this form:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="k">for</span><span class="o">(</span><span class="n">initialization</span><span class="o">;</span> <span class="n">condition</span><span class="o">;</span> <span class="n">increment</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// ... body code ...</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Which is equivalent to this while-loop:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="o">{</span>
+    <span class="n">initialization</span><span class="o">;</span>
+    <span class="k">while</span> <span class="o">(</span><span class="n">condition</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// ... body code ...</span>
+        <span class="n">increment</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>for-loops can be confusing at first because they pack so much information into
+their first line. But once you understand that, they become easier to read and
+write. Some experienced programmers <em>never</em> use while-loop, and use for-loops
+exclusively.</p>
+<p>Using a for-loop, we could re-write <code class="docutils literal"><span class="pre">square</span></code> once again:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">square</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">t</span><span class="o">.</span><span class="na">forward</span><span class="o">(</span><span class="mi">100</span><span class="o">);</span>
+        <span class="n">t</span><span class="o">.</span><span class="na">right</span><span class="o">(</span><span class="mi">90</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Here is a function that draws a regular <code class="docutils literal"><span class="pre">polygon</span></code> using a while-loop:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">polygon</span><span class="o">(</span><span class="kt">int</span> <span class="n">sides</span><span class="o">,</span> <span class="kt">int</span> <span class="n">step</span><span class="o">)</span> <span class="o">{</span>
+  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">sides</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">t</span><span class="o">.</span><span class="na">forward</span><span class="o">(</span><span class="n">step</span><span class="o">);</span>
+    <span class="n">t</span><span class="o">.</span><span class="na">right</span><span class="o">(</span><span class="mf">360.0</span> <span class="o">/</span> <span class="n">sides</span><span class="o">);</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>And here&#8217;s an equivalent implementation that uses a for-loop:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">polygon</span><span class="o">(</span><span class="kt">int</span> <span class="n">sides</span><span class="o">,</span> <span class="kt">int</span> <span class="n">step</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sides</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">t</span><span class="o">.</span><span class="na">forward</span><span class="o">(</span><span class="n">step</span><span class="o">);</span>
+        <span class="n">t</span><span class="o">.</span><span class="na">right</span><span class="o">(</span><span class="mf">360.0</span> <span class="o">/</span> <span class="n">sides</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>The most important detail here is that the control information for the loop is
+in one place at the top. The body of the loop now contains just the code
+specific to the function.</p>
+<div class="section" id="for-each-loops-as-for-loops">
+<h2>For-each Loops as For-loops<a class="headerlink" href="#for-each-loops-as-for-loops" title="Permalink to this headline">¶</a></h2>
+<p>Here is some code from the notes on <a class="reference internal" href="particle_systems.html"><em>particle systems</em></a>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="c1">// render and update all the particles</span>
+  <span class="k">for</span> <span class="o">(</span><span class="n">Particle</span> <span class="n">p</span> <span class="o">:</span> <span class="n">particles</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">p</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="n">p</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">particles</span></code> is an <code class="docutils literal"><span class="pre">ArrayList&lt;Particle&gt;</span></code>, and contains sprites representing
+a particle system (such as the bits of an explosion).</p>
+<p>A <em>for-each</em> loop is used here to access each element of <code class="docutils literal"><span class="pre">particles</span></code>, one at
+at time. This is often the simplest kind of loop to use, and so we try to use
+it whenever possible.</p>
+<p>Let&#8217;s see how to re-write the loop first a while-loop, and then a for-loop.
+Here&#8217;s the while-loop version:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+<span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">particles</span><span class="o">.</span><span class="na">size</span><span class="o">())</span> <span class="o">{</span>
+    <span class="n">Particle</span> <span class="n">p</span> <span class="o">=</span> <span class="n">particles</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+    <span class="n">p</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="n">p</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>And the for-loop version:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">particles</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">Particle</span> <span class="n">p</span> <span class="o">=</span> <span class="n">particles</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+    <span class="n">p</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="n">p</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Both are clearly more code than the original for-each loop, and a little
+harder to read. But they all do the same thing.</p>
+</div>
+<div class="section" id="example-printing-a-numbered-list">
+<h2>Example: Printing a Numbered List<a class="headerlink" href="#example-printing-a-numbered-list" title="Permalink to this headline">¶</a></h2>
+<p>Suppose you have a list of names in an <code class="docutils literal"><span class="pre">ArrayList&lt;String&gt;</span></code> object that you
+want to print as a numbered list, e.g.:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="mf">1.</span> <span class="n">Marie</span>
+<span class="mf">2.</span> <span class="n">Ella</span>
+<span class="mf">3.</span> <span class="n">Ping</span>
+<span class="mf">4.</span> <span class="n">Meg</span>
+</pre></div>
+</div>
+<p>First, assume an <code class="docutils literal"><span class="pre">ArrayList&lt;String&gt;</span></code> called <code class="docutils literal"><span class="pre">names</span></code> has been declared like
+this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">names</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;();</span>
+<span class="n">names</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;Marie&quot;</span><span class="o">);</span>
+<span class="n">names</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;Ella&quot;</span><span class="o">);</span>
+<span class="n">names</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;Ping&quot;</span><span class="o">);</span>
+<span class="n">names</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;Meg&quot;</span><span class="o">);</span>
+</pre></div>
+</div>
+<p>One way to do print the number list is to use a for-each loop:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+<span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">s</span> <span class="o">:</span> <span class="n">names</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">println</span><span class="o">(</span><span class="n">num</span> <span class="o">+</span> <span class="s">&quot;. &quot;</span> <span class="o">+</span> <span class="n">s</span><span class="o">);</span>
+  <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Or you could use a while-loop:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+<span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">names</span><span class="o">.</span><span class="na">size</span><span class="o">())</span> <span class="o">{</span>
+  <span class="n">String</span> <span class="n">s</span> <span class="o">=</span> <span class="n">names</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+  <span class="n">println</span><span class="o">((</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;. &quot;</span> <span class="o">+</span> <span class="n">s</span><span class="o">);</span>
+  <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Notice that we&#8217;ve renamed <code class="docutils literal"><span class="pre">num</span></code> to <code class="docutils literal"><span class="pre">i</span></code>. That&#8217;s because its purpose is to
+serve as the index into <code class="docutils literal"><span class="pre">names</span></code>, and <code class="docutils literal"><span class="pre">i</span></code> is the traditional name for such
+a variable. Also different is that we&#8217;ve initialized <code class="docutils literal"><span class="pre">i</span></code> to 0 instead of 1.
+That&#8217;s because the first index location of an <code class="docutils literal"><span class="pre">ArrayList</span></code> is always 1. In
+the <code class="docutils literal"><span class="pre">println</span></code> the expression for printing the list item number is now <code class="docutils literal"><span class="pre">i</span> <span class="pre">+</span>
+<span class="pre">1</span></code> because, presumably, we want to start the list number at 1 (and not 0).</p>
+<p>Or you could use a for-loop:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">names</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">String</span> <span class="n">s</span> <span class="o">=</span> <span class="n">names</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+  <span class="n">println</span><span class="o">((</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;. &quot;</span> <span class="o">+</span> <span class="n">s</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Again, we use a variable named <code class="docutils literal"><span class="pre">i</span></code>, starting at 0, since it&#8217;s purpose is to
+act as an index into <code class="docutils literal"><span class="pre">names</span></code>.</p>
+</div>
+<div class="section" id="which-loop-to-use">
+<h2>Which Loop to Use?<a class="headerlink" href="#which-loop-to-use" title="Permalink to this headline">¶</a></h2>
+<p>We&#8217;ve seen three kinds of loops in this course: while-loops, for-each loops,
+and for-loops.</p>
+<p>Generally, for-each loops are the easiest to use, and so you should use them
+whenever possible. Unfortunately, they work when you are using a container
+object, such as an <code class="docutils literal"><span class="pre">ArrayList</span></code>.</p>
+<p>So if you can&#8217;t use a for-each loop, plain for-loops are generally the next
+best choice. They are more flexible than for-each loops, and, as compared to a
+while-loop, are usually easier to read because their initialization,
+condition, and increment are all gathered together in the loop header.</p>
+<p>While-loops are syntactically simpler than for-loops, and they can be good for
+loops that don&#8217;t follow the initialization/condition/increment pattern of a
+for-loop.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><a class="reference external" href="http://processing.org/">Processing</a> (<a class="reference external" href="http://en.wikipedia.org/wiki/Java_(programming_language)">Java</a>) has one more kind of loop: a <strong>do-while loop</strong>.
+It is essentially a while-loop where the condition is test at the <em>bottom</em>
+of the loop instead of the top. For example, this code prints the numbers
+from 1 to 10:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+<span class="k">do</span> <span class="o">{</span>
+    <span class="n">println</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+    <span class="n">i</span><span class="o">++;</span>
+<span class="o">}</span> <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">11</span><span class="o">);</span>
+</pre></div>
+</div>
+<p>Because the condition is checked at the bottom, the body of this loop is
+guaranteed to be executed at least once.</p>
+<p>In practice, do/while are surprisingly rare. This seems to be because the
+requirement that the body of the loop be executed at least once is often
+not what is wanted. In many loops, it might be the case that the body is
+executed 0 times.</p>
+<p class="last">We won&#8217;t use do/while loops in this course. You can always re-write a
+do/while loop as an equivalent while-loop or for-loop.</p>
+</div>
+</div>
+<div class="section" id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Write the general form of a for-loop.</p>
+</li>
+<li><p class="first">Why are for-loops often preferred over while-loops?</p>
+</li>
+<li><p class="first">Explain the difference between a for-each loop and a for-loop.</p>
+</li>
+<li><p class="first">Write a loop that prints all numbers from 1 to, and including, 1000 that
+are evenly divisible by 5. Do it in two different ways:</p>
+<ol class="loweralpha simple">
+<li>Using a while-loop.</li>
+<li>Using a for-loop.</li>
+</ol>
+</li>
+<li><p class="first">Re-write the following while-loops as equivalent for-loops:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">//</span>
+<span class="c1">// A</span>
+<span class="c1">//</span>
+<span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+<span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">println</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+  <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">//</span>
+<span class="c1">// B</span>
+<span class="c1">//</span>
+<span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>
+<span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">println</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+  <span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">//</span>
+<span class="c1">// C</span>
+<span class="c1">//</span>
+<span class="kt">int</span> <span class="n">m</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span><span class="o">;</span>
+<span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">!=</span> <span class="mi">10</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">println</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+  <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">//</span>
+<span class="c1">// D</span>
+<span class="c1">//</span>
+<span class="kt">int</span> <span class="n">total</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+<span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+<span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">total</span> <span class="o">+=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">i</span><span class="o">;</span>
+  <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Re-write the following for-loops as equivalent while-loops:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">//</span>
+<span class="c1">// A</span>
+<span class="c1">//</span>
+<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">println</span><span class="o">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">5</span><span class="o">);</span>
+<span class="o">}</span>
+
+
+<span class="c1">//</span>
+<span class="c1">// B</span>
+<span class="c1">//</span>
+<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">75</span><span class="o">;</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">100</span><span class="o">;</span> <span class="n">i</span> <span class="o">-=</span> <span class="mi">2</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">println</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="c1">//</span>
+<span class="c1">// C</span>
+<span class="c1">//</span>
+<span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="k">for</span><span class="o">(;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">println</span><span class="o">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">5</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="c1">//</span>
+<span class="c1">// D</span>
+<span class="c1">//</span>
+<span class="k">for</span><span class="o">(;;)</span> <span class="o">{</span>
+  <span class="n">println</span><span class="o">(</span><span class="s">&quot;cat&quot;</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="the-turtle-class">
+<h2>The Turtle Class<a class="headerlink" href="#the-turtle-class" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Turtle</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">angle</span><span class="o">;</span>
+  <span class="kt">boolean</span> <span class="n">penUp</span><span class="o">;</span>
+  <span class="n">color</span> <span class="n">penColor</span><span class="o">;</span>
+
+  <span class="n">Turtle</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">height</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+    <span class="n">angle</span> <span class="o">=</span> <span class="mf">0.0</span><span class="o">;</span>
+    <span class="n">penUp</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="n">penColor</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">penDown</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">penUp</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">penUp</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">penUp</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">setColor</span><span class="o">(</span><span class="n">color</span> <span class="n">c</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">penColor</span> <span class="o">=</span> <span class="n">c</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">left</span><span class="o">(</span><span class="kt">float</span> <span class="n">degrees</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">right</span><span class="o">(-</span><span class="n">degrees</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">right</span><span class="o">(</span><span class="kt">float</span> <span class="n">degrees</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">angle</span> <span class="o">+=</span> <span class="n">degrees</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">forward</span><span class="o">(</span><span class="kt">float</span> <span class="n">dist</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">float</span> <span class="n">dx</span> <span class="o">=</span> <span class="n">dist</span> <span class="o">*</span> <span class="n">cos</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="n">angle</span><span class="o">));</span>
+    <span class="kt">float</span> <span class="n">dy</span> <span class="o">=</span> <span class="n">dist</span> <span class="o">*</span> <span class="n">sin</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="n">angle</span><span class="o">));</span>
+    <span class="k">if</span> <span class="o">(!</span><span class="n">penUp</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">stroke</span><span class="o">(</span><span class="n">penColor</span><span class="o">);</span>
+      <span class="n">line</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">dx</span><span class="o">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">dy</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span> <span class="c1">// class Turtle</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="arrays.html" title="Arrays"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="l_systems.html" title="L-Systems"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Toby Donaldson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

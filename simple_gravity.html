@@ -1,0 +1,497 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Keyboard, the Mouse, and Gravity &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
+    <link rel="next" title="Sprites" href="basic_sprites.html" />
+    <link rel="prev" title="Floats and Ints" href="numbers.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="basic_sprites.html" title="Sprites"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="numbers.html" title="Floats and Ints"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The Keyboard, the Mouse, and Gravity</a><ul>
+<li><a class="reference internal" href="#the-keypressed-function">The keyPressed() Function</a></li>
+<li><a class="reference internal" href="#the-mousepressed-function">The mousePressed() Function</a></li>
+<li><a class="reference internal" href="#gravity">Gravity</a></li>
+<li><a class="reference internal" href="#a-bouncing-ball-in-gravity">A Bouncing Ball in Gravity</a></li>
+<li><a class="reference internal" href="#adding-more-gravity">Adding More Gravity</a></li>
+<li><a class="reference internal" href="#questions">Questions</a></li>
+<li><a class="reference internal" href="#programming-questions">Programming Questions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="numbers.html"
+                        title="previous chapter">Floats and Ints</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="basic_sprites.html"
+                        title="next chapter">Sprites</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="the-keyboard-the-mouse-and-gravity">
+<h1>The Keyboard, the Mouse, and Gravity<a class="headerlink" href="#the-keyboard-the-mouse-and-gravity" title="Permalink to this headline">¶</a></h1>
+<p>In these notes you will learn:</p>
+<ul class="simple">
+<li>How to use the <code class="docutils literal"><span class="pre">keyPressed()</span></code> function to do something when any key is
+pressed.</li>
+<li>How to use the <code class="docutils literal"><span class="pre">mousePressed()</span></code> function to do something when a mouse
+button is clicked.</li>
+<li>How to simulate gravity.</li>
+</ul>
+<p>In this note, we will start the following program makes a red ball bounce
+around the screen. Notice that we&#8217;ve commented out the <code class="docutils literal"><span class="pre">background(255)</span></code>
+statement in <code class="docutils literal"><span class="pre">draw()</span></code> so that the ball leaves a trail as it moves:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">dx</span><span class="o">,</span> <span class="n">dy</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">radius</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="n">height</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+  <span class="n">dx</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.5</span><span class="o">;</span>
+  <span class="n">radius</span> <span class="o">=</span> <span class="mi">50</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="c1">//background(255);</span>
+
+  <span class="n">noStroke</span><span class="o">();</span>
+  <span class="n">fill</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">radius</span><span class="o">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">radius</span><span class="o">);</span>
+
+  <span class="c1">// update position</span>
+  <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+
+  <span class="c1">//</span>
+  <span class="c1">// check if an edge has been hit</span>
+  <span class="c1">//</span>
+
+  <span class="c1">// hit top?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">radius</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">radius</span><span class="o">;</span>  <span class="c1">// adjust position to ensure sprite is on-screen</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// hit bottom?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">radius</span> <span class="o">&gt;</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">499</span> <span class="o">-</span> <span class="n">radius</span><span class="o">;</span>  <span class="c1">// adjust position to ensure sprite is on-screen</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// hit left?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">radius</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">radius</span><span class="o">;</span>  <span class="c1">// adjust position to ensure sprite is on-screen</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// hit right?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">radius</span> <span class="o">&gt;</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">499</span> <span class="o">-</span> <span class="n">radius</span><span class="o">;</span>  <span class="c1">// adjust position to ensure sprite is on-screen</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Notice that we&#8217;ve declared two variables on the same line, e.g.:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">;</span>
+</pre></div>
+</div>
+<p>This is just to save a bit of typing. It is the same as if we had written it
+out like this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+</pre></div>
+</div>
+<div class="section" id="the-keypressed-function">
+<h2>The keyPressed() Function<a class="headerlink" href="#the-keypressed-function" title="Permalink to this headline">¶</a></h2>
+<p>Suppose we want the program to &#8220;reset&#8221; itself any time we press a key. By that
+we mean the screen should be cleared of any trails, and the ball should go
+back to its initial starting position (with its initial velocity).</p>
+<p>The easiest way to do that is to use the built-in <code class="docutils literal"><span class="pre">keyPressed()</span></code> function.
+Add this to the bottom of the program (after the <code class="docutils literal"><span class="pre">draw()</span></code> function):</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">keyPressed</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>  <span class="c1">// erase the screen</span>
+
+  <span class="n">x</span> <span class="o">=</span> <span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>   <span class="c1">// set the position to be the same</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="n">height</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>  <span class="c1">// as in setup()</span>
+
+  <span class="n">dx</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>          <span class="c1">// set the velocity to be the same</span>
+  <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.5</span><span class="o">;</span>       <span class="c1">// as in setup()</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Now when you press (almost) any key on the keyboard, the screen should erase
+itself, and the ball should restart in the middle.</p>
+<p>If you want to check for a specific key being pressed, use the special <code class="docutils literal"><span class="pre">key</span></code>
+variable. For example, this version of <code class="docutils literal"><span class="pre">keyPressed()</span></code> only resets the screen
+if the <em>R</em> key is pressed:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">keyPressed</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">key</span> <span class="o">==</span> <span class="sc">&#39;r&#39;</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>  <span class="c1">// erase the screen</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>   <span class="c1">// set the position to be the same</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">height</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>  <span class="c1">// as in setup()</span>
+
+        <span class="n">dx</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>          <span class="c1">// set the velocity to be the same</span>
+        <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.5</span><span class="o">;</span>       <span class="c1">// as in setup()</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Be careful: if Caps Lock is on, or you press &lt;Shift&gt; while pressing the R key,
+you are generating an uppercase R, but the program only looks for a lowercase
+R. So if you want either both uppercare and lowercase R to cause a reset,
+check for both like this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">keyPressed</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">key</span> <span class="o">==</span> <span class="sc">&#39;r&#39;</span> <span class="o">||</span> <span class="n">key</span> <span class="o">==</span> <span class="sc">&#39;R&#39;</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>  <span class="c1">// erase the screen</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>   <span class="c1">// set the position to be the same</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">height</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>  <span class="c1">// as in setup()</span>
+
+        <span class="n">dx</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>          <span class="c1">// set the velocity to be the same</span>
+        <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.5</span><span class="o">;</span>       <span class="c1">// as in setup()</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>In the if-statement, the symbol <code class="docutils literal"><span class="pre">||</span></code> means &#8220;or&#8221;. We&#8217;ll discuss <code class="docutils literal"><span class="pre">||</span></code>, and
+other logical operators, in more detail in <a class="reference internal" href="logical_expressions.html"><em>a future lecture</em></a>.</p>
+<p>Finally, when you press some keys, such as &lt;Shift&gt; or &lt;Ctrl&gt;, they <em>don&#8217;t</em>
+cause <code class="docutils literal"><span class="pre">keyPressed()</span></code> to be called. Such keys are considered special, and you
+should check the <a class="reference external" href="http://processing.org/">Processing</a> documentation for <a class="reference external" href="https://processing.org/reference/keyCode.html">the keyCode variable</a> for examples of how to
+handle them.</p>
+</div>
+<div class="section" id="the-mousepressed-function">
+<h2>The mousePressed() Function<a class="headerlink" href="#the-mousepressed-function" title="Permalink to this headline">¶</a></h2>
+<p>Similar to <code class="docutils literal"><span class="pre">keyPressed()</span></code>, <code class="docutils literal"><span class="pre">mousePressed()</span></code> is a special <a class="reference external" href="http://processing.org/">Processing</a>
+function that is called whenever you press a button (any button) on your
+mouse.</p>
+<p>Suppose we want the ball to reverse direction when we click the mouse. Add
+this code to the end of the program:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// clicking the mouse (anywhere on the screen) reverses the ball&#39;s direction</span>
+<span class="kt">void</span> <span class="nf">mousePressed</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+  <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Now when you click the mouse, the ball will instantly reverse direction.</p>
+<p>Lets implement a different feature. Now lets have the mouse clicks control
+whether the ball is moving or stopped. If the ball is moving, then clicking
+the mouse should stop it, and if the ball is stopped, clicking the mouse
+should make it start moving again. Here&#8217;s a solution:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">mousePressed</span><span class="o">()</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">dx</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">dy</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>  <span class="c1">// ball is stopped, so start it moving</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.5</span><span class="o">;</span>
+  <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>                   <span class="c1">// ball is moving, so stop it</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>An if-statement is used to distinguish between the case when the ball is
+stopped, and when the ball is moving. In the if-statement condition <code class="docutils literal"><span class="pre">dx</span> <span class="pre">==</span> <span class="pre">0</span>
+<span class="pre">&amp;&amp;</span> <span class="pre">dy</span> <span class="pre">==</span> <span class="pre">0</span></code>, <code class="docutils literal"><span class="pre">&amp;&amp;</span></code> means &#8220;and&#8221;, and so the entire thing is true when <em>both</em>
+<code class="docutils literal"><span class="pre">dx</span></code> and <code class="docutils literal"><span class="pre">dy</span></code> are equal to 0. That is, when the ball is stopped.</p>
+<p>The <code class="docutils literal"><span class="pre">else</span></code> part indicates the code that will run if the condition <code class="docutils literal"><span class="pre">dx</span> <span class="pre">==</span> <span class="pre">0</span>
+<span class="pre">&amp;&amp;</span> <span class="pre">dy</span> <span class="pre">==</span> <span class="pre">0</span></code> evaluates to false.</p>
+<p>We&#8217;ll learn (much!) more about the details of if-statements and logical
+expressions in <a class="reference internal" href="logical_expressions.html"><em>a future lecture</em></a>.</p>
+</div>
+<div class="section" id="gravity">
+<h2>Gravity<a class="headerlink" href="#gravity" title="Permalink to this headline">¶</a></h2>
+<p>Getting an object to appear to be affected by gravity is the basis for many
+interesting visual effect. We won&#8217;t worry about the <em>exact</em> physics of gravity
+here. As long as the ball <em>looks</em> like it is under the influence of gravity
+we&#8217;ll be satisfied.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Of course, sometimes it <em>is</em> important to simulate gravity
+accurately, or other physical processes, even in video games. This is
+tricky enough that many games use so-called <a class="reference external" href="http://en.wikipedia.org/wiki/Physics_engine">physics engines</a> that provide pre-made
+functions designed for efficiently simulating realistic physics. As you can
+imagine, creating a physics engine needs a lot more knowledge of physics
+than we will cover in this introductory programming course.</p>
+<p class="last">If you are curious about this topic, then you might want to look at a book
+such as <a class="reference external" href="http://www.amazon.ca/Game-Physics-Engine-Development-Commercial-Grade/dp/0123819768/ref=sr_1_2?ie=UTF8&amp;qid=1317768030&amp;sr=8-2">Game Physics Engine Development</a> by Ian
+Millington.</p>
+</div>
+</div>
+<div class="section" id="a-bouncing-ball-in-gravity">
+<h2>A Bouncing Ball in Gravity<a class="headerlink" href="#a-bouncing-ball-in-gravity" title="Permalink to this headline">¶</a></h2>
+<p>Gravity is a force that we are all familiar with: it pulls objects down
+towards the ground, causing them to accelerate. For instance, on Earth, if you
+drop a ball its speed will increase at a rate of 9.8 m/s each second it falls.</p>
+<p>So lets write a <a class="reference external" href="http://processing.org/">Processing</a> program that simulates a ball that bounces due to
+gravity. The main trick is to add a small, constant, number to <code class="docutils literal"><span class="pre">dy</span></code> (the
+speed of the ball in the y-direction) on each call to <code class="docutils literal"><span class="pre">draw()</span></code>. This will
+cause the ball to accelerate downwards &#8212; which makes it look as if gravity
+is pulling it down.</p>
+<p>We will also simulate the <em>elasticity</em> of the ball, which tells us how high it
+will bounce after it hits the ground. Every time the ball hits the ground it
+loses some energy, and so it bounces lower and lower. Exactly how much energy
+the ball loses depends on what it is made of, e.g. a rubber ball loses less
+energy than a glass marble.</p>
+<p>We are ignoring many details, such as the ball&#8217;s mass and air friction. But as
+you will see when you run the program, the results are good enough for many
+purposes.</p>
+<p id="gravity-prog-label">Here is the program:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">dx</span><span class="o">,</span> <span class="n">dy</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">radius</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">gravity_y</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">elasticity</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="c1">//</span>
+  <span class="c1">// ... same as starting program ...</span>
+  <span class="c1">//</span>
+
+  <span class="c1">// gravity and elasticity are constant values: try changing them</span>
+  <span class="n">gravity_y</span> <span class="o">=</span> <span class="mf">0.1</span><span class="o">;</span>
+
+  <span class="c1">// elasticity &lt; 1 makes the ball bounce lower each time</span>
+  <span class="c1">// elasticity &gt; 1 makes the ball bounce higher each time</span>
+  <span class="n">elasticity</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="c1">//</span>
+  <span class="c1">// ... same as starting program ...</span>
+  <span class="c1">//</span>
+
+  <span class="n">dy</span> <span class="o">+=</span> <span class="n">gravity_y</span><span class="o">;</span>
+
+  <span class="c1">// when the ball bounces, make it lose some speed so that</span>
+  <span class="c1">// it doesn&#39;t bounce as high next time</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">radius</span> <span class="o">&gt;</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">499</span> <span class="o">-</span> <span class="n">radius</span><span class="o">;</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="o">-(</span><span class="n">dy</span> <span class="o">*</span> <span class="n">elasticity</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="c1">//</span>
+  <span class="c1">// ... same as starting program ...</span>
+  <span class="c1">//</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="adding-more-gravity">
+<h2>Adding More Gravity<a class="headerlink" href="#adding-more-gravity" title="Permalink to this headline">¶</a></h2>
+<p>On Earth, gravity only pulls things downwards. However, we can simulate other
+kinds of gravity.</p>
+<p>For example, just for fun lets add a second force of gravity that causes
+things to move towards the right edge of the screen:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">dx</span><span class="o">,</span> <span class="n">dy</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">radius</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">gravity_x</span><span class="o">,</span> <span class="n">gravity_y</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">elasticity</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="n">height</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+  <span class="n">dx</span> <span class="o">=</span> <span class="mf">0.1</span><span class="o">;</span>
+  <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span><span class="o">;</span>
+  <span class="n">radius</span> <span class="o">=</span> <span class="mi">50</span><span class="o">;</span>
+
+  <span class="n">gravity_x</span> <span class="o">=</span> <span class="mf">1.25</span><span class="o">;</span>
+  <span class="n">gravity_y</span> <span class="o">=</span> <span class="mf">0.1</span><span class="o">;</span>
+
+  <span class="c1">// elasticity &lt; 1 makes the ball bounce lower each time</span>
+  <span class="c1">// elasticity &gt; 1 makes the ball bounce higher each time</span>
+  <span class="n">elasticity</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="n">stroke</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+  <span class="n">fill</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">radius</span><span class="o">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">radius</span><span class="o">);</span>
+
+  <span class="c1">// update position</span>
+  <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+
+  <span class="n">dx</span> <span class="o">+=</span> <span class="n">gravity_x</span><span class="o">;</span>
+  <span class="n">dy</span> <span class="o">+=</span> <span class="n">gravity_y</span><span class="o">;</span>
+
+  <span class="c1">// when the ball bounces, make it lose some speed so that</span>
+  <span class="c1">// it doesn&#39;t bounce as high next time</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">radius</span> <span class="o">&gt;</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">499</span> <span class="o">-</span> <span class="n">radius</span><span class="o">;</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">*</span><span class="mf">0.8</span><span class="o">;</span>
+    <span class="c1">//    dx = -(dx * elasticity);</span>
+  <span class="o">}</span>
+
+  <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">radius</span> <span class="o">&gt;</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">499</span> <span class="o">-</span> <span class="n">radius</span><span class="o">;</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="o">-(</span><span class="n">dy</span> <span class="o">*</span> <span class="n">elasticity</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="c1">//</span>
+  <span class="c1">// check if an edge has been hit</span>
+  <span class="c1">//</span>
+
+  <span class="c1">// hit top?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">radius</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">radius</span><span class="o">;</span>  <span class="c1">// adjust position to ensure sprite is on-screen</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// hit bottom?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">radius</span> <span class="o">&gt;</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">499</span> <span class="o">-</span> <span class="n">radius</span><span class="o">;</span>  <span class="c1">// adjust position to ensure sprite is on-screen</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// hit left?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">radius</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">radius</span><span class="o">;</span>  <span class="c1">// adjust position to ensure sprite is on-screen</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// hit right?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">radius</span> <span class="o">&gt;</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">499</span> <span class="o">-</span> <span class="n">radius</span><span class="o">;</span>  <span class="c1">// adjust position to ensure sprite is on-screen</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>The movement of the ball is now much more complex. Try commenting-out the call
+to <code class="docutils literal"><span class="pre">background</span></code> to see the path the ball follows.</p>
+</div>
+<div class="section" id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>What are some keys on a typical keyboard that, when pressed, will <em>not</em>
+caused <code class="docutils literal"><span class="pre">keyPressed()</span></code> to be called?</li>
+<li>What is the return type of the <code class="docutils literal"><span class="pre">mousePressed()</span></code> function? What are it&#8217;s
+input parameters?</li>
+<li>Besides certain video games, what is another application that might require
+more accurate modelling of physics?</li>
+<li>What is the purpose of the variable <code class="docutils literal"><span class="pre">elasticity</span></code>?</li>
+</ol>
+</div>
+<div class="section" id="programming-questions">
+<h2>Programming Questions<a class="headerlink" href="#programming-questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">The notes provide code for <code class="docutils literal"><span class="pre">mousePressed()</span></code> that made the ball start/stop
+moving whenever the mouse is clicked. One of the problems with it is that
+it always re-starts the ball with same velocity, i.e. up and to the left.
+This can look pretty strange when the ball was just moving in some other
+direction.</p>
+<p>Fix this problem: modify the code in <code class="docutils literal"><span class="pre">mousePressed()</span></code> so that when the
+ball is stopped and the user clicks the mouse, the ball starts moving with
+the exact same velocity (speed and direction) it was moving with <em>before</em>
+it was stopped.</p>
+<p><strong>Hint</strong>: Add two new variables, <code class="docutils literal"><span class="pre">prev_dx</span></code> and <code class="docutils literal"><span class="pre">prev_dy</span></code>, to keep track
+of the velocity of the ball after it is stopped.</p>
+</li>
+<li><p class="first">Modify <a class="reference internal" href="#gravity-prog-label"><span>the the gravity demo program</span></a> so that the
+ball <em>stops</em> when it hits the right edge of the screen instead of rolling
+off.</p>
+</li>
+<li><p class="first">Modify <a class="reference internal" href="#gravity-prog-label"><span>the the gravity demo program</span></a> to use an
+image (of your choice) instead of a circle. Make sure no part of the image
+goes off the screen when it bounces.</p>
+</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="basic_sprites.html" title="Sprites"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="numbers.html" title="Floats and Ints"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Toby Donaldson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

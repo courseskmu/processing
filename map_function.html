@@ -1,0 +1,371 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Map Function &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
+    <link rel="next" title="Using Images in Processing" href="using_images.html" />
+    <link rel="prev" title="RGB Color" href="color.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="using_images.html" title="Using Images in Processing"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="color.html" title="RGB Color"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The Map Function</a><ul>
+<li><a class="reference internal" href="#some-handy-mathematical-functions">Some Handy Mathematical Functions</a></li>
+<li><a class="reference internal" href="#id1">The Map Function</a></li>
+<li><a class="reference internal" href="#using-the-map-function">Using the map Function</a></li>
+<li><a class="reference internal" href="#a-non-graphical-example">A Non-Graphical Example</a></li>
+<li><a class="reference internal" href="#an-example-with-images">An Example with Images</a></li>
+<li><a class="reference internal" href="#questions">Questions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="color.html"
+                        title="previous chapter">RGB Color</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="using_images.html"
+                        title="next chapter">Using Images in Processing</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="the-map-function">
+<h1>The Map Function<a class="headerlink" href="#the-map-function" title="Permalink to this headline">¶</a></h1>
+<p>In these notes you will learn:</p>
+<ul class="simple">
+<li>How to shrink and expand ranges of numbers using basic arithmetic.</li>
+<li>How to use the <code class="docutils literal"><span class="pre">map</span></code> function.</li>
+</ul>
+<div class="section" id="some-handy-mathematical-functions">
+<h2>Some Handy Mathematical Functions<a class="headerlink" href="#some-handy-mathematical-functions" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://processing.org/">Processing</a> has a number of pre-defined mathematical functions that you can
+use in your programs. For example:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">sq(x)</span></code> returns the <strong>square</strong> of <code class="docutils literal"><span class="pre">x</span></code>. For example, <code class="docutils literal"><span class="pre">sq(3)</span></code> returns 9,
+and <code class="docutils literal"><span class="pre">sq(sq(2))</span></code> returns 16.</li>
+<li><code class="docutils literal"><span class="pre">sqrt(x)</span></code> returns the <strong>square root</strong> of <code class="docutils literal"><span class="pre">x</span></code>. For example, <code class="docutils literal"><span class="pre">sqrt(121)</span></code>
+returns 11, and <code class="docutils literal"><span class="pre">sqrt(sq(74))</span></code> returns 74.</li>
+<li><code class="docutils literal"><span class="pre">abs(x)</span></code> returns the <strong>absolute value</strong> of <code class="docutils literal"><span class="pre">x</span></code>. For example,
+<code class="docutils literal"><span class="pre">abs(-3.1)</span></code> returns 3.1, and <code class="docutils literal"><span class="pre">abs(2.55)</span></code> returns 2.55.</li>
+<li><code class="docutils literal"><span class="pre">pow(x,</span> <span class="pre">y)</span></code> returns <code class="docutils literal"><span class="pre">x</span></code> to the <strong>power</strong> of <code class="docutils literal"><span class="pre">y</span></code>, e.g. <span class="math">\(x^y\)</span>. For
+example, <code class="docutils literal"><span class="pre">pow(2,</span> <span class="pre">5)</span></code> returns 32 (i.e. <span class="math">\(2^5\)</span>), and <code class="docutils literal"><span class="pre">pow(3,</span> <span class="pre">3)</span></code>
+returns 27.</li>
+<li><code class="docutils literal"><span class="pre">min(x,</span> <span class="pre">y)</span></code> returns the <strong>smallest</strong> of <code class="docutils literal"><span class="pre">x</span></code> an <code class="docutils literal"><span class="pre">y</span></code>. For example,
+<code class="docutils literal"><span class="pre">min(6,</span> <span class="pre">2)</span></code> returns 2, and <code class="docutils literal"><span class="pre">min(min(1,</span> <span class="pre">2),</span> <span class="pre">3)</span></code> returns 1.</li>
+<li><code class="docutils literal"><span class="pre">max(x,</span> <span class="pre">y)</span></code> returns the <strong>largest</strong> of <code class="docutils literal"><span class="pre">x</span></code> an <code class="docutils literal"><span class="pre">y</span></code>. For example,
+<code class="docutils literal"><span class="pre">max(6,</span> <span class="pre">2)</span></code> returns 6, and <code class="docutils literal"><span class="pre">max(max(1,</span> <span class="pre">2),</span> <span class="pre">3)</span></code> returns 3.</li>
+<li><code class="docutils literal"><span class="pre">dist(x,</span> <span class="pre">y,</span> <span class="pre">a,</span> <span class="pre">b)</span></code> returns the distance between the points (<code class="docutils literal"><span class="pre">x</span></code>, <code class="docutils literal"><span class="pre">y</span></code>)
+and (<code class="docutils literal"><span class="pre">a</span></code>, <code class="docutils literal"><span class="pre">b</span></code>). For example, the distance between the points (5, 4) and
+(10, 10) is <code class="docutils literal"><span class="pre">dist(5,</span> <span class="pre">4,</span> <span class="pre">10,</span> <span class="pre">10)</span></code>, which equals 7.81025.</li>
+<li><code class="docutils literal"><span class="pre">constrain(x,</span> <span class="pre">lo,</span> <span class="pre">hi)</span></code> returns <code class="docutils literal"><span class="pre">lo</span></code> if <code class="docutils literal"><span class="pre">x</span> <span class="pre">&lt;=</span> <span class="pre">lo</span></code>, <code class="docutils literal"><span class="pre">hi</span></code> if <code class="docutils literal"><span class="pre">x</span> <span class="pre">&gt;=</span>
+<span class="pre">hi</span></code>, and <code class="docutils literal"><span class="pre">x</span></code> otherwise. For example, <code class="docutils literal"><span class="pre">contrain(12,</span> <span class="pre">1,</span> <span class="pre">10)</span></code> returns 10,
+<code class="docutils literal"><span class="pre">contrain(0,</span> <span class="pre">1,</span> <span class="pre">10)</span></code> returns 1, and <code class="docutils literal"><span class="pre">contrain(3.2,</span> <span class="pre">1,</span> <span class="pre">10)</span></code> returns 3.2.</li>
+</ul>
+</div>
+<div class="section" id="id1">
+<h2>The Map Function<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">map</span></code> is a particularly useful function that is used to stretch and shrink
+ranges of numbers. It shows up often enough in graphics programming that we
+will look at it in some detail.</p>
+<p>It&#8217;s often interesting to set colors automatically. For instance, lets write a
+a program that draws circles whose fill color is a shade of gray that depends
+upon <code class="docutils literal"><span class="pre">mouseY</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">noStroke</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">fill</span><span class="o">(</span><span class="n">mouseY</span><span class="o">);</span>   <span class="c1">// not so good!</span>
+  <span class="n">ellipse</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">,</span> <span class="mi">50</span><span class="o">,</span> <span class="mi">50</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>This program simply sets the fill color of the ellipse to be <code class="docutils literal"><span class="pre">mouseY</span></code>:</p>
+<a class="reference internal image-reference" href="_images/grayScaleWrong.png"><img alt="Automatic color setting only working on half the screen." class="align-center" src="_images/grayScaleWrong.png" style="width: 254.0px; height: 250.0px;" /></a>
+<p>As you can see, circles are drawn only on the top half the screen.</p>
+<p>Why is this happening? The problem is that the <em>range</em> of legal values for
+<code class="docutils literal"><span class="pre">mouseY</span></code> is bigger than the range of legal values for <code class="docutils literal"><span class="pre">fill</span></code>.
+Specifically, <code class="docutils literal"><span class="pre">mouseY</span></code> ranges from 0 to 500 (the height of the screen), but
+<code class="docutils literal"><span class="pre">fill</span></code> values only range from 0 to 255 (which you learn from <a class="reference external" href="https://processing.org/reference/fill_.html">the
+documentation for fill</a>).</p>
+<p>So we can&#8217;t directly use the value of``mouseY`` as the <code class="docutils literal"><span class="pre">fill</span></code> value.
+Instead, we want a value, based on <code class="docutils literal"><span class="pre">mouseY</span></code>, that fits in the range 0 to
+255.</p>
+<p>One trick is to use this expression: <cite>255 * (mouseY / 500)</cite>. The sub-
+expression <code class="docutils literal"><span class="pre">mouseY</span> <span class="pre">/</span> <span class="pre">500</span></code> is guaranteed to be in the range 0 to 1 because
+the maximum possible value of <code class="docutils literal"><span class="pre">mouseY</span></code> is 500 (and the smallest possible
+value is 0). Thus, multiplying <code class="docutils literal"><span class="pre">mouseY</span> <span class="pre">/</span> <span class="pre">500</span></code> by 255 gives a value that is
+in the range 0 to 255, which is what <code class="docutils literal"><span class="pre">fill</span></code> needs:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">fill</span><span class="o">(</span><span class="mi">256</span> <span class="o">*</span> <span class="n">mouseY</span> <span class="o">/</span> <span class="mi">500</span><span class="o">);</span>   <span class="c1">// good!</span>
+  <span class="n">ellipse</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">,</span> <span class="mi">50</span><span class="o">,</span> <span class="mi">50</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/grayScaleGood.png"><img alt="Automatic color setting working on entire screen." class="align-center" src="_images/grayScaleGood.png" style="width: 254.0px; height: 250.0px;" /></a>
+</div>
+<div class="section" id="using-the-map-function">
+<h2>Using the map Function<a class="headerlink" href="#using-the-map-function" title="Permalink to this headline">¶</a></h2>
+<p>Shrinking and stretching numbers like this is so common in graphics
+programming that <a class="reference external" href="http://processing.org/">Processing</a> provides a helper function to do it for you. The
+<a class="reference external" href="http://processing.org/reference/map_.html">map(x, low1, high1, low2, high2)</a> function converts <code class="docutils literal"><span class="pre">x</span></code> from the
+<em>source range</em> <code class="docutils literal"><span class="pre">[low1,</span> <span class="pre">high1]</span></code> to a new value in the <em>target range</em> <code class="docutils literal"><span class="pre">[low2,</span>
+<span class="pre">high2]</span></code>. The key fact is that the new value is at proportionally the same
+position in the target range as <code class="docutils literal"><span class="pre">x</span></code> is in the source range.</p>
+<p>For example, suppose you have a point 25% of the way between 10 and
+20 (i.e. the point 12.5):</p>
+<a class="reference internal image-reference" href="_images/mapExample.png"><img alt="Example of the map function." class="align-center" src="_images/mapExample.png" style="width: 231.3px; height: 139.5px;" /></a>
+<p>Then <code class="docutils literal"><span class="pre">map(12.5,</span> <span class="pre">10,</span> <span class="pre">20,</span> <span class="pre">12,</span> <span class="pre">19)</span></code> returns the point 13.75, which is
+exactly 25% of the way between 12 and 19.</p>
+<p>As another example, suppose instead of having the color depend upon
+<code class="docutils literal"><span class="pre">mouseY</span></code>, we wanted it to depend upon <code class="docutils literal"><span class="pre">mouseX</span> <span class="pre">*</span> <span class="pre">mouseY</span></code>. The smallest
+possible value of this expression is 0, while the largest possible value is
+500 * 500, and so the range is [0, 500 * 500]. To map this into the range [0,
+255] we do this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">map</span><span class="o">(</span><span class="n">mouseX</span> <span class="o">*</span> <span class="n">mouseY</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">500</span> <span class="o">*</span> <span class="mi">500</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">255</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>This always returns a number in the target range, i.e. a number from 0 to 255.
+And using this function we can choose colors based on the mouse position like
+this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">noStroke</span><span class="o">();</span>
+  <span class="n">fill</span><span class="o">(</span><span class="n">map</span><span class="o">(</span><span class="n">mouseX</span> <span class="o">*</span> <span class="n">mouseY</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">500</span> <span class="o">*</span> <span class="mi">500</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">255</span><span class="o">));</span>
+  <span class="n">ellipse</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">,</span> <span class="mi">50</span><span class="o">,</span> <span class="mi">50</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>As another example, lets draw an ellipse whose diameters are always between 25
+and 100, and change in proportion to the mouse location:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">color</span> <span class="n">orange</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">165</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+<span class="n">color</span> <span class="n">white</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">255</span><span class="o">,</span> <span class="mi">255</span><span class="o">);</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">noStroke</span><span class="o">();</span>
+  <span class="n">smooth</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="n">white</span><span class="o">);</span>
+  <span class="n">fill</span><span class="o">(</span><span class="n">orange</span><span class="o">);</span>
+  <span class="n">ellipse</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">,</span> <span class="n">map</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">500</span><span class="o">,</span> <span class="mi">25</span><span class="o">,</span> <span class="mi">100</span><span class="o">),</span>
+                          <span class="n">map</span><span class="o">(</span><span class="n">mouseY</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">500</span><span class="o">,</span> <span class="mi">25</span><span class="o">,</span> <span class="mi">100</span><span class="o">));</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Since the screen is 500 by 500, we know that <code class="docutils literal"><span class="pre">mouseX</span></code> (and <code class="docutils literal"><span class="pre">mouseY</span></code>) must
+be in the range [0, 500]. The legal diameter values are in the range [25,
+100], and so <code class="docutils literal"><span class="pre">map(mouseX,</span> <span class="pre">0,</span> <span class="pre">500,</span> <span class="pre">25,</span> <span class="pre">100)</span></code> returns a value in [25, 100]
+that corresponds to the same location as <code class="docutils literal"><span class="pre">mouseX</span></code> in the range [0, 500].</p>
+</div>
+<div class="section" id="a-non-graphical-example">
+<h2>A Non-Graphical Example<a class="headerlink" href="#a-non-graphical-example" title="Permalink to this headline">¶</a></h2>
+<p>You can use the <code class="docutils literal"><span class="pre">map</span></code> function to help you calculate your score on an exam.
+For instance, suppose you write a final exam and score 65 out of a possible 71
+marks, and you scored 65. What is this as a percentage?</p>
+<p>The easiest way to calculate this percentage is like this:</p>
+<div class="math">
+\[100 \cdot \frac{65}{75} = 100 \cdot 0.86667 = 86.667\]</div>
+<p>We could also use the <code class="docutils literal"><span class="pre">map</span></code> function:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">map</span><span class="o">(</span><span class="mi">65</span><span class="o">,</span>     <span class="c1">// score of the exam</span>
+    <span class="mi">0</span><span class="o">,</span> <span class="mi">75</span><span class="o">,</span>  <span class="c1">// range of possible marks on the exam</span>
+    <span class="mi">0</span><span class="o">,</span> <span class="mi">100</span>  <span class="c1">// range of possible percentages</span>
+    <span class="o">)</span>
+</pre></div>
+</div>
+<p>This call to <code class="docutils literal"><span class="pre">map</span></code> returns 86.667, just like the first way of calculating
+your percentage.</p>
+<p>Of course, you probably wouldn&#8217;t use <code class="docutils literal"><span class="pre">map</span></code> in practice to calculate
+percentages, but it is a good test of your understanding of how <code class="docutils literal"><span class="pre">map</span></code> works.</p>
+</div>
+<div class="section" id="an-example-with-images">
+<h2>An Example with Images<a class="headerlink" href="#an-example-with-images" title="Permalink to this headline">¶</a></h2>
+<p>In the <a class="reference internal" href="image_processing.html"><em>notes on image processing</em></a> we saw how to apply
+various filters to images using the <code class="docutils literal"><span class="pre">filter</span></code> function. Here, lets make a
+program that displays two copies of an image side-by-side and lets you apply a
+threshold filter in real time. Being able to compare the processed image to
+the original is quite convenient.</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// each will be displaying two different images, so we need</span>
+<span class="c1">// two images variables</span>
+<span class="n">PImage</span> <span class="n">img</span><span class="o">;</span>
+<span class="n">PImage</span> <span class="n">img2</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="c1">// load the image file from the &quot;data&quot; folder</span>
+  <span class="n">img</span> <span class="o">=</span> <span class="n">loadImage</span><span class="o">(</span><span class="s">&quot;cat.jpg&quot;</span><span class="o">);</span>
+
+  <span class="c1">// set the window to be wide enough for two copies</span>
+  <span class="c1">// of the image drawn side-by-side</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">img</span><span class="o">.</span><span class="na">width</span><span class="o">,</span> <span class="n">img</span><span class="o">.</span><span class="na">height</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="c1">// display the original image</span>
+  <span class="n">image</span><span class="o">(</span><span class="n">img</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+
+  <span class="c1">// make a copy of the original</span>
+  <span class="n">img2</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+
+  <span class="c1">// calculate threshold based on the y-position of mouse</span>
+  <span class="kt">float</span> <span class="n">t</span> <span class="o">=</span> <span class="n">map</span><span class="o">(</span><span class="n">mouseY</span><span class="o">,</span>
+                <span class="mi">0</span><span class="o">,</span> <span class="n">height</span><span class="o">,</span>   <span class="c1">// range of values for mouseY</span>
+                <span class="mi">0</span><span class="o">,</span> <span class="mf">1.0</span>       <span class="c1">// target range to convert to</span>
+               <span class="o">);</span>
+
+  <span class="c1">// apply the filter</span>
+  <span class="n">img2</span><span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">THRESHOLD</span><span class="o">,</span> <span class="n">t</span><span class="o">);</span>
+
+  <span class="c1">// display the image</span>
+  <span class="n">image</span><span class="o">(</span><span class="n">img2</span><span class="o">,</span> <span class="n">img</span><span class="o">.</span><span class="na">width</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">You should understand <em>every</em> line and detail of this program!</p>
+</div>
+<p>When you run this program the threshold for the black and white image is set
+proportionally based on the height of the mouse pointer. The image on the left
+doesn&#8217;t change, and so it is easy to compare the two.</p>
+<a class="reference internal image-reference" href="_images/cat_compare.png"><img alt="Original image beside a black and white copy with threshold base on mouseY." class="align-center" src="_images/cat_compare.png" style="width: 440.0px; height: 210.0px;" /></a>
+</div>
+<div class="section" id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">What values do each of the following expressions return?</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">sq(2)</span> <span class="pre">+</span> <span class="pre">sq(3)</span> <span class="pre">-</span> <span class="pre">sqrt(16)</span></code></li>
+<li><code class="docutils literal"><span class="pre">sqrt(sq(3.14))</span></code></li>
+<li><code class="docutils literal"><span class="pre">abs(min(1,</span> <span class="pre">2)</span> <span class="pre">+</span> <span class="pre">max(abs(-2),</span> <span class="pre">abs(-1)))</span></code></li>
+<li><code class="docutils literal"><span class="pre">min(min(4,</span> <span class="pre">-1),</span> <span class="pre">max(8,</span> <span class="pre">2))</span></code></li>
+<li><code class="docutils literal"><span class="pre">pow(max(1,</span> <span class="pre">2),</span> <span class="pre">pow(2,</span> <span class="pre">2))</span></code></li>
+<li><code class="docutils literal"><span class="pre">sq(dist(3,</span> <span class="pre">abs(-4),</span> <span class="pre">min(0,</span> <span class="pre">11),</span> <span class="pre">0))</span></code></li>
+<li><code class="docutils literal"><span class="pre">constrain(max(5,</span> <span class="pre">1),</span> <span class="pre">-3,</span> <span class="pre">3)</span> <span class="pre">+</span> <span class="pre">constrain(sq(2),</span> <span class="pre">15,</span> <span class="pre">sq(5))</span></code></li>
+</ul>
+</li>
+<li><p class="first">Explain, in brief English, what  the <code class="docutils literal"><span class="pre">map</span></code> function does.</p>
+</li>
+<li><p class="first">Explain what each of the 6 variables in the following <code class="docutils literal"><span class="pre">map</span></code> statement
+mean:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">a</span> <span class="o">=</span> <span class="n">map</span><span class="o">(</span><span class="n">b</span><span class="o">,</span> <span class="n">c</span><span class="o">,</span> <span class="n">d</span><span class="o">,</span> <span class="n">e</span><span class="o">,</span> <span class="n">f</span><span class="o">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">For each of the following exam scores, write a <code class="docutils literal"><span class="pre">map</span></code> function that
+calculates what percentage out of 100 the score is:</p>
+<ul class="simple">
+<li>36 out of 43</li>
+<li>10 out of 12</li>
+<li>85 out of 100</li>
+<li>55 out of 50</li>
+</ul>
+</li>
+<li><p class="first">Write a program that draws a purple square with a yellow edge at
+the mouse pointer. Make the width and height of the square equal to
+<code class="docutils literal"><span class="pre">(mouseX</span> <span class="pre">+</span> <span class="pre">mouseY)</span> <span class="pre">/</span> <span class="pre">5</span></code>, and use <a class="reference external" href="http://processing.org/reference/strokeWeight_.html">strokeWeight</a> to give the
+edge a thickness of at least 10.</p>
+</li>
+<li><p class="first">Modify the previous program so that, in addition to what it already
+does, the color of the square&#8217;s interior is based on <code class="docutils literal"><span class="pre">mouseX</span> <span class="pre">+</span>
+<span class="pre">mouseY</span></code>. Use the <code class="docutils literal"><span class="pre">map</span></code> function to convert <code class="docutils literal"><span class="pre">mouseX</span> <span class="pre">+</span> <span class="pre">mouseY</span></code>
+into a legal RGB color.</p>
+</li>
+<li><p class="first">Write a program that draws an ellipse centered at the mouse pointer
+and its fill color set to be proportional to <code class="docutils literal"><span class="pre">mouseX</span> <span class="pre">*</span>
+<span class="pre">mouseY</span></code>.</p>
+<a class="reference internal image-reference" href="_images/graySketch.png"><img alt="Sample output for mouseX * mouseY fill color." class="align-center" src="_images/graySketch.png" style="width: 251.0px; height: 251.0px;" /></a>
+</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="using_images.html" title="Using Images in Processing"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="color.html" title="RGB Color"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Toby Donaldson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

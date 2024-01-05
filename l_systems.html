@@ -1,0 +1,393 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>L-Systems &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
+    <link rel="next" title="For-loops" href="forLoops.html" />
+    <link rel="prev" title="Turtle Graphics" href="turtle_graphics.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="forLoops.html" title="For-loops"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="turtle_graphics.html" title="Turtle Graphics"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">L-Systems</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#turtle-graphics-string">Turtle Graphics String</a></li>
+<li><a class="reference internal" href="#id3">L-Systems</a></li>
+<li><a class="reference internal" href="#questions">Questions</a></li>
+<li><a class="reference internal" href="#example-program">Example Program</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="turtle_graphics.html"
+                        title="previous chapter">Turtle Graphics</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="forLoops.html"
+                        title="next chapter">For-loops</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="l-systems">
+<h1>L-Systems<a class="headerlink" href="#l-systems" title="Permalink to this headline">¶</a></h1>
+<p>In these notes you will learn:</p>
+<ul class="simple">
+<li>How to draw simple turtle graphics using a string of commands.</li>
+<li>What an L-system is.</li>
+<li>How to use an L-system to draw pictures.</li>
+</ul>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>In this note we will see a remarkable way of creating a wide variety of
+patterns using sets of rules called <a class="reference external" href="http://en.wikipedia.org/wiki/L-system">L-systems</a>. For instance, <a class="reference external" href="http://en.wikipedia.org/wiki/L-system">L-systems</a> can be used to generate <a class="reference external" href="http://algorithmicbotany.org/papers/#abop">realistic
+looking trees and plants</a>.</p>
+</div>
+<div class="section" id="turtle-graphics-string">
+<h2>Turtle Graphics String<a class="headerlink" href="#turtle-graphics-string" title="Permalink to this headline">¶</a></h2>
+<p>Recall this program for drawing a square using turtle graphics:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Turtle</span> <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Turtle</span><span class="o">();</span>
+
+<span class="n">t</span><span class="o">.</span><span class="na">forward</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
+<span class="n">t</span><span class="o">.</span><span class="na">right</span><span class="o">(</span><span class="mi">90</span><span class="o">);</span>
+<span class="n">t</span><span class="o">.</span><span class="na">forward</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
+<span class="n">t</span><span class="o">.</span><span class="na">right</span><span class="o">(</span><span class="mi">90</span><span class="o">);</span>
+<span class="n">t</span><span class="o">.</span><span class="na">forward</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
+<span class="n">t</span><span class="o">.</span><span class="na">right</span><span class="o">(</span><span class="mi">90</span><span class="o">);</span>
+<span class="n">t</span><span class="o">.</span><span class="na">forward</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
+</pre></div>
+</div>
+<p>This is a lot of typing! We could simplify it using a code, e.g.:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">F</span></code> means <code class="docutils literal"><span class="pre">t.forward(10)</span></code></li>
+<li><code class="docutils literal"><span class="pre">+</span></code> means <code class="docutils literal"><span class="pre">t.right(90)</span></code></li>
+</ul>
+<p>Then the drawing for the square is the string <code class="docutils literal"><span class="pre">&quot;F+F+F+F&quot;</span></code>. We&#8217;ll call this a
+<strong>turtle string</strong>, or a <strong>turtle program</strong>. Treating the string <code class="docutils literal"><span class="pre">&quot;F+F+F+F&quot;</span></code>
+as a program may seem strange at first, but it makes sense. It&#8217;s just a very
+compact encoding of the instructions for drawing a square.</p>
+<p>We can write a function takes a turtle string as input and runs it:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">drawTurtle</span><span class="o">(</span><span class="n">String</span> <span class="n">prog</span><span class="o">)</span> <span class="o">{</span>
+  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">prog</span><span class="o">.</span><span class="na">length</span><span class="o">())</span> <span class="o">{</span>
+    <span class="kt">char</span> <span class="n">c</span> <span class="o">=</span> <span class="n">prog</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">c</span> <span class="o">==</span> <span class="sc">&#39;F&#39;</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">t</span><span class="o">.</span><span class="na">forward</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">c</span> <span class="o">==</span> <span class="sc">&#39;+&#39;</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">t</span><span class="o">.</span><span class="na">right</span><span class="o">(</span><span class="mi">90</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="o">++</span><span class="n">i</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>The idea here is that the while-loop examines the characters in <code class="docutils literal"><span class="pre">prog</span></code> one
+character at a time. If it sees an <code class="docutils literal"><span class="pre">F</span></code>, then it makes the turtle move
+forward 10 pixels, and if it sees a <code class="docutils literal"><span class="pre">+</span></code> it makes the turtle turn 90 degrees
+to the right.</p>
+<p>In general, we don&#8217;t always want to move forward 10 pixels, or turn right 90
+degrees. So a useful improvement to this function is to also pass in the step
+size and the turn amount:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">drawTurtle</span><span class="o">(</span><span class="n">String</span> <span class="n">prog</span><span class="o">,</span> <span class="kt">float</span> <span class="n">stepSize</span><span class="o">,</span> <span class="kt">float</span> <span class="n">turnAmount</span><span class="o">)</span> <span class="o">{</span>
+  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">prog</span><span class="o">.</span><span class="na">length</span><span class="o">())</span> <span class="o">{</span>
+    <span class="kt">char</span> <span class="n">c</span> <span class="o">=</span> <span class="n">prog</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">c</span> <span class="o">==</span> <span class="sc">&#39;F&#39;</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">t</span><span class="o">.</span><span class="na">forward</span><span class="o">(</span><span class="n">stepSize</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">c</span> <span class="o">==</span> <span class="sc">&#39;+&#39;</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">t</span><span class="o">.</span><span class="na">right</span><span class="o">(</span><span class="n">turnAmount</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="o">++</span><span class="n">i</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>This makes the <code class="docutils literal"><span class="pre">drawTurtle</span></code> much more flexible, e.g.:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">drawTurtle</span><span class="o">(</span><span class="s">&quot;F+F+F+F&quot;</span><span class="o">,</span> <span class="mi">10</span><span class="o">,</span> <span class="mi">90</span><span class="o">);</span>   <span class="c1">// a square</span>
+<span class="n">drawTurtle</span><span class="o">(</span><span class="s">&quot;F+F+F+F&quot;</span><span class="o">,</span> <span class="mi">100</span><span class="o">,</span> <span class="mi">90</span><span class="o">);</span>  <span class="c1">// a bigger square</span>
+</pre></div>
+</div>
+<p>We can also use it to draw other shapes:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">drawTurtle</span><span class="o">(</span><span class="s">&quot;F+F+F&quot;</span><span class="o">,</span> <span class="mi">100</span><span class="o">,</span> <span class="mi">120</span><span class="o">);</span>           <span class="c1">// an equilateral triangle</span>
+<span class="n">drawTurtle</span><span class="o">(</span><span class="s">&quot;F+F+F+F+F&quot;</span><span class="o">,</span> <span class="mi">100</span><span class="o">,</span> <span class="mi">72</span><span class="o">);</span>        <span class="c1">// a pentagon (5 sides)</span>
+<span class="n">drawTurtle</span><span class="o">(</span><span class="s">&quot;F+F+F+F+F+F+F+F&quot;</span><span class="o">,</span> <span class="mi">100</span><span class="o">,</span> <span class="mi">45</span><span class="o">);</span>  <span class="c1">// an octagon (8 sides)</span>
+<span class="n">drawTurtle</span><span class="o">(</span><span class="s">&quot;F+F+F+F+F&quot;</span><span class="o">,</span> <span class="mi">100</span><span class="o">,</span> <span class="mi">144</span><span class="o">);</span>       <span class="c1">// a 5-pointed star</span>
+</pre></div>
+</div>
+<p>One more convenient change to make <code class="docutils literal"><span class="pre">drawTurtle</span></code> is to allow the symbol
+<code class="docutils literal"><span class="pre">'-'</span></code>, which means a left turn, i.e. the opposite of <code class="docutils literal"><span class="pre">'+'</span></code>. So let&#8217;s add
+that:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">drawTurtle</span><span class="o">(</span><span class="n">String</span> <span class="n">prog</span><span class="o">,</span> <span class="kt">float</span> <span class="n">stepSize</span><span class="o">,</span> <span class="kt">float</span> <span class="n">turnAmount</span><span class="o">)</span> <span class="o">{</span>
+  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">prog</span><span class="o">.</span><span class="na">length</span><span class="o">())</span> <span class="o">{</span>
+    <span class="kt">char</span> <span class="n">c</span> <span class="o">=</span> <span class="n">prog</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">c</span> <span class="o">==</span> <span class="sc">&#39;F&#39;</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">t</span><span class="o">.</span><span class="na">forward</span><span class="o">(</span><span class="n">stepSize</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">c</span> <span class="o">==</span> <span class="sc">&#39;+&#39;</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">t</span><span class="o">.</span><span class="na">right</span><span class="o">(</span><span class="n">turnAmount</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">c</span> <span class="o">==</span> <span class="sc">&#39;-&#39;</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">t</span><span class="o">.</span><span class="na">left</span><span class="o">(</span><span class="n">turnAmount</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="o">++</span><span class="n">i</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>L-Systems<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>An <a class="reference external" href="http://en.wikipedia.org/wiki/L-system">L-system</a> is a set of rules
+system for re-writing strings. For example, here is a simple L-system:</p>
+<ul class="simple">
+<li><strong>Starting string</strong>: &#8220;F&#8221;</li>
+<li><strong>Replacement rule</strong>: replace &#8220;F&#8221; with &#8220;F+F−F−F+F&#8221;</li>
+</ul>
+<p>The idea is to start with &#8220;F&#8221;, and then to repeatedly apply the replacement
+rule, e.g.:</p>
+<div class="highlight-java"><div class="highlight"><pre>F
+F+F−F−F+F
+F+F−F−F+F+F+F−F−F+F-F+F−F−F+F-F+F−F−F+F+F+F−F−F+F
+...
+</pre></div>
+</div>
+<p>Each string is created by applying the replacement rule to the previous
+string. To get things started we are simply told that the first string is
+<code class="docutils literal"><span class="pre">F</span></code>, but after that each new string comes from the previous one. Note also
+that the non-<code class="docutils literal"><span class="pre">F</span></code> characters are copied into the next string without any
+change.</p>
+<p>Now, if you interpret the output these as turtle strings, then we can draw
+them, e.g.:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">drawTurtle</span><span class="o">(</span><span class="s">&quot;F+F−F−F+F+F+F−F−F+F-F+F−F−F+F-F+F−F−F+F+F+F−F−F+F&quot;</span><span class="o">,</span> <span class="mi">30</span><span class="o">,</span> <span class="mi">120</span><span class="o">);</span>
+</pre></div>
+</div>
+<p>This draws a tree-like shape with, perhaps, a bird on top. Try re-running this
+with angles other than 120 and you will see many different shapes.</p>
+<p>The strings get long pretty quickly, and so they are impractical to generate
+by hand. So lets write a function to create the strings for us:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">String</span> <span class="nf">makeString</span><span class="o">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="s">&quot;F&quot;</span><span class="o">;</span>
+  <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">prev</span> <span class="o">=</span> <span class="n">makeString</span><span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>  <span class="c1">// recursive call</span>
+    <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">prev</span><span class="o">.</span><span class="na">length</span> <span class="o">())</span> <span class="o">{</span>
+      <span class="kt">char</span> <span class="n">c</span> <span class="o">=</span> <span class="n">prev</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">c</span> <span class="o">==</span> <span class="sc">&#39;F&#39;</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="s">&quot;F+F-F-F+F&quot;</span><span class="o">;</span>
+      <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="n">c</span><span class="o">;</span>
+      <span class="o">}</span>
+      <span class="o">++</span><span class="n">i</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>An interesting feature of this function is that it <em>calls itself</em> at this
+line:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">String</span> <span class="n">prev</span> <span class="o">=</span> <span class="n">makeString</span><span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>  <span class="c1">// recursive call</span>
+</pre></div>
+</div>
+<p>A function that calls itself is a <strong>recursive function</strong>, and it is quite
+useful in this case. The idea is that to generate the string n, you first
+(recursively) generate string n - 1 and then apply the replacement rule to it.
+The only exception is the case where n is 1, and then we immediately return
+<code class="docutils literal"><span class="pre">&quot;F&quot;</span></code>.</p>
+<p>This is just one example of an L-system. There are many others that generate a
+wide range of interesting pictures of things like <a class="reference external" href="http://en.wikipedia.org/wiki/Sierpinski_triangle">Sierpinski triangles</a>, <a class="reference external" href="http://en.wikipedia.org/wiki/Hilbert_curve">Hilbert curves</a>, <a class="reference external" href="http://en.wikipedia.org/wiki/Dragon_curve">dragon curves</a>, and even <a class="reference external" href="http://algorithmicbotany.org/papers/">fractal plants</a>.</p>
+</div>
+<div class="section" id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Suppose <code class="docutils literal"><span class="pre">s</span></code> is a <code class="docutils literal"><span class="pre">String</span></code> variable with at least 100 characters in it.
+Write a fragment of code that prints the first character of <code class="docutils literal"><span class="pre">s</span></code>.</li>
+<li>What is a recursive function?</li>
+</ol>
+</div>
+<div class="section" id="example-program">
+<h2>Example Program<a class="headerlink" href="#example-program" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Turtle</span> <span class="n">t</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">noLoop</span><span class="o">();</span>
+  <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Turtle</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+  <span class="n">String</span> <span class="n">prog</span> <span class="o">=</span> <span class="n">makeString</span><span class="o">(</span><span class="mi">4</span><span class="o">);</span>
+  <span class="n">drawTurtle</span><span class="o">(</span><span class="n">prog</span><span class="o">,</span> <span class="mi">20</span><span class="o">,</span> <span class="mi">90</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">drawTurtle</span><span class="o">(</span><span class="n">String</span> <span class="n">prog</span><span class="o">,</span> <span class="kt">float</span> <span class="n">stepSize</span><span class="o">,</span> <span class="kt">float</span> <span class="n">turnAmount</span><span class="o">)</span> <span class="o">{</span>
+  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">prog</span><span class="o">.</span><span class="na">length</span><span class="o">())</span> <span class="o">{</span>
+    <span class="kt">char</span> <span class="n">c</span> <span class="o">=</span> <span class="n">prog</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">c</span> <span class="o">==</span> <span class="sc">&#39;F&#39;</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">t</span><span class="o">.</span><span class="na">forward</span><span class="o">(</span><span class="n">stepSize</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">c</span> <span class="o">==</span> <span class="sc">&#39;+&#39;</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">t</span><span class="o">.</span><span class="na">right</span><span class="o">(</span><span class="n">turnAmount</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">c</span> <span class="o">==</span> <span class="sc">&#39;-&#39;</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">t</span><span class="o">.</span><span class="na">left</span><span class="o">(</span><span class="n">turnAmount</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="o">++</span><span class="n">i</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">String</span> <span class="nf">makeString</span><span class="o">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="s">&quot;F&quot;</span><span class="o">;</span>
+  <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">prev</span> <span class="o">=</span> <span class="n">makeString</span><span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+    <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">prev</span><span class="o">.</span><span class="na">length</span> <span class="o">())</span> <span class="o">{</span>
+      <span class="kt">char</span> <span class="n">c</span> <span class="o">=</span> <span class="n">prev</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">c</span> <span class="o">==</span> <span class="sc">&#39;F&#39;</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="s">&quot;F+F-F-F+F&quot;</span><span class="o">;</span>
+      <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="n">c</span><span class="o">;</span>
+      <span class="o">}</span>
+      <span class="o">++</span><span class="n">i</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">Turtle</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">angle</span><span class="o">;</span>
+  <span class="kt">boolean</span> <span class="n">penUp</span><span class="o">;</span>
+  <span class="n">color</span> <span class="n">penColor</span><span class="o">;</span>
+
+  <span class="n">Turtle</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">height</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+    <span class="n">angle</span> <span class="o">=</span> <span class="mf">0.0</span><span class="o">;</span>
+    <span class="n">penUp</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="n">penColor</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">penDown</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">penUp</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">penUp</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">penUp</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">setColor</span><span class="o">(</span><span class="n">color</span> <span class="n">c</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">penColor</span> <span class="o">=</span> <span class="n">c</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">left</span><span class="o">(</span><span class="kt">float</span> <span class="n">degrees</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">right</span><span class="o">(-</span><span class="n">degrees</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">right</span><span class="o">(</span><span class="kt">float</span> <span class="n">degrees</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">angle</span> <span class="o">+=</span> <span class="n">degrees</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">forward</span><span class="o">(</span><span class="kt">float</span> <span class="n">dist</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">float</span> <span class="n">dx</span> <span class="o">=</span> <span class="n">dist</span> <span class="o">*</span> <span class="n">cos</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="n">angle</span><span class="o">));</span>
+    <span class="kt">float</span> <span class="n">dy</span> <span class="o">=</span> <span class="n">dist</span> <span class="o">*</span> <span class="n">sin</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="n">angle</span><span class="o">));</span>
+    <span class="k">if</span> <span class="o">(!</span><span class="n">penUp</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">stroke</span><span class="o">(</span><span class="n">penColor</span><span class="o">);</span>
+      <span class="n">line</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">dx</span><span class="o">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">dy</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span> <span class="c1">// class Turtle</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="forLoops.html" title="For-loops"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="turtle_graphics.html" title="Turtle Graphics"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Toby Donaldson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

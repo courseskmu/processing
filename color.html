@@ -1,0 +1,407 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>RGB Color &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
+    <link rel="next" title="The Map Function" href="map_function.html" />
+    <link rel="prev" title="Coordinates and Modes" href="coordinates.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="map_function.html" title="The Map Function"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="coordinates.html" title="Coordinates and Modes"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">RGB Color</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#id1">RGB Color</a></li>
+<li><a class="reference internal" href="#grayscale">Grayscale</a></li>
+<li><a class="reference internal" href="#setting-the-background-color">Setting the Background Color</a></li>
+<li><a class="reference internal" href="#setting-the-fill-color">Setting the Fill Color</a></li>
+<li><a class="reference internal" href="#setting-the-stroke-color-and-size">Setting the Stroke Color (and size)</a></li>
+<li><a class="reference internal" href="#color-variables">Color Variables</a></li>
+<li><a class="reference internal" href="#transparency">Transparency</a></li>
+<li><a class="reference internal" href="#the-processing-ide-color-selector">The Processing IDE Color Selector</a></li>
+<li><a class="reference internal" href="#more-color">More Color</a></li>
+<li><a class="reference internal" href="#questions">Questions</a></li>
+<li><a class="reference internal" href="#programming-questions">Programming Questions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="coordinates.html"
+                        title="previous chapter">Coordinates and Modes</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="map_function.html"
+                        title="next chapter">The Map Function</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="rgb-color">
+<h1>RGB Color<a class="headerlink" href="#rgb-color" title="Permalink to this headline">¶</a></h1>
+<p>In these notes you will learn:</p>
+<ul class="simple">
+<li>How to specify RGB colors.</li>
+<li>How to use grayscale.</li>
+<li>How to set the background, fill, and stroke colors in <a class="reference external" href="http://processing.org/">Processing</a>.</li>
+<li>How to use variables to store frequently-used colors.</li>
+</ul>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="http://en.wikipedia.org/wiki/Color">art and science of color</a> is a huge
+topic, and this note is a brief and practical introduction to <a class="reference internal" href="glossary.html#term-rgb-color"><span class="xref std std-term">RGB
+color</span></a> as used in <a class="reference external" href="http://processing.org/">Processing</a>.</p>
+</div>
+<div class="section" id="id1">
+<h2>RGB Color<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<a class="reference internal image-reference" href="_images/randomCircles.png"><img alt="Randomly placed ellipses with random colors." class="align-right" src="_images/randomCircles.png" style="width: 258.5px; height: 251.0px;" /></a>
+<p><a class="reference internal" href="glossary.html#term-rgb"><span class="xref std std-term">RGB</span></a> is short for &#8220;red, green, blue&#8221;, and all <a class="reference internal" href="glossary.html#term-rgb"><span class="xref std std-term">RGB</span></a> colors are
+combinations of different amounts of red, green, and blue.
+An RGB color is written as three numbers: (<em>red</em>, <em>green</em>, <em>blue</em>). We call
+this an <a class="reference internal" href="glossary.html#term-rgb-triplet"><span class="xref std std-term">RGB triplet</span></a>. Often, we shorten this to just <strong>triplet</strong>, or
+<strong>triple</strong>.</p>
+<p>The individual <em>red</em>, <em>green</em>, and <em>blue</em> values of an RGB triplet are called
+<strong>intensities</strong>. Intensities range from 0 (least intense) to 255 (most
+intense). So orange, for example, which is (255, 165, 0), is a combination of
+red at the maximum intensity 255, green at a middling intensity of 165, and
+blue at the lowest intensity 0 (i.e. there is no blue in orange).</p>
+<p>There are exactly 16,777,216 different colors, i.e. over 16 million unique
+colors. On a good color monitor this is enough to display photo-realistic
+images.</p>
+<p>Why 16,777,216 different colors? In the RGB triple (r, g, b), each of r, g,
+and b can independently take on one 256 different values. Thus, there are
+<span class="math">\(256 \times 256 \times 256 = 256^3 = 16,777,216\)</span> different RGB
+triples.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you are curious, here is <a class="reference download internal" href="_downloads/allColors.png" download=""><code class="xref download docutils literal"><span class="pre">an</span> <span class="pre">image</span> <span class="pre">that</span> <span class="pre">shows</span>
+<span class="pre">all</span> <span class="pre">16,777,216</span> <span class="pre">RGB</span> <span class="pre">colors</span></code></a>, one color per pixel.
+It&#8217;s a 4096 x 4096 image and is over 34 megabytes in size.</p>
+</div>
+<p>You should memorize at least these basic <a class="reference internal" href="glossary.html#term-rgb"><span class="xref std std-term">RGB</span></a> colors:</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="32%" />
+<col width="68%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">RGB triplet</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>black</td>
+<td>(0, 0, 0)</td>
+</tr>
+<tr class="row-odd"><td>white</td>
+<td>(255, 255, 255)</td>
+</tr>
+<tr class="row-even"><td>gray</td>
+<td>(128, 128, 128)</td>
+</tr>
+<tr class="row-odd"><td>red</td>
+<td>(255, 0, 0)</td>
+</tr>
+<tr class="row-even"><td>green</td>
+<td>(0, 255, 0)</td>
+</tr>
+<tr class="row-odd"><td>blue</td>
+<td>(0, 0, 255)</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">To get more RGB color names look at <a class="reference external" href="http://www.tayloredmktg.com/rgb/">one of the many
+RGB color charts on the web</a>.</p>
+</div>
+</div>
+<div class="section" id="grayscale">
+<h2>Grayscale<a class="headerlink" href="#grayscale" title="Permalink to this headline">¶</a></h2>
+<p>A number of <a class="reference external" href="http://processing.org/">Processing</a> functions support <a class="reference internal" href="glossary.html#term-grayscale"><span class="xref std std-term">grayscale</span></a> color. In
+<a class="reference internal" href="glossary.html#term-rgb"><span class="xref std std-term">RGB</span></a>, any triplet of the form (c, c, c) specifies a shade of gray, and
+is called a
+<a class="reference internal" href="glossary.html#term-grayscale"><span class="xref std std-term">grayscale</span></a> color. Since there are 256 different possible values for c,
+these <a class="reference internal" href="glossary.html#term-grayscale"><span class="xref std std-term">grayscale</span></a> colors have 256 different shades:</p>
+<a class="reference internal image-reference" href="_images/grayscale.png"><img alt="Sample of grayscale colors." class="align-center" src="_images/grayscale.png" style="width: 256.0px; height: 65.0px;" /></a>
+<p>Grayscale need not use the color gray. For instance, here are three different
+grayscales, using 256 shades of red, green, and blue respectively:</p>
+<a class="reference internal image-reference" href="_images/colorGrayscales.png"><img alt="Sample of color grayscales." class="align-center" src="_images/colorGrayscales.png" style="width: 256.0px; height: 196.0px;" /></a>
+</div>
+<div class="section" id="setting-the-background-color">
+<h2>Setting the Background Color<a class="headerlink" href="#setting-the-background-color" title="Permalink to this headline">¶</a></h2>
+<p>To set the background color of the drawing window, uses the <code class="docutils literal"><span class="pre">background</span></code>
+function, e.g.:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">165</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>  <span class="c1">// orange</span>
+</pre></div>
+</div>
+<p>To set the background to be a shade of gray you could do this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">background</span><span class="o">(</span><span class="mi">128</span><span class="o">,</span> <span class="mi">128</span><span class="o">,</span> <span class="mi">128</span><span class="o">);</span>
+</pre></div>
+</div>
+<p>Or, equivalently, this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">background</span><span class="o">(</span><span class="mi">128</span><span class="o">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setting-the-fill-color">
+<h2>Setting the Fill Color<a class="headerlink" href="#setting-the-fill-color" title="Permalink to this headline">¶</a></h2>
+<p>Shapes, such as ellipses and rectangles, can have their interiors filled with
+any color using the <code class="docutils literal"><span class="pre">fill</span></code> function. For example:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">fill</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">165</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>  <span class="c1">// orange fill</span>
+<span class="n">ellipse</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">100</span><span class="o">,</span> <span class="mi">60</span><span class="o">,</span> <span class="mi">40</span><span class="o">);</span>
+
+<span class="n">fill</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">100</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span> <span class="c1">// gray fill</span>
+<span class="n">rect</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">100</span><span class="o">,</span> <span class="mi">60</span><span class="o">,</span> <span class="mi">40</span><span class="o">);</span>
+</pre></div>
+</div>
+<p>The fill color is always the same as the last call to <code class="docutils literal"><span class="pre">fill</span></code>.</p>
+<p>For <a class="reference internal" href="glossary.html#term-grayscale"><span class="xref std std-term">grayscale</span></a> colors you can write <code class="docutils literal"><span class="pre">fill(c)</span></code>, or <code class="docutils literal"><span class="pre">fill(c,</span> <span class="pre">c,</span> <span class="pre">c)</span></code>
+if you like typing.</p>
+</div>
+<div class="section" id="setting-the-stroke-color-and-size">
+<h2>Setting the Stroke Color (and size)<a class="headerlink" href="#setting-the-stroke-color-and-size" title="Permalink to this headline">¶</a></h2>
+<p>Shapes also have an edge with a color that can be different from its fill
+color. The <code class="docutils literal"><span class="pre">stroke</span></code> function set the color of the edge, e.g.:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">fill</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">165</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>  <span class="c1">// orange fill</span>
+<span class="n">stroke</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">50</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>   <span class="c1">// dark green stroke</span>
+<span class="n">ellipse</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">100</span><span class="o">,</span> <span class="mi">60</span><span class="o">,</span> <span class="mi">40</span><span class="o">);</span>
+</pre></div>
+</div>
+<p>If you don&#8217;t want an edge on a shape, then use <code class="docutils literal"><span class="pre">noStroke()</span></code>. As with the
+other color-setting functions, calling <code class="docutils literal"><span class="pre">stroke(c)</span></code> will set the stroke to be
+the <a class="reference internal" href="glossary.html#term-grayscale"><span class="xref std std-term">grayscale</span></a> color (c, c, c).</p>
+<p>You can set the thickness of the stroke using the <code class="docutils literal"><span class="pre">strokeWeight</span></code> function,
+e.g.:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">strokeWeight</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="color-variables">
+<h2>Color Variables<a class="headerlink" href="#color-variables" title="Permalink to this headline">¶</a></h2>
+<p>It&#8217;s often convenient to store colors in <a class="reference internal" href="glossary.html#term-variable"><span class="xref std std-term">variable</span></a>s. For example:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">color</span> <span class="n">orange</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">165</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+<span class="n">color</span> <span class="n">darkGreen</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">50</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+<span class="n">color</span> <span class="n">white</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">255</span><span class="o">,</span> <span class="mi">255</span><span class="o">);</span>
+</pre></div>
+</div>
+<p>These statements create three new variables: <code class="docutils literal"><span class="pre">orange</span></code>, <code class="docutils literal"><span class="pre">darkGreen</span></code>, and
+<code class="docutils literal"><span class="pre">white</span></code>. We can use them like this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">color</span> <span class="n">orange</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">165</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+<span class="n">color</span> <span class="n">darkGreen</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">50</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+<span class="n">color</span> <span class="n">white</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">255</span><span class="o">,</span> <span class="mi">255</span><span class="o">);</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="n">white</span><span class="o">);</span>
+  <span class="n">fill</span><span class="o">(</span><span class="n">orange</span><span class="o">);</span>
+  <span class="n">stroke</span><span class="o">(</span><span class="n">darkGreen</span><span class="o">);</span>
+  <span class="n">ellipse</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">100</span><span class="o">,</span> <span class="mi">60</span><span class="o">,</span> <span class="mi">40</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Using color variables has a couple of advantages. First, they make the program
+more readable. When you see the statement <code class="docutils literal"><span class="pre">fill(orange)</span></code> you have a pretty
+good idea about what it does. In contrast, the statement <code class="docutils literal"><span class="pre">fill(255,</span> <span class="pre">165,</span> <span class="pre">0)</span></code>
+is not as easy to understand. Second, it is easier to change the colors later.
+For instance, if you decide that you want your green to be darker, and so all
+you need to do is change its definition in one place:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">color</span> <span class="n">darkGreen</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">30</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>   <span class="c1">// 30 used to be 50</span>
+</pre></div>
+</div>
+<p>Everywhere in your program where <code class="docutils literal"><span class="pre">darkGreen</span></code> is used will now have this new
+color.</p>
+</div>
+<div class="section" id="transparency">
+<h2>Transparency<a class="headerlink" href="#transparency" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://processing.org/">Processing</a> also lets you specify how <em>transparent</em> a color is. For example,
+in this program the moving rectangle has a transparency value of 100:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">color</span> <span class="n">orange</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">165</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+<span class="n">color</span> <span class="n">darkGreen</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">50</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+<span class="n">color</span> <span class="n">white</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">255</span><span class="o">,</span> <span class="mi">255</span><span class="o">);</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">255</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="n">white</span><span class="o">);</span>
+  <span class="n">fill</span><span class="o">(</span><span class="n">orange</span><span class="o">);</span>
+  <span class="n">ellipse</span><span class="o">(</span><span class="mi">255</span><span class="o">/</span><span class="mi">2</span><span class="o">,</span> <span class="mi">255</span><span class="o">/</span><span class="mi">2</span><span class="o">,</span> <span class="mi">255</span><span class="o">,</span> <span class="mi">255</span><span class="o">);</span>
+
+  <span class="n">fill</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span>  <span class="c1">// transparency set to 100</span>
+
+  <span class="n">rect</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">,</span> <span class="mi">128</span><span class="o">,</span> <span class="mi">128</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/transparentSquare.png"><img alt="Transparent square over a circle." class="align-right" src="_images/transparentSquare.png" style="width: 140.5px; height: 135.0px;" /></a>
+<p>The rectangle acts a bit like red cellophane, i.e. you can see through to
+whatever is underneath. By changing 100 to different values you can get
+different levels of transparency.</p>
+<p>Transparent colors have the format (r, g, b, alpha), where <em>alpha</em> is, like
+the others, a number from 0 (totally transparent) to 255 (totally opaque).</p>
+</div>
+<div class="section" id="the-processing-ide-color-selector">
+<h2>The Processing IDE Color Selector<a class="headerlink" href="#the-processing-ide-color-selector" title="Permalink to this headline">¶</a></h2>
+<p>If you are using the programming editor that comes with <a class="reference external" href="http://processing.org/">Processing</a>, then you
+may want to use the color selector tool that comes with it. To use it, open
+the Tools menu and choose &#8220;Color Selector&#8221;. A window with a color wheel and
+various boxes should appear. Click on any color in the wheel and the
+<a class="reference internal" href="glossary.html#term-rgb"><span class="xref std std-term">RGB</span></a> values for that color will be instantly displayed.</p>
+<a class="reference internal image-reference" href="_images/colorSelector.png"><img alt="The Processing_ IDE color selector." class="align-center" src="_images/colorSelector.png" style="width: 324.75px; height: 215.25px;" /></a>
+<p>Notice that in addition to RGB color, the selector also supports <a class="reference external" href="http://en.wikipedia.org/wiki/HSV_color_space">HSB color</a> codes, which can sometimes be
+more convenient than RGB.</p>
+</div>
+<div class="section" id="more-color">
+<h2>More Color<a class="headerlink" href="#more-color" title="Permalink to this headline">¶</a></h2>
+<p>We&#8217;ve just scratched the surface of color in <a class="reference external" href="http://processing.org/">Processing</a>, but it will suffice
+for most of the programs we&#8217;ll write in this course. The <a class="reference external" href="http://processing.org/">Processing</a>
+documentation lists many other color-related functions, and they are a good
+start for learning more about colors.</p>
+</div>
+<div class="section" id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">What does RGB stand for?</p>
+</li>
+<li><p class="first">In a <a class="reference external" href="http://processing.org/">Processing</a> RGB triple (r, g, b), what are the smallest and
+largest possible values for r, g, and b?</p>
+</li>
+<li><p class="first">About how many different colors can RGB specify?</p>
+</li>
+<li><p class="first">Explain the difference between <em>fill</em> color and <em>stroke</em> color for
+a shape such as an ellipse or rectangle.</p>
+</li>
+<li><p class="first">Explain the difference between <code class="docutils literal"><span class="pre">noFill()</span></code> and <code class="docutils literal"><span class="pre">fill(0,</span> <span class="pre">0,</span> <span class="pre">0)</span></code>.</p>
+</li>
+<li><p class="first">In the following program, the color of a circle and the background
+change according to the position of the mouse pointer:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">255</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="n">fill</span><span class="o">(</span><span class="mi">255</span> <span class="o">-</span> <span class="n">mouseX</span><span class="o">,</span> <span class="mi">255</span> <span class="o">-</span> <span class="n">mouseY</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="n">noStroke</span><span class="o">();</span>
+  <span class="n">ellipse</span><span class="o">(</span><span class="mi">255</span><span class="o">/</span><span class="mi">2</span><span class="o">,</span> <span class="mi">255</span><span class="o">/</span><span class="mi">2</span><span class="o">,</span> <span class="mi">255</span><span class="o">/</span><span class="mi">2</span><span class="o">,</span> <span class="mi">255</span><span class="o">/</span><span class="mi">2</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>At what point must the mouse pointer be for the circle to be
+invisible, i.e. the same color as the background?</p>
+</li>
+<li><p class="first">Give two different reasons why <code class="docutils literal"><span class="pre">color</span></code> variables are useful in
+<a class="reference external" href="http://processing.org/">Processing</a>.</p>
+</li>
+<li><p class="first">Why are <code class="docutils literal"><span class="pre">color</span></code> variables typically defined <em>outside</em> of any
+function?</p>
+</li>
+<li><p class="first">In the <a class="reference external" href="http://processing.org/">Processing</a> color (r, g, b, alpha), what does alpha
+represent?</p>
+</li>
+</ol>
+</div>
+<div class="section" id="programming-questions">
+<h2>Programming Questions<a class="headerlink" href="#programming-questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Write a program that draws four differently colored triangles on
+the screen. The base of each triangle should be one of the four
+edges of the screen, and one point of each triangle should follow
+the mouse pointer.</p>
+<a class="reference internal image-reference" href="_images/fourTriangles.png"><img alt="Four triangles with different colors." class="align-center" src="_images/fourTriangles.png" style="width: 251.0px; height: 251.0px;" /></a>
+<p>As the pointer moves, the four triangle change shape. There bases
+always stay attached to the screen edges.</p>
+</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="map_function.html" title="The Map Function"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="coordinates.html" title="Coordinates and Modes"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Toby Donaldson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

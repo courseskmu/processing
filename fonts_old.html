@@ -1,0 +1,322 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Fonts &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
+    <link rel="next" title="Scrolling Text" href="text_scroll.html" />
+    <link rel="prev" title="Bouncing Balls, Lists, and Loops" href="oop_bouncing_ball.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="text_scroll.html" title="Scrolling Text"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="oop_bouncing_ball.html" title="Bouncing Balls, Lists, and Loops"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Fonts</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#creating-fonts-in-the-processing-ide">Creating Fonts in the Processing IDE</a></li>
+<li><a class="reference internal" href="#moving-text">Moving Text</a></li>
+<li><a class="reference internal" href="#questions">Questions</a></li>
+<li><a class="reference internal" href="#programming-questions">Programming Questions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="oop_bouncing_ball.html"
+                        title="previous chapter">Bouncing Balls, Lists, and Loops</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="text_scroll.html"
+                        title="next chapter">Scrolling Text</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="fonts">
+<h1>Fonts<a class="headerlink" href="#fonts" title="Permalink to this headline">¶</a></h1>
+<p>In these notes you will learn:</p>
+<ul class="simple">
+<li>How to create <a class="reference external" href="http://processing.org/">Processing</a> font files (.vlw files) using the Processing
+editor.</li>
+<li>How to load fonts from disk and display them.</li>
+<li>How to move fonts around the screen.</li>
+</ul>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>We&#8217;ve seen that <code class="docutils literal"><span class="pre">println</span></code> can display strings on the <em>console</em> window. But
+what if you want a string to appear in the <em>graphics</em> window? That&#8217;s more
+involved because <strong>fonts</strong> &#8212; the images representing the characters in a
+string &#8212; have so many different properties. If you&#8217;ve ever played around
+with a word processor, then you have some idea of the many different
+properties of fonts. You can specify a font&#8217;s location, style, size, weight
+(i.e. thickness of stroke), color, and more. Hundreds of different fonts have
+been created, and choosing good fonts takes skill and experience.</p>
+<p><a class="reference external" href="http://processing.org/">Processing</a> makes it relatively easy for you to use lots of different kinds of
+fonts. To use a font in <a class="reference external" href="http://processing.org/">Processing</a>, follow these 4 basic steps:</p>
+<ol class="arabic">
+<li><p class="first">Create the <code class="docutils literal"><span class="pre">.vlw</span></code> file that stores the font images. The <a class="reference external" href="http://processing.org/">Processing</a> IDE
+provides a handy tool for creating font files for a variety of fonts.</p>
+<a class="reference internal image-reference" href="_images/createFontMenu.png"><img alt="Screenshot of the Processing IDE create font menu." class="align-center" src="_images/createFontMenu.png" style="width: 369.0px; height: 429.0px;" /></a>
+</li>
+<li><p class="first">Once you know a font file exists, then you load it from the disk into
+memory using the <code class="docutils literal"><span class="pre">loadFont</span></code> function.</p>
+</li>
+<li><p class="first">After a font has been loaded into memory, you set it as the font to be used
+with the <code class="docutils literal"><span class="pre">textFont</span></code> function.</p>
+</li>
+<li><p class="first">Finally, <code class="docutils literal"><span class="pre">text(s,</span> <span class="pre">x,</span> <span class="pre">y)</span></code> displays string <code class="docutils literal"><span class="pre">s</span></code> at location (<code class="docutils literal"><span class="pre">x</span></code>, <code class="docutils literal"><span class="pre">y</span></code>)
+using the font set by the most recent call to <code class="docutils literal"><span class="pre">textFont</span></code>.</p>
+</li>
+</ol>
+<p>Compared to calling <code class="docutils literal"><span class="pre">println(s)</span></code>, this is a lot more work! But this extra
+complexity buys us <em>flexibility</em>: we have a <em>lot</em> of control over our fonts.
+In contrast, <code class="docutils literal"><span class="pre">println</span></code> gives you almost no flexibility: your text is
+displayed in the system console font, end of story.</p>
+</div>
+<div class="section" id="creating-fonts-in-the-processing-ide">
+<h2>Creating Fonts in the Processing IDE<a class="headerlink" href="#creating-fonts-in-the-processing-ide" title="Permalink to this headline">¶</a></h2>
+<p>As an example of how to use fonts in <a class="reference external" href="http://processing.org/">Processing</a>, lets write a program that
+prints &#8220;Hello everybody!&#8221; on the screen.</p>
+<p>The first step is to choose a font. Look at the list of fonts in the
+Tools/Create Font menu in the Processing IDE and choose a font you like. I&#8217;ll
+choose &#8220;Purisa&#8221; at size 48. After clicking &#8220;OK&#8221;, this creates a file called
+&#8220;Purisa-48.vlw&#8221; that stores all the font images.</p>
+<a class="reference internal image-reference" href="_images/createFontWindow.png"><img alt="Screenshot of the Processing IDE create font window." class="align-center" src="_images/createFontWindow.png" style="width: 324.75px; height: 412.5px;" /></a>
+<p>The second step is to load the font file we&#8217;ve just created in <a class="reference external" href="http://processing.org/">Processing</a>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">PFont</span> <span class="n">font</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">font</span> <span class="o">=</span> <span class="n">loadFont</span><span class="o">(</span><span class="s">&quot;Purisa-48.vlw&quot;</span><span class="o">);</span>
+  <span class="c1">// ...</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="c1">// ...</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Notice that we need to use a <a class="reference internal" href="glossary.html#term-global-variable"><span class="xref std std-term">global variable</span></a> of <a class="reference internal" href="glossary.html#term-type"><span class="xref std std-term">type</span></a> <code class="docutils literal"><span class="pre">PFont</span></code>
+to store the result of calling <code class="docutils literal"><span class="pre">loadFont</span></code>. <code class="docutils literal"><span class="pre">PFont</span></code> is the main <a class="reference external" href="http://processing.org/">Processing</a>
+class for representing fonts in memory.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">As it explains on the <a class="reference external" href="http://processing.org/reference/loadFont_.html">loadFont documentation page</a>, the font file needs to
+be in your programs <code class="docutils literal"><span class="pre">data</span></code> folder, i.e. a folder called <code class="docutils literal"><span class="pre">data</span></code> that is
+in the same folder as your source code file. You&#8217;ll get a &#8220;Could not load
+font ...&#8221; error if the font <code class="docutils literal"><span class="pre">.vlw</span></code> file is not there.</p>
+</div>
+<p>The third step is to set the just-loaded font as the current font to use. This
+is simply a matter of calling the <code class="docutils literal"><span class="pre">textFont</span></code> function:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">PFont</span> <span class="n">font</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">font</span> <span class="o">=</span> <span class="n">loadFont</span><span class="o">(</span><span class="s">&quot;Purisa-48.vlw&quot;</span><span class="o">);</span>
+  <span class="n">textFont</span><span class="o">(</span><span class="n">font</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="c1">// ...</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Our Purisa font is size 48, but you can change it&#8217;s size in <code class="docutils literal"><span class="pre">textFont</span></code>, e.g.
+<code class="docutils literal"><span class="pre">textFont(font,</span> <span class="pre">32)</span></code> would make the font a little smaller.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Changing the size of a font using <code class="docutils literal"><span class="pre">textFont</span></code> often
+results in visual blemishes such as jagged edges or blurriness. To ensure
+your fonts look good, it&#8217;s usually best to create them at the desired size
+using the <a class="reference external" href="http://processing.org/">Processing</a> IDE font creation tool instead of changing their size
+in <code class="docutils literal"><span class="pre">textFont</span></code>.</p>
+</div>
+<p>Finally, we are ready to place the text on the screen:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">PFont</span> <span class="n">font</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">font</span> <span class="o">=</span> <span class="n">loadFont</span><span class="o">(</span><span class="s">&quot;Purisa-48.vlw&quot;</span><span class="o">);</span>
+  <span class="n">textFont</span><span class="o">(</span><span class="n">font</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">text</span><span class="o">(</span><span class="s">&quot;Hello everybody!&quot;</span><span class="o">,</span> <span class="mi">50</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>If your program happens to use more than one style of font, then you must
+remember to call <code class="docutils literal"><span class="pre">textFont</span></code> before each call to <code class="docutils literal"><span class="pre">text</span></code>.</p>
+</div>
+<div class="section" id="moving-text">
+<h2>Moving Text<a class="headerlink" href="#moving-text" title="Permalink to this headline">¶</a></h2>
+<p>We can make text move in the same way that we move shapes and images. For
+instance, this program make a string &#8220;bounce&#8221; up and down on the screen:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">PFont</span> <span class="n">font</span><span class="o">;</span>
+
+<span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">dy</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">font</span> <span class="o">=</span> <span class="n">loadFont</span><span class="o">(</span><span class="s">&quot;Purisa-48.vlw&quot;</span><span class="o">);</span>
+  <span class="n">textFont</span><span class="o">(</span><span class="n">font</span><span class="o">,</span> <span class="mi">32</span><span class="o">);</span>
+
+  <span class="n">x</span> <span class="o">=</span> <span class="mi">50</span><span class="o">;</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="mi">50</span><span class="o">;</span>
+  <span class="n">dy</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+  <span class="n">fill</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="n">text</span><span class="o">(</span><span class="s">&quot;Hello everybody!&quot;</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+
+  <span class="c1">// move the text</span>
+  <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+
+  <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">&lt;</span> <span class="mi">25</span><span class="o">)</span> <span class="o">{</span>  <span class="c1">// hit the top?</span>
+     <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">&gt;</span> <span class="mi">475</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// hit the bottom?</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Notice that the color of the text is set by calling the <code class="docutils literal"><span class="pre">fill</span></code> function
+before calling <code class="docutils literal"><span class="pre">text</span></code>.</p>
+</div>
+<div class="section" id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Name 5 different properties of fonts.</li>
+<li>Answer <em>true</em> or <em>false</em> for each of the following statements.<ul>
+<li>The <a class="reference external" href="http://processing.org/">Processing</a> IDE comes with a font creation tool that lets you create
+your own .vlw font files.</li>
+<li>The <code class="docutils literal"><span class="pre">loadFont</span></code> function loads .vlw files into memory.</li>
+<li>The <code class="docutils literal"><span class="pre">textFont</span></code> function returns the name of the font that will be used
+when text is drawn on the screen.</li>
+<li>The function <code class="docutils literal"><span class="pre">print(x,</span> <span class="pre">y,</span> <span class="pre">s)</span></code> displays string <code class="docutils literal"><span class="pre">s</span></code> at location (<code class="docutils literal"><span class="pre">x</span></code>,
+<code class="docutils literal"><span class="pre">y</span></code>) on the screen.</li>
+</ul>
+</li>
+<li>What is the name of the class <a class="reference external" href="http://processing.org/">Processing</a> uses to represent fonts?</li>
+<li>What is a potential problem of using <code class="docutils literal"><span class="pre">textFont</span></code> to change the size of a
+font?</li>
+</ol>
+</div>
+<div class="section" id="programming-questions">
+<h2>Programming Questions<a class="headerlink" href="#programming-questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Write a program that puts <code class="docutils literal"><span class="pre">Hello</span> <span class="pre">everybody!</span></code> 5 times on the screen (not
+the console!). Use 5 different fonts and five different colors.</p>
+</li>
+<li><p class="first">Write a program that puts the string <code class="docutils literal"><span class="pre">I</span> <span class="pre">like</span> <span class="pre">red</span> <span class="pre">apples.</span></code> on the screen
+(not the console!) all on one line. The word <code class="docutils literal"><span class="pre">red</span></code> should be colored red,
+and in a different font, than the rest of the string in a different color.</p>
+</li>
+<li><p class="first">Write a program that puts the string &#8220;Drag me around!&#8221; on the screen (not
+the console!), and allows the user to drag it around on the screen.</p>
+</li>
+<li><p class="first">Write a program that makes the string <code class="docutils literal"><span class="pre">&quot;ball&quot;</span></code> bounce around the screen.
+It should bounce off the screen edges.</p>
+</li>
+<li><p class="first">Write a program that displays a digital clock in the middle of the screen
+that shows the current time (hours, minutes, and seconds), and whether or
+not it is &#8220;am&#8221; or &#8220;pm&#8221;. The clock should, of course, change as the current
+time changes. Look at <a class="reference external" href="http://processing.org/reference/hour_.html">the example for hours</a> to see how to access the
+current time in <a class="reference external" href="http://processing.org/">Processing</a>.</p>
+<p>Test it with, at <em>least</em>, the following times:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="mi">7</span><span class="o">:</span><span class="mo">05</span><span class="o">:</span><span class="mo">02</span><span class="n">am</span>
+<span class="mi">7</span><span class="o">:</span><span class="mo">05</span><span class="o">:</span><span class="mo">02</span><span class="n">pm</span>
+<span class="mi">12</span><span class="o">:</span><span class="mo">01</span><span class="o">:</span><span class="mo">00</span><span class="n">am</span>
+<span class="mi">12</span><span class="o">:</span><span class="mo">01</span><span class="o">:</span><span class="mo">00</span><span class="n">pm</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="text_scroll.html" title="Scrolling Text"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="oop_bouncing_ball.html" title="Bouncing Balls, Lists, and Loops"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Toby Donaldson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,448 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Our First Program &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
+    <link rel="next" title="Exploring Shapes" href="exploring_shapes.html" />
+    <link rel="prev" title="Introduction to Programming with Processing" href="intro.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="exploring_shapes.html" title="Exploring Shapes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="Introduction to Programming with Processing"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Our First Program</a><ul>
+<li><a class="reference internal" href="#getting-processing">Getting Processing</a></li>
+<li><a class="reference internal" href="#running-your-first-program">Running Your First Program</a></li>
+<li><a class="reference internal" href="#examining-our-first-program">Examining Our First Program</a></li>
+<li><a class="reference internal" href="#frame-rate">Frame Rate</a></li>
+<li><a class="reference internal" href="#indentation">Indentation</a></li>
+<li><a class="reference internal" href="#playing-with-the-code-ellipse-in-the-middle">Playing with the Code: Ellipse in the Middle</a></li>
+<li><a class="reference internal" href="#playing-with-the-code-swapping-x-and-y">Playing with the Code: Swapping X and Y</a></li>
+<li><a class="reference internal" href="#playing-with-the-code-two-ellipses">Playing with the Code: Two Ellipses</a></li>
+<li><a class="reference internal" href="#ellipse-parameters">Ellipse Parameters</a></li>
+<li><a class="reference internal" href="#an-important-trick-re-drawing-the-background">An Important Trick: Re-drawing the Background</a></li>
+<li><a class="reference internal" href="#questions">Questions</a></li>
+<li><a class="reference internal" href="#programming-questions">Programming Questions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="intro.html"
+                        title="previous chapter">Introduction to Programming with Processing</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="exploring_shapes.html"
+                        title="next chapter">Exploring Shapes</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="our-first-program">
+<h1>Our First Program<a class="headerlink" href="#our-first-program" title="Permalink to this headline">¶</a></h1>
+<p>In these notes you will learn:</p>
+<ul class="simple">
+<li>Enter and run a simple program in the <a class="reference external" href="http://processing.org/">Processing</a> editor.</li>
+<li>How to draw ellipses and rectangles.</li>
+<li>How to determine the position of the mouse.</li>
+<li>How to clear the screen.</li>
+</ul>
+<div class="section" id="getting-processing">
+<h2>Getting Processing<a class="headerlink" href="#getting-processing" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://processing.org/">Processing</a> is a <a class="reference external" href="http://processing.org/download/">freely available</a> that
+comes with an easy-to-use programming. It works on Mac, Linux, and Windows
+systems.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You can expect <a class="reference external" href="http://processing.org/">Processing</a> to work essentially identically on
+different systems. Past students have used <a class="reference external" href="http://processing.org/">Processing</a> on all these systems
+with no almost no noticeable differences. This is a pretty impressive
+technical achievement that is due to <a class="reference external" href="http://en.wikipedia.org/wiki/Java_(programming_language)">Java</a>: <a class="reference external" href="http://en.wikipedia.org/wiki/Java_(programming_language)">Java</a> designed to make the same
+Java program run identically on any computer.</p>
+</div>
+<p><a class="reference external" href="http://processing.org/download/">Download</a> and install the most recent
+version of <a class="reference external" href="http://processing.org/">Processing</a> for your computer. We&#8217;ll be using the editor that comes
+with it throughout the course. When you first run it, it should look something
+like this:</p>
+<a class="reference internal image-reference" href="_images/processing_editor.png"><img alt="Screenshot of the Processing editor." class="align-center" src="_images/processing_editor.png" style="width: 375.0px; height: 450.0px;" /></a>
+</div>
+<div class="section" id="running-your-first-program">
+<h2>Running Your First Program<a class="headerlink" href="#running-your-first-program" title="Permalink to this headline">¶</a></h2>
+<p>Lets write our first <a class="reference external" href="http://processing.org/">Processing</a> program. Launch <a class="reference external" href="http://processing.org/">Processing</a> and type the
+following into the editor window that appears:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">ellipse</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">,</span> <span class="mi">40</span><span class="o">,</span> <span class="mi">40</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">You must type this program <em>exactly</em> as it appears: a
+<em>single</em> wrong character could cause it to fail!</p>
+</div>
+<p>Now run the program by clicking the &#8220;play&#8221; button at the top of the window,
+i.e. the little triangle in the circle at the top-left of the screen (under
+the <em>File</em> menu). Move the mouse around, and you should see lots of circles,
+e.g.:</p>
+<a class="reference internal image-reference" href="_images/firstProgramOutput.png"><img alt="Sample output of our first Processing_ program." class="align-center" src="_images/firstProgramOutput.png" style="width: 251.0px; height: 251.0px;" /></a>
+<p>After pressing play we say that the program is <strong>running</strong>, or <strong>executing</strong>.
+This particular program runs until you either click the &#8220;stop&#8221; button (the
+little square in the circle), or quit <a class="reference external" href="http://processing.org/">Processing</a> (e.g. by closing the
+<a class="reference external" href="http://processing.org/">Processing</a> window, or choosing &#8220;quit&#8221; in the <em>File</em> menu).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">To <strong>save</strong> a program to a file, click the square with the downward-
+pointing arrow, or press ctrl-S (i.e. hold down the ctrl key and then press
+S). Give your program a descriptive name to help you remember what it is
+about, e.g. <code class="docutils literal"><span class="pre">firstProgram</span></code> would be good.</p>
+</div>
+<a class="reference internal image-reference" href="_images/sourceToExecutable.png"><img alt="Source to executable." class="align-center" src="_images/sourceToExecutable.png" style="width: 204.0px; height: 465.0px;" /></a>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><a class="reference external" href="http://processing.org/">Processing</a> files end with the extension <code class="docutils literal"><span class="pre">.pde</span></code>. This is important
+because many programs decide how to handle a file based on its extension.</p>
+</div>
+</div>
+<div class="section" id="examining-our-first-program">
+<h2>Examining Our First Program<a class="headerlink" href="#examining-our-first-program" title="Permalink to this headline">¶</a></h2>
+<p>Now lets look in detail at our program. The text of a program is called its
+<a class="reference internal" href="glossary.html#term-source-code"><span class="xref std std-term">source code</span></a>, or <em>code</em> for short:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">ellipse</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">,</span> <span class="mi">40</span><span class="o">,</span> <span class="mi">40</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/drawSetupFlowchart.png"><img alt="Flow chart showing when setup() and draw() are called." class="align-right" src="_images/drawSetupFlowchart.png" style="width: 199.0px; height: 372.0px;" /></a>
+<p>The first thing to note is that the source code is divided into two
+<a class="reference internal" href="glossary.html#term-function"><span class="xref std std-term">function</span></a>s, one named <code class="docutils literal"><span class="pre">setup()</span></code> and the other named <code class="docutils literal"><span class="pre">draw()</span></code>.
+Most <a class="reference external" href="http://processing.org/">Processing</a> programs we write will have these two functions
+(and maybe more).</p>
+<p>The <code class="docutils literal"><span class="pre">setup()</span></code> function is <strong>called</strong> precisely <em>once</em> at the <em>start</em> of your
+program. When a function is called the code inside of it, i.e. the code
+between the open brace <code class="docutils literal"><span class="pre">{</span></code> and the close brace <code class="docutils literal"><span class="pre">}</span></code>, is executed. In this
+program, <code class="docutils literal"><span class="pre">setup()</span></code> contains a single function call to <code class="docutils literal"><span class="pre">size</span></code> that sets the
+width and height of the output window to be 500 <a class="reference internal" href="glossary.html#term-pixel"><span class="xref std std-term">pixel</span></a>s high and 500
+<a class="reference internal" href="glossary.html#term-pixel"><span class="xref std std-term">pixel</span></a>s wide.</p>
+<p>After <code class="docutils literal"><span class="pre">setup()</span></code> finishes, the <code class="docutils literal"><span class="pre">draw()</span></code> function is called repeatedly. That
+is, <a class="reference external" href="http://processing.org/">Processing</a> calls <code class="docutils literal"><span class="pre">draw()</span></code> again and again forever. Each time <code class="docutils literal"><span class="pre">draw()</span></code>
+is called, an ellipse 40 <a class="reference internal" href="glossary.html#term-pixel"><span class="xref std std-term">pixel</span></a>s wide and 40 <a class="reference internal" href="glossary.html#term-pixel"><span class="xref std std-term">pixel</span></a>s high is
+drawn at the position of the mouse pointer, i.e. at location (<code class="docutils literal"><span class="pre">mouseX</span></code>,
+<code class="docutils literal"><span class="pre">mouseY</span></code>) on the screen.</p>
+<p>A nice way to visualize how <code class="docutils literal"><span class="pre">setup()</span></code> and <code class="docutils literal"><span class="pre">draw()</span></code> are called is shown in
+the <a class="reference internal" href="glossary.html#term-flow-chart"><span class="xref std std-term">flow chart</span></a> on the right.</p>
+<p>Both <code class="docutils literal"><span class="pre">setup()</span></code> and <code class="docutils literal"><span class="pre">draw()</span></code> are <code class="docutils literal"><span class="pre">void</span></code> functions, which means they do
+not calculate a value the way a regular mathematical function does. Later we
+will see that you can write functions that calculate new values, such as
+numbers (e.g. a square-root function) or strings.</p>
+<p><code class="docutils literal"><span class="pre">mouseX</span></code> and <code class="docutils literal"><span class="pre">mouseY</span></code> are examples of <a class="reference internal" href="glossary.html#term-variable"><span class="xref std std-term">variable</span></a>s.  These
+particular variables are pre-defined by <a class="reference external" href="http://processing.org/">Processing</a> and are automatically set
+to be the current coordinates of the mouse pointer on the screen.</p>
+</div>
+<div class="section" id="frame-rate">
+<h2>Frame Rate<a class="headerlink" href="#frame-rate" title="Permalink to this headline">¶</a></h2>
+<p>In one second, <a class="reference external" href="http://processing.org/">Processing</a> calls <code class="docutils literal"><span class="pre">draw()</span></code> approximately 60 times. We call
+this the program&#8217;s <a class="reference internal" href="glossary.html#term-frame-rate"><span class="xref std std-term">frame rate</span></a>, and the pre-defined <a class="reference external" href="http://processing.org/">Processing</a>
+variable <code class="docutils literal"><span class="pre">frameRate</span></code> is an estimate of a program&#8217;s current frame rate. The
+number of frames per second that a program runs at is often abbreviated
+<a class="reference internal" href="glossary.html#term-fps"><span class="xref std std-term">fps</span></a>.</p>
+<p>If <code class="docutils literal"><span class="pre">draw()</span></code> takes a long time to finish, then the frame rate might be less
+than 60. For complex animations that do a lot of work to generate each frame,
+it is important to keep an eye on the frame rate to make sure it never dips so
+low that it makes the animation look bad.</p>
+</div>
+<div class="section" id="indentation">
+<h2>Indentation<a class="headerlink" href="#indentation" title="Permalink to this headline">¶</a></h2>
+<p>The format of source code is quite important because human programmers need to
+read it. Poorly formatted source code is difficult understand and change.</p>
+<p>So, in <a class="reference external" href="http://processing.org/">Processing</a>, like most other languages, we use identation to visually
+indicate a <a class="reference internal" href="glossary.html#term-block-of-code"><span class="xref std std-term">block of code</span></a>. For example, the statement inside
+<code class="docutils literal"><span class="pre">setup()</span></code> is indented a couple of spaces:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+   <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+   <span class="c1">// other lines of code in setup()</span>
+   <span class="c1">// should be indented the same</span>
+   <span class="c1">// amount just like these comments</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>The close brace <code class="docutils literal"><span class="pre">}</span></code> lines up with the <code class="docutils literal"><span class="pre">v</span></code> in <code class="docutils literal"><span class="pre">void</span></code>. If we add any more
+statements to <code class="docutils literal"><span class="pre">setup()</span></code>, they should start in the same column as the <code class="docutils literal"><span class="pre">s</span></code>
+in <code class="docutils literal"><span class="pre">size</span></code>.</p>
+<p>The <code class="docutils literal"><span class="pre">//</span></code> symbol indicates a <a class="reference internal" href="glossary.html#term-source-code-comment"><span class="xref std std-term">source code comment</span></a>, i.e. a note for the
+person reading the program. We will often add comments to our programs to make
+them easier for humans to read.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><a class="reference external" href="http://processing.org/">Processing</a> editor will automatically indent your code for you if
+you press ctrl-T (hold down the Ctrl key, and then press T).</p>
+</div>
+</div>
+<div class="section" id="playing-with-the-code-ellipse-in-the-middle">
+<h2>Playing with the Code: Ellipse in the Middle<a class="headerlink" href="#playing-with-the-code-ellipse-in-the-middle" title="Permalink to this headline">¶</a></h2>
+<p>Now lets play with our program a little bit to see what else it can do. Re-
+write it as follows (again, be <em>very</em> careful to type the code <em>exactly</em> as
+given!):</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">ellipse</span><span class="o">(</span><span class="mi">250</span><span class="o">,</span> <span class="mi">250</span><span class="o">,</span> <span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Here we&#8217;ve changed the <a class="reference internal" href="glossary.html#term-parameter"><span class="xref std std-term">parameter</span></a>s to the <code class="docutils literal"><span class="pre">ellipse</span></code> function: now
+the ellipse&#8217;s center is always drawm at (250, 250) (the middle of the screen),
+and its width is the value of <code class="docutils literal"><span class="pre">mouseX</span></code> and its height is the value of
+<code class="docutils literal"><span class="pre">mouseY</span></code>. Move the mouse pointer around while the program is running to see
+the effect.</p>
+<a class="reference internal image-reference" href="_images/middleEllipse.png"><img alt="Sample output of &quot;ellipse in the middle&quot; program." class="align-center" src="_images/middleEllipse.png" style="width: 251.0px; height: 251.0px;" /></a>
+</div>
+<div class="section" id="playing-with-the-code-swapping-x-and-y">
+<h2>Playing with the Code: Swapping X and Y<a class="headerlink" href="#playing-with-the-code-swapping-x-and-y" title="Permalink to this headline">¶</a></h2>
+<p>Here we swap <code class="docutils literal"><span class="pre">mouseX</span></code> and <code class="docutils literal"><span class="pre">mouseY</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">ellipse</span><span class="o">(</span><span class="n">mouseY</span><span class="o">,</span> <span class="n">mouseX</span><span class="o">,</span> <span class="mi">40</span><span class="o">,</span> <span class="mi">40</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>This is an unusual effect: it feels as if the mouse is not working properly!</p>
+<a class="reference internal image-reference" href="_images/swappedXY.png"><img alt="Sample output of &quot;swapped X, Y&quot; program." class="align-center" src="_images/swappedXY.png" style="width: 251.0px; height: 251.0px;" /></a>
+</div>
+<div class="section" id="playing-with-the-code-two-ellipses">
+<h2>Playing with the Code: Two Ellipses<a class="headerlink" href="#playing-with-the-code-two-ellipses" title="Permalink to this headline">¶</a></h2>
+<p>In this program we add another ellipse:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">ellipse</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">,</span> <span class="mi">40</span><span class="o">,</span> <span class="mi">40</span><span class="o">);</span>
+  <span class="n">ellipse</span><span class="o">(</span><span class="n">mouseX</span> <span class="o">+</span> <span class="mi">80</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">,</span> <span class="mi">40</span><span class="o">,</span> <span class="mi">40</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>The second ellipse is drawn 80 pixels to the right of the first one. If you
+replace the 80 with, say, 20, then the ellipses will overlap.</p>
+<a class="reference internal image-reference" href="_images/twoEllipses.png"><img alt="Sample output of &quot;two ellipses&quot; program." class="align-center" src="_images/twoEllipses.png" style="width: 251.0px; height: 251.0px;" /></a>
+</div>
+<div class="section" id="ellipse-parameters">
+<h2>Ellipse Parameters<a class="headerlink" href="#ellipse-parameters" title="Permalink to this headline">¶</a></h2>
+<p>Lets stop for a moment and look in more detail at the <code class="docutils literal"><span class="pre">ellipse</span></code> function.
+You call the <code class="docutils literal"><span class="pre">ellipse</span></code> function by writing a statement that looks like
+this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">width</span><span class="o">,</span> <span class="n">height</span><span class="o">);</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/ellipse.png"><img alt="Ellipse parameters." class="align-right" src="_images/ellipse.png" style="width: 308.0px; height: 140.0px;" /></a>
+<p>We say that <code class="docutils literal"><span class="pre">ellipse</span></code> has four <a class="reference internal" href="glossary.html#term-parameter"><span class="xref std std-term">parameter</span></a>s: <code class="docutils literal"><span class="pre">x</span></code>, <code class="docutils literal"><span class="pre">y</span></code>,
+<code class="docutils literal"><span class="pre">width</span></code>, and <code class="docutils literal"><span class="pre">height</span></code>. Each of these parameters must be a number;
+<code class="docutils literal"><span class="pre">width</span></code> and <code class="docutils literal"><span class="pre">height</span></code> should both be greater than 0.</p>
+<p>Notice a few important details:</p>
+<ul class="simple">
+<li>The name of the function is <code class="docutils literal"><span class="pre">ellipse</span></code>, and after the name comes an open
+bracket, i.e. a <code class="docutils literal"><span class="pre">(</span></code> character. A matching close-bracket, <code class="docutils literal"><span class="pre">)</span></code>, goes at
+the end of the line before the <code class="docutils literal"><span class="pre">;</span></code>.</li>
+<li>After the <code class="docutils literal"><span class="pre">(</span></code> bracket we list the function&#8217;s parameters. <em>Order matters</em>:
+first comes <code class="docutils literal"><span class="pre">x</span></code> and <code class="docutils literal"><span class="pre">y</span></code>, which specifies the (x, y) location of the
+center of the ellipse, and then <code class="docutils literal"><span class="pre">width</span></code> and <code class="docutils literal"><span class="pre">height</span></code> which specify the
+vertical and horizontal diameter of the ellipse (not the radius!).</li>
+<li>Calling the <code class="docutils literal"><span class="pre">ellipse</span></code> function is an example of <a class="reference internal" href="glossary.html#term-statement"><span class="xref std std-term">statement</span></a>, and in
+<a class="reference external" href="http://processing.org/">Processing</a> a <code class="docutils literal"><span class="pre">;</span></code> character marks the end of a statement.</li>
+</ul>
+<p>Almost any other way of calling <code class="docutils literal"><span class="pre">ellipse</span></code> results in an error. For example:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">ellipse</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">250</span><span class="o">,</span> <span class="mi">250</span><span class="o">);</span>   <span class="c1">// too many parameters</span>
+<span class="n">ellipse</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">250</span><span class="o">);</span>           <span class="c1">// too few parameters</span>
+<span class="n">ellipse</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">250</span><span class="o">,</span> <span class="mi">250</span><span class="o">,);</span>     <span class="c1">// extra comma</span>
+<span class="n">ellipse</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mf">0.</span> <span class="mi">250</span><span class="o">,</span> <span class="mi">250</span><span class="o">);</span>      <span class="c1">// . instead of ,</span>
+<span class="n">Ellipse</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">250</span><span class="o">,</span> <span class="mi">250</span><span class="o">);</span>      <span class="c1">// wrong case</span>
+<span class="n">elipse</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">250</span><span class="o">,</span> <span class="mi">250</span><span class="o">);</span>       <span class="c1">// wrong spelling</span>
+<span class="n">ellipse</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">250</span><span class="o">,</span> <span class="mi">250</span><span class="o">)</span>       <span class="c1">// missing ;</span>
+<span class="n">ellipse</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">250</span><span class="o">,</span> <span class="mi">250</span><span class="o">;</span>       <span class="c1">// missing )</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">ellipse</span></code> is a pre-defined function that comes with <a class="reference external" href="http://processing.org/">Processing</a>, and you can
+read about it <a class="reference external" href="http://processing.org/reference/ellipse_.html">here</a>.  The
+<a class="reference external" href="http://processing.org/reference/">Processing reference page</a> lists all the
+<a class="reference external" href="http://processing.org/">Processing</a> functions, and we will often be referring to it. <a class="reference external" href="http://processing.org/reference/">Bookmark it!</a></p>
+</div>
+<div class="section" id="an-important-trick-re-drawing-the-background">
+<h2>An Important Trick: Re-drawing the Background<a class="headerlink" href="#an-important-trick-re-drawing-the-background" title="Permalink to this headline">¶</a></h2>
+<p>Now lets make a small but important modification to our original program:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">200</span><span class="o">);</span>
+  <span class="n">ellipse</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">,</span> <span class="mi">80</span><span class="o">,</span> <span class="mi">80</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Every time <code class="docutils literal"><span class="pre">draw()</span></code> is called the <code class="docutils literal"><span class="pre">background(200)</span></code> sets the color of the
+drawing window to be 200, which us a light shade of gray (a value closer to 0
+would make it darker). This erases everything on the screen. Since <code class="docutils literal"><span class="pre">draw()</span></code>
+is called about 60 times a second, the ellipse appears to move smoothly around
+without leaving a trail.</p>
+<p>This simple trick of re-drawing the screen background at the start of every
+call to <code class="docutils literal"><span class="pre">draw</span></code> is a key idea in computer animation. We&#8217;ll use it throughout
+this course as the basic technique for getting things to move on the screen.</p>
+</div>
+<div class="section" id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">What is <em>source code</em>?</p>
+</li>
+<li><p class="first">Draw a flow chart showing when the <code class="docutils literal"><span class="pre">setup()</span></code> and <code class="docutils literal"><span class="pre">draw()</span></code> functions are
+called.</p>
+</li>
+<li><p class="first">Describe, in English, what the following <a class="reference external" href="http://processing.org/">Processing</a> statement does:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">250</span><span class="o">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Write a <a class="reference external" href="http://processing.org/">Processing</a> statement that draws an ellipse of width 50 and height
+75 at the current mouse location.</p>
+</li>
+<li><p class="first">Name two variables that <a class="reference external" href="http://processing.org/">Processing</a> provides.</p>
+</li>
+<li><p class="first">What is the purpose of a <code class="docutils literal"><span class="pre">;</span></code> (semi-colon) in a <a class="reference external" href="http://processing.org/">Processing</a> program?</p>
+</li>
+<li><p class="first">What does <code class="docutils literal"><span class="pre">//</span></code> indicate in a <a class="reference external" href="http://processing.org/">Processing</a> program?</p>
+</li>
+</ol>
+</div>
+<div class="section" id="programming-questions">
+<span id="first-program-programming-questions-label"></span><h2>Programming Questions<a class="headerlink" href="#programming-questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Write a program that draws a <em>square</em> wherever the mouse pointer is on the
+screen. The square should leave a trail, i.e. do <em>not</em> re-draw the
+background on each call to <code class="docutils literal"><span class="pre">draw()</span></code>. <strong>Hint</strong>: Use the <a class="reference external" href="http://processing.org/reference/rect_.html">rect function</a>.</p>
+</li>
+<li><p class="first">Re-do the previous question, but this time do not have the square leave a
+trail, i.e. re-draw the screen background at the start of each call to
+<code class="docutils literal"><span class="pre">draw()</span></code>.</p>
+</li>
+<li><p class="first">Write a program that draws a circle inside of a square wherever the mouse
+points. It should not leave a trail.</p>
+</li>
+<li><p class="first">Write a program that draws two ellipses both with their centers in the
+middle of the screen (i.e. at (250, 250) on a 500 x 500 screen). Make the
+width and height of the two ellipses change in different ways as you move
+the mouse pointer around the screen. How exactly the ellipses change is up
+to you.</p>
+</li>
+<li><p class="first">Read about the <a class="reference external" href="http://processing.org/reference/triangle_.html">triangle function</a> and write a program that
+makes a triangle follow the mouse pointer around the screen <em>without</em>
+leaving a trail.</p>
+<p><strong>Important:</strong> The triangle must keep the same size and orientation as it
+moves.</p>
+</li>
+<li><p class="first">Write a program that draws a single line on the screen using the <a class="reference external" href="http://processing.org/reference/line_.html">line
+function</a>. One end of the
+line should <em>always</em> be at (0, 0), and the other end of the line should be
+at the mouse pointer. The line should not leave a trail: re-draw the
+background on each call to <code class="docutils literal"><span class="pre">draw()</span></code>.</p>
+</li>
+<li><p class="first">Extend the program in the previous question to use four lines, each with
+one end attached to one of the four corners of the screen. The other end of
+each line should be at the mouse pointer.</p>
+<a class="reference internal image-reference" href="_images/fourLines.png"><img alt="Four lines attached to the mouse pointer and four screen corners." class="align-center" src="_images/fourLines.png" style="width: 251.0px; height: 251.0px;" /></a>
+</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="exploring_shapes.html" title="Exploring Shapes"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="Introduction to Programming with Processing"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Toby Donaldson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

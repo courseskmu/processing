@@ -1,0 +1,388 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction to Programming with Processing &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
+    <link rel="next" title="Our First Program" href="first_program.html" />
+    <link rel="prev" title="Notes for CMPT 166 Fall 2016" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="first_program.html" title="Our First Program"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Notes for CMPT 166 Fall 2016"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Introduction to Programming with Processing</a><ul>
+<li><a class="reference internal" href="#what-is-this-course-about">What is this course about?</a></li>
+<li><a class="reference internal" href="#computer-programming">Computer Programming</a></li>
+<li><a class="reference internal" href="#what-is-a-computer">What is a Computer?</a></li>
+<li><a class="reference internal" href="#what-is-a-programming-language">What is a Programming Language?</a></li>
+<li><a class="reference internal" href="#some-other-programming-languages">Some Other Programming Languages</a></li>
+<li><a class="reference internal" href="#questions">Questions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Notes for CMPT 166 Fall 2016</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="first_program.html"
+                        title="next chapter">Our First Program</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="introduction-to-programming-with-processing">
+<h1>Introduction to Programming with Processing<a class="headerlink" href="#introduction-to-programming-with-processing" title="Permalink to this headline">¶</a></h1>
+<p>In these notes you will learn:</p>
+<ul class="simple">
+<li>What this course is about.</li>
+<li>The pre-requisites for taking this course.</li>
+<li>The basic components of a computer.</li>
+<li>The definition of a programming language.</li>
+<li>Some examples of popular programming languages.</li>
+</ul>
+<div class="section" id="what-is-this-course-about">
+<h2>What is this course about?<a class="headerlink" href="#what-is-this-course-about" title="Permalink to this headline">¶</a></h2>
+<p>This course is an introduction to computer programming using the <a class="reference external" href="http://processing.org/">Processing</a>
+language. You don&#8217;t need to know anything about programming to take this
+course. But we do assume you:</p>
+<ul class="simple">
+<li><strong>Have interest in learning how to program.</strong></li>
+<li><strong>Enjoy playing with graphics and animation.</strong> You don&#8217;t need any artistic
+skill, just a willingness to learn about basic 2D-animation and graphics.</li>
+<li><strong>Know high school algebra</strong>. We&#8217;ll be using things like (x, y) coordinates,
+and few other mathematical ideas that should be no problem for you if you&#8217;ve
+taken a high-school algebra course.</li>
+</ul>
+</div>
+<div class="section" id="computer-programming">
+<h2>Computer Programming<a class="headerlink" href="#computer-programming" title="Permalink to this headline">¶</a></h2>
+<p>Computers are everywhere, and they all run <a class="reference internal" href="glossary.html#term-program"><span class="xref std std-term">program</span></a>s. A program is a
+sequence of instructions that tell the computer what to do, and a programmers
+job is to create and arrange these instructions. <strong>Software</strong> refers to a
+collection of programs.</p>
+<p>Programs are usually written to solve a particular problem. For example, a
+word processor solves the problem of editing documents, and a web browser
+solves the problem of conveniently accessing files on other computers.</p>
+<p>We&#8217;ll start with very basic programs, and work our way up to
+<a class="reference internal" href="glossary.html#term-object-oriented-programming"><span class="xref std std-term">object-oriented programming</span></a> (OOP).</p>
+</div>
+<div class="section" id="what-is-a-computer">
+<h2>What is a Computer?<a class="headerlink" href="#what-is-a-computer" title="Permalink to this headline">¶</a></h2>
+<p>Since programs run on computers, it&#8217;s useful spend some time exploring what a
+computer actually is. All computers have, at least, the following basic
+components:</p>
+<a class="reference internal image-reference" href="_images/computerBlock.png"><img alt="Block diagram of a computer" class="align-right" src="_images/computerBlock.png" style="width: 426.0px; height: 303.6px;" /></a>
+<ul>
+<li><p class="first"><strong>A central processing unit, known as the CPU</strong>. The <a class="reference internal" href="glossary.html#term-cpu"><span class="xref std std-term">CPU</span></a> is the so-
+called &#8220;brain&#8221; of the computer that makes logical decisions, does
+arithmetic, and manipulates the computer&#8217;s memory.</p>
+<p><strong>Note</strong>: These days, many PCs have more than one CPU (or core). Programming
+multiple-CPU computers is <em>much</em> more challenging than programming single-
+CPU computers because of the difficulty of coordinating the CPUs. We will
+stick to single-CPU programming in this course.</p>
+</li>
+<li><p class="first"><strong>Random-access memory</strong>, known as <strong>RAM</strong>. <a class="reference internal" href="glossary.html#term-ram"><span class="xref std std-term">RAM</span></a> is where computers
+can store and retrieve data. At a very low level, you can think of
+<a class="reference internal" href="glossary.html#term-ram"><span class="xref std std-term">RAM</span></a> as a sequence of 0s and 1s (<a class="reference internal" href="glossary.html#term-bit"><span class="xref std std-term">bit</span></a>s), although in this
+course we will rarely, if ever, need to be concerned with such low-level
+details. Instead, we will imagine that the computer stores data as numbers
+and strings of characters.</p>
+<p>An important feature of <a class="reference internal" href="glossary.html#term-ram"><span class="xref std std-term">RAM</span></a> is its speed: data in <a class="reference internal" href="glossary.html#term-ram"><span class="xref std std-term">RAM</span></a> can be
+stored and retrieved <em>very</em> efficiently.</p>
+</li>
+<li><p class="first"><strong>Input and output devices, known as I/O devices</strong>. Input devices &#8212; such
+as mice, keyboards, touchscreens, disk drives, and video cameras, etc. &#8212;
+let us put data into a computer. Output devices &#8212; such as monitors,
+speakers, printers, and disk drives, etc. &#8212; extract data from the
+computer.</p>
+<p>Some devices, such as a disk drive, allow for both input and output.</p>
+</li>
+</ul>
+<a class="reference internal image-reference" href="_images/desktop-computer.jpg"><img alt="A desktop computer" class="align-right" src="_images/desktop-computer.jpg" style="width: 183.15px; height: 129.6px;" /></a>
+<p>By varying these three elements, you can get different types of computers. For
+instance, a typical desktop computer might have these features:</p>
+<ul class="simple">
+<li>A fast <a class="reference internal" href="glossary.html#term-cpu"><span class="xref std std-term">CPU</span></a> that might do, say, <strong>2.5 billion</strong> low-level operations
+(such as additions or multiplications) per second. Generally speaking, if a
+<a class="reference internal" href="glossary.html#term-cpu"><span class="xref std std-term">CPU</span></a> runs at 1 gigahertz, then it does about 1 billion low-level
+operations per second.</li>
+<li>Lots of <a class="reference internal" href="glossary.html#term-ram"><span class="xref std std-term">RAM</span></a>, e.g. 4 <a class="reference internal" href="glossary.html#term-gigabyte"><span class="xref std std-term">gigabyte</span></a>s of <a class="reference internal" href="glossary.html#term-ram"><span class="xref std std-term">RAM</span></a> can store
+about 8000 color images. A gigabyte is one billion <a class="reference internal" href="glossary.html#term-byte"><span class="xref std std-term">byte</span></a>s, and a
+byte is 8 <a class="reference internal" href="glossary.html#term-bit"><span class="xref std std-term">bit</span></a>s (where a bit is a 0 or a 1).</li>
+<li>Input devices: keyboard, mouse, large and fast hard disk.</li>
+<li>Output devices: (large) graphical monitor, large and fast hard disk,
+printer.</li>
+</ul>
+<a class="reference internal image-reference" href="_images/arduino-hand.jpg"><img alt="A hand holding an Arduino microcontroller." class="align-right" src="_images/arduino-hand.jpg" style="width: 210.0px; height: 139.25px;" /></a>
+<p>Compare this to a very different kind of computer, the <a class="reference external" href="http://en.wikipedia.org/wiki/Arduino">Arduino micro-
+controller</a>:</p>
+<ul>
+<li><p class="first">One slow <a class="reference internal" href="glossary.html#term-cpu"><span class="xref std std-term">CPU</span></a> that can do about 16 million low-level operations per
+second. While 16 million is certainly a big number, this is about <em>150 times
+slower</em> than a desktop <a class="reference internal" href="glossary.html#term-cpu"><span class="xref std std-term">CPU</span></a> running at 2.6 gigahertz.</p>
+<p>In other words, you would have to let the <a class="reference external" href="http://en.wikipedia.org/wiki/Arduino">Arduino</a> run for more than <em>27 minutes</em> for
+it to do the same amount of work a 2.6 gigahertz CPU could do in <em>1 second</em>.</p>
+</li>
+<li><p class="first">About 32 <a class="reference internal" href="glossary.html#term-kilobyte"><span class="xref std std-term">kilobyte</span></a>s of memory. This is enough to store, <em>maybe</em>,
+one <em>small</em> color image. Maybe.</p>
+</li>
+<li><p class="first">No input/output devices: instead, the <a class="reference external" href="http://en.wikipedia.org/wiki/Arduino">Arduino</a> is designed to control other
+devices. For instance, you could use an <a class="reference external" href="http://en.wikipedia.org/wiki/Arduino">Arduino</a> to control an array of blinking
+lights.</p>
+</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A fun question to ask is &#8220;What is the worlds&#8217;s fastest computer?&#8221;.
+While there is no universally agreed upon way to measure the speed of a
+computer, the website <a class="reference external" href="http://www.top500.org">www.top500.org</a> is an
+interesting list where computers are ranked according to their performance
+running scientific programs.</p>
+</div>
+</div>
+<div class="section" id="what-is-a-programming-language">
+<h2>What is a Programming Language?<a class="headerlink" href="#what-is-a-programming-language" title="Permalink to this headline">¶</a></h2>
+<p>To program a computer, you need to give it a sequence of instructions to
+follow, and these instructions must be written in some sort of language. Since
+the 1940s when electronic digital computers first appeared, <em>thousands</em> of
+different programming languages have been created.</p>
+<p>The simplest &#8212; and usually most difficult &#8212; way of programming a computer
+is to use its <a class="reference internal" href="glossary.html#term-assembly-language"><span class="xref std std-term">assembly language</span></a> (or just <em>assembly</em>, or <em>assembler</em>,
+for short). Assembly language programs <em>directly</em> control the <a class="reference internal" href="glossary.html#term-cpu"><span class="xref std std-term">CPU</span></a> and
+<a class="reference internal" href="glossary.html#term-ram"><span class="xref std std-term">RAM</span></a>. For example, here&#8217;s an assembly language program prints &#8220;Hello,
+World&#8221; on the screen:</p>
+<div class="highlight-python"><div class="highlight"><pre>SEGMT SEGMENT
+ASSUME CS:SEGMT, DS:SEGMT
+ORG 100h
+
+Main:
+MOV AH,09h
+MOV DX,OFFSET Text
+INT 21h
+MOV AX,4C00h
+INT 21h
+
+Text:
+DB &quot;Hello, World$&quot;
+
+SEGMT ENDS
+END Main
+</pre></div>
+</div>
+<p>Few programmers write programs directly in assembly language. The main problem
+is that such programs very quickly become long and complex, even for simple
+tasks. Furthermore, different <a class="reference internal" href="glossary.html#term-cpu"><span class="xref std std-term">CPU</span></a>s have different assembly
+languages.</p>
+<p>So instead, most programmers use <a class="reference internal" href="glossary.html#term-high-level-programming-language"><span class="xref std std-term">high-level programming language</span></a>s
+that are easier to read and write.</p>
+<a class="reference internal image-reference" href="_images/loading.gif"><img alt="Duke, Java's mascot." class="align-right" src="_images/loading.gif" style="width: 100.0px; height: 100.0px;" /></a>
+<p>In this course, we will use <a class="reference external" href="http://processing.org/">Processing</a>, a <a class="reference internal" href="glossary.html#term-high-level-programming-language"><span class="xref std std-term">high-level programming
+language</span></a> (it&#8217;s logo is on the right). <a class="reference external" href="http://processing.org/">Processing</a> is essentially the popular
+<a class="reference external" href="http://en.wikipedia.org/wiki/Java_(programming_language)">Java</a> programming language combined with a library of useful graphical and
+animation functions and a handy editor. So by learning <a class="reference external" href="http://processing.org/">Processing</a>, you are
+really learning <a class="reference external" href="http://en.wikipedia.org/wiki/Java_(programming_language)">Java</a> (remember this when you write your resume!).</p>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/Java_(programming_language)">Java</a>, and thus <a class="reference external" href="http://processing.org/">Processing</a>, is a high-level language designed for
+<a class="reference internal" href="glossary.html#term-applications-programming"><span class="xref std std-term">applications programming</span></a>. <a class="reference external" href="http://processing.org/">Processing</a> is particularly good for
+creating small interactive graphical programs.</p>
+</div>
+<div class="section" id="some-other-programming-languages">
+<h2>Some Other Programming Languages<a class="headerlink" href="#some-other-programming-languages" title="Permalink to this headline">¶</a></h2>
+<p>It is useful to know the names and uses of some other programming languages
+besides <a class="reference external" href="http://processing.org/">Processing</a>. Here is a brief summary of a few well-known programming
+languages:</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="27%" />
+<col width="20%" />
+<col width="53%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Language</th>
+<th class="head">Created</th>
+<th class="head">Purpose</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>FORTRAN</td>
+<td>1957</td>
+<td>numerics, e.g.
+scientific computing</td>
+</tr>
+<tr class="row-odd"><td>LISP</td>
+<td>1958</td>
+<td>symbolics, e.g.
+artificial intelligence</td>
+</tr>
+<tr class="row-even"><td>C</td>
+<td>1972</td>
+<td>systems</td>
+</tr>
+<tr class="row-odd"><td>SmallTalk</td>
+<td>1972</td>
+<td>education</td>
+</tr>
+<tr class="row-even"><td>C++</td>
+<td>1983</td>
+<td>systems/applications</td>
+</tr>
+<tr class="row-odd"><td>Python</td>
+<td>1991</td>
+<td>scripting/applications</td>
+</tr>
+<tr class="row-even"><td>Java</td>
+<td>1995</td>
+<td>applications</td>
+</tr>
+<tr class="row-odd"><td>JavaScript</td>
+<td>1996</td>
+<td>web browser language</td>
+</tr>
+<tr class="row-even"><td>C#</td>
+<td>2001</td>
+<td>applications</td>
+</tr>
+<tr class="row-odd"><td>Scratch</td>
+<td>2006</td>
+<td>beginners language</td>
+</tr>
+<tr class="row-even"><td>Go</td>
+<td>2009</td>
+<td>systems/applications</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>While these are all <a class="reference internal" href="glossary.html#term-high-level-programming-language"><span class="xref std std-term">high-level programming language</span></a>s, they were
+designed for solving different kinds of problems. For example, C is good for
+<a class="reference internal" href="glossary.html#term-systems-programming"><span class="xref std std-term">systems programming</span></a>, e.g. low-level programs that do things like copy
+files, control disk drives, manage RAM, and so on.</p>
+<p>In contrast, application-oriented languages, such as <a class="reference external" href="http://en.wikipedia.org/wiki/Java_(programming_language)">Java</a>, are better for
+writing programs that will be directly used by people. For instance, <a class="reference external" href="http://en.wikipedia.org/wiki/Java_(programming_language)">Java</a>
+would be a good language for writing an email reader, or a smartphone game.</p>
+<a class="reference internal image-reference" href="_images/python-logo.gif"><img alt="The Python logo." class="align-right" src="_images/python-logo.gif" style="width: 211.0px; height: 71.0px;" /></a>
+<p>Another popular style of programming language is a <a class="reference internal" href="glossary.html#term-scripting"><span class="xref std std-term">scripting</span></a> language.
+<a class="reference external" href="http://www.python.org/">Python</a>, for instance, is designed in large part
+for writing programs that automate common tasks. For instance, suppose you
+have a folder containing 1000 image files ending in <code class="docutils literal"><span class="pre">.jpeg</span></code> that you want to
+change to <code class="docutils literal"><span class="pre">.jpg</span></code>. Python would be a good choice for writing a program to
+automatically rename all these files since it comes with many helpful built-in
+that make accessing files and manipulating strings quite easy.</p>
+</div>
+<div class="section" id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>What is a program? What is software?</li>
+<li>Draw, and label, a diagram that shows the three main components of a
+computer system and how they relate.</li>
+<li>What do the following stand for?<ul>
+<li>CPU</li>
+<li>RAM</li>
+<li>I/O</li>
+</ul>
+</li>
+<li>About how many low-level operations can a 2 gigahertz CPU do per second?</li>
+<li>Give examples of I/O devices that are:<ul>
+<li>input only</li>
+<li>output only</li>
+<li>both input and output</li>
+</ul>
+</li>
+<li>What is <strong>assembly language</strong>?</li>
+<li>What is one good thing about assembly language? What is one bad thing about
+it?</li>
+<li>True or false: <a class="reference external" href="http://processing.org/">Processing</a> is an example of a high-level programming
+language.</li>
+<li>How is <a class="reference external" href="http://processing.org/">Processing</a> related to <a class="reference external" href="http://en.wikipedia.org/wiki/Java_(programming_language)">Java</a>?</li>
+<li>What is systems programming? What is applications programming? What is
+scripting?</li>
+<li>Name two different programming languages often used for writing low-level
+programs such as operating systems.</li>
+<li>Name a programming language often used for scripting.</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="first_program.html" title="Our First Program"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Notes for CMPT 166 Fall 2016"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Toby Donaldson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

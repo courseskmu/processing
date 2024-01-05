@@ -1,0 +1,706 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Particle Systems &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
+    <link rel="next" title="More Complex Animations with State Variables" href="sprite_paratroopers.html" />
+    <link rel="prev" title="While Loops" href="while-loops.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="sprite_paratroopers.html" title="More Complex Animations with State Variables"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="while-loops.html" title="While Loops"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Particle Systems</a><ul>
+<li><a class="reference internal" href="#what-is-a-particle-system">What is a Particle System?</a></li>
+<li><a class="reference internal" href="#designing-an-explosion">Designing an Explosion</a></li>
+<li><a class="reference internal" href="#simulating-water">Simulating Water</a></li>
+<li><a class="reference internal" href="#dots-and-lines">Dots and Lines</a></li>
+<li><a class="reference internal" href="#questions">Questions</a></li>
+<li><a class="reference internal" href="#programming-questions">Programming Questions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="while-loops.html"
+                        title="previous chapter">While Loops</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="sprite_paratroopers.html"
+                        title="next chapter">More Complex Animations with State Variables</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="particle-systems">
+<h1>Particle Systems<a class="headerlink" href="#particle-systems" title="Permalink to this headline">¶</a></h1>
+<p>In these notes you will learn:</p>
+<ul class="simple">
+<li>What a particle system is, and how it can be useful.</li>
+<li>How to create a particle system that simulates an explosion.</li>
+<li>How particular systems can be used to model a few other situations.</li>
+</ul>
+<div class="section" id="what-is-a-particle-system">
+<h2>What is a Particle System?<a class="headerlink" href="#what-is-a-particle-system" title="Permalink to this headline">¶</a></h2>
+<p>A <strong>particle system</strong> is a technique often used in games and physics
+simulations that uses a large number of small animated objects to simulate a
+larger system. For example, you could use a particle system to simulate rain,
+snow, sparks, hair, a magical explosion, and so on.</p>
+<p>High-end particle systems can be quite impressive. For instance, <a class="reference external" href="https://www.youtube.com/watch?v=URm9EMrhWF8">this video
+models human forms where the particles are bits of sand</a>. In <a class="reference external" href="https://www.youtube.com/watch?v=J9HaT23b-xc">this video, the particles
+are modelled as 3D planks</a>,
+and follow the rules of physics. And <a class="reference external" href="https://www.youtube.com/watch?v=KyxA_9Ul8So">this video</a> shows a variety of simulations
+made a by a particle system tool.</p>
+<p>In this note we&#8217;ll see three examples of particle systems: an explosion, a
+water simulation, and program that draws bouncing dots and lines.</p>
+</div>
+<div class="section" id="designing-an-explosion">
+<h2>Designing an Explosion<a class="headerlink" href="#designing-an-explosion" title="Permalink to this headline">¶</a></h2>
+<p>Explosions are naturally simulated by particle system. A simple explosion The
+explosion starts at a given point, and then expands outwards. It consists of
+many small fragments, of varying size, moving in different directions at
+different speeds.</p>
+<p>We&#8217;ll create an explosion particle by modifying this program (which makes
+random balls bounce around screen):</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dy</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">BouncingBall</span> <span class="kd">extends</span> <span class="n">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">diam</span><span class="o">;</span>
+  <span class="n">color</span> <span class="n">fillColor</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">pushMatrix</span><span class="o">();</span>
+
+    <span class="n">noStroke</span><span class="o">();</span>
+    <span class="n">fill</span><span class="o">(</span><span class="n">fillColor</span><span class="o">);</span>
+
+    <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">diam</span><span class="o">,</span> <span class="n">diam</span><span class="o">);</span>
+
+    <span class="n">popMatrix</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kd">super</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+
+    <span class="c1">// hit top?</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">y</span> <span class="o">=</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+      <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// hit bottom?</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="n">height</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">y</span> <span class="o">=</span> <span class="n">height</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+      <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// hit left?</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+      <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// hit right?</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="n">width</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="n">width</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+      <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">BouncingBall</span> <span class="nf">randomBouncingBall</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">BouncingBall</span> <span class="n">ball</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BouncingBall</span><span class="o">();</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mi">3</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mi">3</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">diam</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mi">50</span><span class="o">,</span> <span class="mi">150</span><span class="o">);</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">fillColor</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="mi">255</span><span class="o">),</span>
+                         <span class="n">random</span><span class="o">(</span><span class="mi">255</span><span class="o">),</span>
+                         <span class="n">random</span><span class="o">(</span><span class="mi">255</span><span class="o">));</span>
+  <span class="k">return</span> <span class="n">ball</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">BouncingBall</span><span class="o">&gt;</span> <span class="n">ballList</span><span class="o">;</span>  <span class="c1">// initially null</span>
+<span class="kd">final</span> <span class="kt">int</span> <span class="n">NUM_BALLS</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+
+  <span class="c1">// create the initially empty ArrayList of BouncingBall objects</span>
+  <span class="n">ballList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">BouncingBall</span><span class="o">&gt;();</span>
+  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">NUM_BALLS</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">ballList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">randomBouncingBall</span><span class="o">());</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="c1">// render and update all the balls</span>
+  <span class="k">for</span> <span class="o">(</span><span class="n">BouncingBall</span> <span class="n">b</span> <span class="o">:</span> <span class="n">ballList</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>The first thing we&#8217;ll do is change the names of some the variables, e.g. all
+occurrences of &#8220;ball&#8221; are replaced by &#8220;particle&#8221;:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// ...</span>
+
+<span class="kd">class</span> <span class="nc">Particle</span> <span class="kd">extends</span> <span class="n">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">diam</span><span class="o">;</span>
+  <span class="n">color</span> <span class="n">fillColor</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">pushMatrix</span><span class="o">();</span>
+
+    <span class="n">noStroke</span><span class="o">();</span>
+    <span class="n">fill</span><span class="o">(</span><span class="n">fillColor</span><span class="o">);</span>
+
+    <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">diam</span><span class="o">,</span> <span class="n">diam</span><span class="o">);</span>
+
+    <span class="n">popMatrix</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kd">super</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+
+    <span class="c1">// hit top?</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">y</span> <span class="o">=</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+      <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// hit bottom?</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="n">height</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">y</span> <span class="o">=</span> <span class="n">height</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+      <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// hit left?</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+      <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// hit right?</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="n">width</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="n">width</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+      <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">Particle</span> <span class="nf">randomParticle</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">Particle</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Particle</span><span class="o">();</span>
+  <span class="n">p</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span>
+  <span class="n">p</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span>
+  <span class="n">p</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mi">3</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+  <span class="n">p</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mi">3</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+  <span class="n">p</span><span class="o">.</span><span class="na">diam</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mi">50</span><span class="o">,</span> <span class="mi">150</span><span class="o">);</span>
+  <span class="n">p</span><span class="o">.</span><span class="na">fillColor</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="mi">255</span><span class="o">),</span>
+                      <span class="n">random</span><span class="o">(</span><span class="mi">255</span><span class="o">),</span>
+                      <span class="n">random</span><span class="o">(</span><span class="mi">255</span><span class="o">));</span>
+  <span class="k">return</span> <span class="n">p</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Particle</span><span class="o">&gt;</span> <span class="n">particles</span><span class="o">;</span>  <span class="c1">// initially null</span>
+<span class="kd">final</span> <span class="kt">int</span> <span class="n">NUM_PARTICLES</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+
+  <span class="c1">// create the initially empty ArrayList of Particle objects</span>
+  <span class="n">particles</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Particle</span><span class="o">&gt;();</span>
+  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">NUM_PARTICLES</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">particles</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">randomParticle</span><span class="o">());</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="c1">// render and update all the particles</span>
+  <span class="k">for</span> <span class="o">(</span><span class="n">Particle</span> <span class="n">p</span> <span class="o">:</span> <span class="n">particles</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">p</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="n">p</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Next, we&#8217;ll make a few modifications to the <code class="docutils literal"><span class="pre">randomParticle()</span></code> function:</p>
+<ul class="simple">
+<li>Instead of setting <code class="docutils literal"><span class="pre">p.x</span></code> and <code class="docutils literal"><span class="pre">p.y</span></code> randomly, all particles will start at
+(250, 250), the center of the screen.</li>
+<li>We&#8217;ll make the range of particle diameters much smaller, e.g. between 3 and
+5.</li>
+<li>Instead of completely random colors, we&#8217;ll make all the particles various
+shades of red.</li>
+</ul>
+<p>Here is the updated function:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Particle</span> <span class="nf">randomParticle</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">Particle</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Particle</span><span class="o">();</span>
+  <span class="n">p</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">p</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">p</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mi">3</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+  <span class="n">p</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mi">3</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+  <span class="n">p</span><span class="o">.</span><span class="na">diam</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">5</span><span class="o">);</span>
+  <span class="n">p</span><span class="o">.</span><span class="na">fillColor</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">255</span><span class="o">),</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="k">return</span> <span class="n">p</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>If you run this in the program given above, and also increase
+<code class="docutils literal"><span class="pre">NUM_PARTICLES</span></code> to, say, 200, then the result should look somewhat like an
+explosion.</p>
+<p>The particles bounce on off the edges, but for this explosion lets say that we
+want the particles to simply disappear off the screen. To do this we can just
+delete the <code class="docutils literal"><span class="pre">update()</span></code> function in <code class="docutils literal"><span class="pre">Particle</span></code>, and instead use the
+<code class="docutils literal"><span class="pre">update()</span></code> function that&#8217;s inherited from <code class="docutils literal"><span class="pre">Sprite</span></code>.</p>
+<p>Another nice change is to make the explosion occur wherever the user clicks
+the mouse. To do this, we will need to make two modifications:</p>
+<ol class="arabic">
+<li><p class="first">Remove the while-loop code from the <code class="docutils literal"><span class="pre">setup()</span></code> function so there is no
+explosion as soon as the program starts. Importantly, we do need to keep
+the <code class="docutils literal"><span class="pre">ArrayList</span></code> initialization statement, so <code class="docutils literal"><span class="pre">setup()</span></code> becomes this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+
+  <span class="c1">// create the initially empty ArrayList of Particle objects</span>
+  <span class="n">particles</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Particle</span><span class="o">&gt;();</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Add a <code class="docutils literal"><span class="pre">mousePressed</span></code> function (which is called automatically when a mouse
+button is pressed) that re-initializes the explosion to start at
+(<code class="docutils literal"><span class="pre">mouseX</span></code>, <code class="docutils literal"><span class="pre">mouseY</span></code>):</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">mousePressed</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">particles</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Particle</span><span class="o">&gt;();</span>
+  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">NUM_PARTICLES</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">Particle</span> <span class="n">p</span> <span class="o">=</span> <span class="n">randomParticle</span><span class="o">();</span>
+    <span class="n">p</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">mouseX</span><span class="o">;</span>
+    <span class="n">p</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">mouseY</span><span class="o">;</span>
+    <span class="n">particles</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p</span><span class="o">);</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>Here is the new program:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dy</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">Particle</span> <span class="kd">extends</span> <span class="n">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">diam</span><span class="o">;</span>
+  <span class="n">color</span> <span class="n">fillColor</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">pushMatrix</span><span class="o">();</span>
+
+    <span class="n">noStroke</span><span class="o">();</span>
+    <span class="n">fill</span><span class="o">(</span><span class="n">fillColor</span><span class="o">);</span>
+
+    <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">diam</span><span class="o">,</span> <span class="n">diam</span><span class="o">);</span>
+
+    <span class="n">popMatrix</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">Particle</span> <span class="nf">randomParticle</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">Particle</span> <span class="n">ball</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Particle</span><span class="o">();</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mi">4</span><span class="o">,</span> <span class="mi">4</span><span class="o">);</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mi">4</span><span class="o">,</span> <span class="mi">4</span><span class="o">);</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">diam</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">5</span><span class="o">);</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">fillColor</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">255</span><span class="o">),</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="k">return</span> <span class="n">ball</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Particle</span><span class="o">&gt;</span> <span class="n">particles</span><span class="o">;</span>  <span class="c1">// initially null</span>
+<span class="kd">final</span> <span class="kt">int</span> <span class="n">NUM_PARTICLES</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+
+  <span class="c1">// create the initially empty ArrayList of Particle objects</span>
+  <span class="n">particles</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Particle</span><span class="o">&gt;();</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="c1">// render and update all the particles</span>
+  <span class="k">for</span> <span class="o">(</span><span class="n">Particle</span> <span class="n">p</span> <span class="o">:</span> <span class="n">particles</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">p</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="n">p</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">mousePressed</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">particles</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Particle</span><span class="o">&gt;();</span>
+  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">NUM_PARTICLES</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">Particle</span> <span class="n">p</span> <span class="o">=</span> <span class="n">randomParticle</span><span class="o">();</span>
+    <span class="n">p</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">mouseX</span><span class="o">;</span>
+    <span class="n">p</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">mouseY</span><span class="o">;</span>
+    <span class="n">particles</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p</span><span class="o">);</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="simulating-water">
+<h2>Simulating Water<a class="headerlink" href="#simulating-water" title="Permalink to this headline">¶</a></h2>
+<p>Simulating water is an interesting and challenging task. Here, we will think
+of water as consisting of many small blue particles that move according to
+gravity. A major difference between this particle system and the one for the
+explosion is that the water will be running continuously. The trick we&#8217;ll use
+to do this is to re-initialize a particle when it goes off the screen to start
+back at the source of the water.</p>
+<p>Each drop of water is a <code class="docutils literal"><span class="pre">Droplet</span></code> object. Some extra code has been added to
+detect when the a drop is off the screen, and to then recycle it:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dy</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">Droplet</span> <span class="kd">extends</span> <span class="n">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">gravity</span><span class="o">;</span> <span class="c1">// force of gravity on this droplet</span>
+
+  <span class="kt">void</span> <span class="nf">randomRestart</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">height</span> <span class="o">-</span> <span class="mi">10</span><span class="o">;</span>  <span class="c1">// height is the height of the screen</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="mi">8</span> <span class="o">*</span> <span class="n">random</span><span class="o">(</span><span class="mf">0.24</span><span class="o">,</span> <span class="mf">0.245</span><span class="o">);</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="mi">8</span> <span class="o">*</span> <span class="n">random</span><span class="o">(-</span><span class="mf">0.45</span><span class="o">,</span> <span class="o">-</span><span class="mf">0.35</span><span class="o">);</span>
+    <span class="n">gravity</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">random</span><span class="o">(</span><span class="mf">0.005</span><span class="o">,</span> <span class="mf">0.015</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">noStroke</span><span class="o">();</span>
+    <span class="n">fill</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">255</span><span class="o">);</span>
+    <span class="n">rect</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="mi">15</span><span class="o">,</span> <span class="mi">15</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kd">super</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+
+    <span class="n">dy</span> <span class="o">+=</span> <span class="n">gravity</span><span class="o">;</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">offScreen</span><span class="o">())</span> <span class="o">{</span>
+      <span class="n">randomRestart</span><span class="o">();</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="kt">boolean</span> <span class="nf">offScreen</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">&gt;</span> <span class="n">height</span> <span class="o">||</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">width</span> <span class="o">||</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Droplet</span><span class="o">&gt;</span> <span class="n">drops</span><span class="o">;</span>
+<span class="kt">int</span> <span class="n">NUM_DROPLETS</span> <span class="o">=</span> <span class="mi">200</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">900</span><span class="o">,</span> <span class="mi">400</span><span class="o">);</span>
+
+  <span class="n">drops</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Droplet</span><span class="o">&gt;();</span>  <span class="c1">// create empty ArrayList</span>
+  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">NUM_DROPLETS</span><span class="o">)</span> <span class="o">{</span>  <span class="c1">// add NUM_DROPLETS drops to the ArrayList</span>
+    <span class="n">Droplet</span> <span class="n">d</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Droplet</span><span class="o">();</span>
+    <span class="n">d</span><span class="o">.</span><span class="na">randomRestart</span><span class="o">();</span>
+    <span class="n">drops</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">d</span><span class="o">);</span>
+    <span class="o">++</span><span class="n">i</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+  <span class="k">for</span> <span class="o">(</span><span class="n">Droplet</span> <span class="n">d</span> <span class="o">:</span> <span class="n">drops</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">d</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="n">d</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dots-and-lines">
+<h2>Dots and Lines<a class="headerlink" href="#dots-and-lines" title="Permalink to this headline">¶</a></h2>
+<p>The final example is a program that does not directly simulate a physical
+process, but instead shows a useful technique for drawing &#8220;dots&#8221; and &#8220;lines&#8221;.
+The idea is that whenever the user clicks the mouse, a dot appears with line
+connecting it to the previously clicked dot. For fun, the dots bounce up and
+down due to gravity.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Drawing connected points and lines turns out to be used frequently
+enough that <a class="reference external" href="http://processing.org/">Processing</a> provides some built-in functions to do it for you:
+see <a class="reference external" href="http://processing.org/reference/beginShape_.html">the documentation for beginShape</a> if you are curious.</p>
+</div>
+<p>Here&#8217;s the program:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dy</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">Dot</span> <span class="kd">extends</span> <span class="n">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">gravity</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">elasticity</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">fill</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+    <span class="n">noStroke</span><span class="o">();</span>
+    <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="mi">10</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kd">super</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+
+    <span class="n">dy</span> <span class="o">+=</span> <span class="n">gravity</span><span class="o">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">&gt;=</span> <span class="n">height</span><span class="o">)</span> <span class="o">{</span>  <span class="c1">// check if dot has hit the bottom edge</span>
+      <span class="n">dy</span> <span class="o">=</span> <span class="o">-(</span><span class="n">dy</span> <span class="o">*</span> <span class="n">elasticity</span><span class="o">);</span>
+      <span class="n">y</span> <span class="o">=</span> <span class="n">height</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span> <span class="c1">// class Dot</span>
+
+
+<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Dot</span><span class="o">&gt;</span> <span class="n">dots</span><span class="o">;</span>  <span class="c1">// dots is initially null</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">smooth</span><span class="o">();</span>
+
+  <span class="n">dots</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Dot</span><span class="o">&gt;();</span> <span class="c1">// make an empty ArrayList of dots</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="c1">// draw the lines</span>
+  <span class="n">Dot</span> <span class="n">prev</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+  <span class="k">for</span> <span class="o">(</span><span class="n">Dot</span> <span class="n">d</span> <span class="o">:</span> <span class="n">dots</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">prev</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">stroke</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+      <span class="n">line</span><span class="o">(</span><span class="n">d</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">d</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="n">prev</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">prev</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="n">prev</span> <span class="o">=</span> <span class="n">d</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// draw the dots</span>
+  <span class="k">for</span> <span class="o">(</span><span class="n">Dot</span> <span class="n">d</span> <span class="o">:</span> <span class="n">dots</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">d</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="n">d</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">mousePressed</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">Dot</span> <span class="n">d</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Dot</span><span class="o">();</span>
+  <span class="n">d</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">mouseX</span><span class="o">;</span>
+  <span class="n">d</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">mouseY</span><span class="o">;</span>
+  <span class="n">d</span><span class="o">.</span><span class="na">gravity</span> <span class="o">=</span> <span class="mf">0.1</span><span class="o">;</span>
+  <span class="n">d</span><span class="o">.</span><span class="na">elasticity</span> <span class="o">=</span> <span class="mf">0.8</span><span class="o">;</span>
+  <span class="n">dots</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">d</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>An important detail occurs in <code class="docutils literal"><span class="pre">draw()</span></code>: the variable <code class="docutils literal"><span class="pre">prev</span></code> refers to the
+dot that comes before dot <code class="docutils literal"><span class="pre">d</span></code>. However, the very first dot doesn&#8217;t have a
+previous one, and so we need to use an if-statement to check the value of
+<code class="docutils literal"><span class="pre">prev</span></code>. If <code class="docutils literal"><span class="pre">prev</span></code> is <code class="docutils literal"><span class="pre">null</span></code>, then we don&#8217;t draw a line.</p>
+</div>
+<div class="section" id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">What is a particle system? What are some examples of things that can
+modelled as a particle system?</p>
+</li>
+<li><p class="first">What is the value of variable <code class="docutils literal"><span class="pre">particles</span></code> after this statement executes?</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Particle</span><span class="o">&gt;</span> <span class="n">particles</span><span class="o">;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Suppose <code class="docutils literal"><span class="pre">particles</span></code> is a variable of type <code class="docutils literal"><span class="pre">ArrayList&lt;Particle&gt;</span></code> that
+has just been created by this statement:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Particle</span><span class="o">&gt;</span> <span class="n">particles</span><span class="o">;</span>
+</pre></div>
+</div>
+<p>Write a line of code that makes <code class="docutils literal"><span class="pre">particles</span></code> refer to a new
+<code class="docutils literal"><span class="pre">ArrayList&lt;Particle&gt;</span></code> object of size 0.</p>
+</li>
+<li><p class="first">In the <code class="docutils literal"><span class="pre">draw()</span></code> function for the dots and lines program, there is this
+if-statement:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="k">if</span> <span class="o">(</span><span class="n">prev</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">stroke</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+  <span class="n">line</span><span class="o">(</span><span class="n">d</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">d</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="n">prev</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">prev</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Why does this test if <code class="docutils literal"><span class="pre">prev</span></code> is not <code class="docutils literal"><span class="pre">null</span></code>? Would it work if you got
+rid of the if-statement and wrote this instead?</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">stroke</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+<span class="n">line</span><span class="o">(</span><span class="n">d</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">d</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="n">prev</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">prev</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="programming-questions">
+<h2>Programming Questions<a class="headerlink" href="#programming-questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>In the final explosion program, the initial burst of particles is a
+distinct square-shape. Why is that? To make the burst circular, try
+modifying how <code class="docutils literal"><span class="pre">randomParticle</span></code> sets <code class="docutils literal"><span class="pre">p.dx</span></code> and <code class="docutils literal"><span class="pre">p.dy</span></code>. Create two new
+variables, <code class="docutils literal"><span class="pre">speed</span></code> and <code class="docutils literal"><span class="pre">angle</span></code>, and assign them random values. Then set
+<code class="docutils literal"><span class="pre">dy</span></code> to <code class="docutils literal"><span class="pre">speed</span> <span class="pre">*</span> <span class="pre">sin(angle)</span></code> and <code class="docutils literal"><span class="pre">dx</span></code> to <code class="docutils literal"><span class="pre">speed</span> <span class="pre">*</span> <span class="pre">cos(angle)</span></code>.</li>
+<li>The pre-defined <a class="reference external" href="http://processing.org/">Processing</a> variable <code class="docutils literal"><span class="pre">frameRate</span></code> is the approximate
+number of frames per second that a program is running at. For the water
+simulation, print the value of <code class="docutils literal"><span class="pre">frameRate</span></code> in the upper-left corner of
+the screen (and update it on each call to <code class="docutils literal"><span class="pre">draw()</span></code>) so that it is easy to
+see what the current frame rate is.</li>
+<li>In the water simulation, modify <code class="docutils literal"><span class="pre">randomRestart</span></code> so that the size of the
+droplet is randomly chosen within a min/max range of values of your
+choosing.</li>
+<li>In the water simulation, modify the program so that the source of the water
+is the location of the mouse pointer. Thus, as you move the pointer around
+the screen the <em>entire</em> flow of water moves with it.</li>
+<li>Modify your answer to the previous question so that if you click on the
+screen, then the water flow is &#8220;pinned&#8221; to that location for the rest of
+the program. That is, the water flow will <em>not</em> follow the mouse after you
+have clicked a button.</li>
+<li>Modify the bouncing dots and lines program so that the dots don&#8217;t start
+moving until the user presses a key. If the user then presses a key while
+the dots are moving, they should immediately stop where they are and not
+move again until the user presses another key.</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="sprite_paratroopers.html" title="More Complex Animations with State Variables"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="while-loops.html" title="While Loops"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Toby Donaldson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

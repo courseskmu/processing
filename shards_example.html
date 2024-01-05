@@ -1,0 +1,671 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>(Extra) Creating an Explosion with a Particle System &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
+    <link rel="next" title="(Extra) Creating an Explosion with an Image" href="explosion_image.html" />
+    <link rel="prev" title="Top 10 Processing Features Not Covered" href="features_not_covered.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="explosion_image.html" title="(Extra) Creating an Explosion with an Image"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="features_not_covered.html" title="Top 10 Processing Features Not Covered"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">(Extra) Creating an Explosion with a Particle System</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#shards-the-pieces-of-an-explosion">Shards: The Pieces of an Explosion</a></li>
+<li><a class="reference internal" href="#testing-a-single-explosion">Testing a Single Explosion</a></li>
+<li><a class="reference internal" href="#the-program-so-far">The Program So Far</a></li>
+<li><a class="reference internal" href="#an-explosion-class">An Explosion Class</a></li>
+<li><a class="reference internal" href="#adding-gravity">Adding Gravity</a></li>
+<li><a class="reference internal" href="#programming-questions">Programming Questions</a></li>
+<li><a class="reference internal" href="#the-program">The Program</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="features_not_covered.html"
+                        title="previous chapter">Top 10 Processing Features Not Covered</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="explosion_image.html"
+                        title="next chapter">(Extra) Creating an Explosion with an Image</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="extra-creating-an-explosion-with-a-particle-system">
+<h1>(Extra) Creating an Explosion with a Particle System<a class="headerlink" href="#extra-creating-an-explosion-with-a-particle-system" title="Permalink to this headline">¶</a></h1>
+<p>In these notes you will learn:</p>
+<ul class="simple">
+<li>How to design an &#8220;explosion&#8221; consisting of multiple particles.</li>
+</ul>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>You&#8217;ve no doubt seen lots of different kinds of explosions in video games, and
+so in this note we will try creating our own explosion. There&#8217;s no standard
+kind of explosion, so we will make things up as we go.</p>
+</div>
+<div class="section" id="shards-the-pieces-of-an-explosion">
+<h2>Shards: The Pieces of an Explosion<a class="headerlink" href="#shards-the-pieces-of-an-explosion" title="Permalink to this headline">¶</a></h2>
+<p>What is an explosion? Roughly speaking, it is a collection of particles that
+begin at the same point, and then quickly move outwards.</p>
+<p>Taking an OOP approach, this suggests that we ought to write a class to
+represent the individual particles of the explosion. Lets make them circles,
+so in addition to the position and velocity we will store a radius and radius
+change rate:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Shard</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">;</span>    <span class="c1">// position</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">,</span> <span class="n">dy</span><span class="o">;</span>  <span class="c1">// velocity</span>
+  <span class="kt">float</span> <span class="n">r</span><span class="o">;</span>       <span class="c1">// radius</span>
+  <span class="kt">float</span> <span class="n">dr</span><span class="o">;</span>      <span class="c1">// rate of change of radius</span>
+
+  <span class="kt">boolean</span> <span class="n">visible</span><span class="o">;</span>
+
+  <span class="n">Shard</span><span class="o">()</span> <span class="o">{</span>
+     <span class="n">reset</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">reset</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mf">2.0</span><span class="o">,</span> <span class="mf">2.0</span><span class="o">);</span>   <span class="c1">// try changing these</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mf">2.0</span><span class="o">,</span> <span class="mf">2.0</span><span class="o">);</span>   <span class="c1">// initial random</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mf">4.0</span><span class="o">,</span> <span class="mf">10.0</span><span class="o">);</span>    <span class="c1">// values to get different</span>
+    <span class="n">dr</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mf">0.5</span><span class="o">,</span> <span class="mf">0.0</span><span class="o">);</span>   <span class="c1">// kinds of explosions</span>
+    <span class="n">visible</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+     <span class="c1">// ...</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+     <span class="c1">// ...</span>
+  <span class="o">}</span>
+<span class="o">}</span> <span class="c1">// class Shard</span>
+</pre></div>
+</div>
+<p>The variable <code class="docutils literal"><span class="pre">visible</span></code> controls whether or not the shard is to be drawn on
+the screen: we will only draw the shard if <code class="docutils literal"><span class="pre">visible</span></code> is <code class="docutils literal"><span class="pre">true</span></code>.</p>
+<p>The constructor calls the <code class="docutils literal"><span class="pre">reset</span></code> function, which randomly assigns the
+variables of the shard. We could have put the code in <code class="docutils literal"><span class="pre">reset</span></code> directly into
+the constructor, but by putting it in its own function it is much easier to
+re-use particles for later explosions.</p>
+<p>Now lets write the <code class="docutils literal"><span class="pre">render()</span></code> and <code class="docutils literal"><span class="pre">update()</span></code> functions. The <code class="docutils literal"><span class="pre">render()</span></code>
+function is relatively simple:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+   <span class="k">if</span> <span class="o">(</span><span class="n">visible</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">r</span><span class="o">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">r</span><span class="o">);</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>We could have written the if-statement in <code class="docutils literal"><span class="pre">render()</span></code> like
+this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="k">if</span> <span class="o">(</span><span class="n">visible</span> <span class="o">==</span> <span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+   <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">r</span><span class="o">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">r</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p class="last">This is equivalent to writing <code class="docutils literal"><span class="pre">if</span> <span class="pre">(visible)</span></code>. You can use whatever
+version you prefer, but keep in mind that most experienced programmers
+prefer <code class="docutils literal"><span class="pre">if</span> <span class="pre">(visible)</span></code> because it is shorter and still relatively
+readable.</p>
+</div>
+<p>The <code class="docutils literal"><span class="pre">update()</span></code> function needs a little bit more code. The shards move
+outwards from the center of the explosion and get smaller as they move. Once
+the radius of a shard is less than 1, it becomes invisible:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+   <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+   <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+   <span class="n">r</span> <span class="o">+=</span> <span class="n">dr</span><span class="o">;</span>
+
+   <span class="k">if</span> <span class="o">(</span><span class="n">r</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>    <span class="c1">// make the shard disappear when it is very small</span>
+      <span class="n">visible</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Here is the final <code class="docutils literal"><span class="pre">Shard</span></code> class:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Shard</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">;</span>    <span class="c1">// position</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">,</span> <span class="n">dy</span><span class="o">;</span>  <span class="c1">// velocity</span>
+  <span class="kt">float</span> <span class="n">r</span><span class="o">;</span>       <span class="c1">// radius</span>
+  <span class="kt">float</span> <span class="n">dr</span><span class="o">;</span>      <span class="c1">// rate of change of radius</span>
+
+  <span class="kt">boolean</span> <span class="n">visible</span><span class="o">;</span>
+
+  <span class="n">Shard</span><span class="o">()</span> <span class="o">{</span>
+     <span class="n">reset</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">reset</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mf">2.0</span><span class="o">,</span> <span class="mf">2.0</span><span class="o">);</span>   <span class="c1">// try changing these</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mf">2.0</span><span class="o">,</span> <span class="mf">2.0</span><span class="o">);</span>   <span class="c1">// initial random</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mf">4.0</span><span class="o">,</span> <span class="mf">10.0</span><span class="o">);</span>    <span class="c1">// values to get different</span>
+    <span class="n">dr</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mf">0.5</span><span class="o">,</span> <span class="mf">0.0</span><span class="o">);</span>   <span class="c1">// kinds of explosions</span>
+    <span class="n">visible</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">visible</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">r</span><span class="o">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">r</span><span class="o">);</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+    <span class="n">r</span> <span class="o">+=</span> <span class="n">dr</span><span class="o">;</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">r</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>   <span class="c1">// when the shard gets too small, make it disappear</span>
+      <span class="n">visible</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span> <span class="c1">// class Shard</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing-a-single-explosion">
+<h2>Testing a Single Explosion<a class="headerlink" href="#testing-a-single-explosion" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have written the <code class="docutils literal"><span class="pre">Shard</span></code> class, lets write a demo that make an
+explosion wherever the user clicks:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+   <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+   <span class="n">smooth</span><span class="o">();</span>
+   <span class="n">noStroke</span><span class="o">();</span>
+   <span class="n">fill</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>   <span class="c1">// yellow</span>
+
+   <span class="c1">// ...</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+   <span class="c1">// draw an explosion, or nothing if the explosion is not occurring ...</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">mousePressed</span><span class="o">()</span> <span class="o">{</span>
+   <span class="c1">// cause an explosion centered at the mouse pointer</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>For simplicity, lets permit only one explosion on the screen at a time. Thus
+we only need to store one <code class="docutils literal"><span class="pre">ArrayList</span></code> of <code class="docutils literal"><span class="pre">Shard</span></code> objects:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">final</span> <span class="kt">int</span> <span class="n">NUM_SHARDS</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>  <span class="c1">// number of particles in an explosion</span>
+<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Shard</span><span class="o">&gt;</span> <span class="n">shards</span><span class="o">;</span>
+</pre></div>
+</div>
+<p>This creates a variable of type <code class="docutils literal"><span class="pre">ArrayList&lt;Shard&gt;</span></code>. It does <em>not</em> create the
+<code class="docutils literal"><span class="pre">ArrayList</span></code>, nor the <code class="docutils literal"><span class="pre">Shard</span></code> objects within it. We do that in
+<code class="docutils literal"><span class="pre">setup()</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">final</span> <span class="kt">int</span> <span class="n">NUM_SHARDS</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>  <span class="c1">// number of particles in an explosion</span>
+<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Shard</span><span class="o">&gt;</span> <span class="n">shards</span><span class="o">;</span>     <span class="c1">// initialized to null</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">smooth</span><span class="o">();</span>
+  <span class="n">noStroke</span><span class="o">();</span>
+  <span class="n">fill</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>   <span class="c1">// yellow</span>
+
+  <span class="c1">// an explosion consists of many small shards</span>
+  <span class="n">shards</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Shard</span><span class="o">&gt;();</span>
+  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">NUM_SHARDS</span> <span class="o">{</span>
+    <span class="n">Shard</span> <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Shard</span><span class="o">();</span>
+    <span class="n">shards</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
+    <span class="o">++</span><span class="n">i</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Note we follow a standard pattern for using an <code class="docutils literal"><span class="pre">ArrayList</span></code> of objects:</p>
+<ol class="arabic">
+<li><p class="first">Declare the <code class="docutils literal"><span class="pre">ArrayList</span></code> variable:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Shard</span><span class="o">&gt;</span> <span class="n">shards</span><span class="o">;</span>   <span class="c1">// initially null</span>
+</pre></div>
+</div>
+<p>This just creates an <code class="docutils literal"><span class="pre">ArrayList</span></code> variable: it <em>doesn&#8217;t</em> create the
+<code class="docutils literal"><span class="pre">ArrayList</span></code> itself, and it <em>doesn&#8217;t</em> create the objects inside it. By
+default, <code class="docutils literal"><span class="pre">ArrayList</span></code> variables are given the initial value of <code class="docutils literal"><span class="pre">null</span></code>.</p>
+</li>
+<li><p class="first">Create the <code class="docutils literal"><span class="pre">ArrayList</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">shards</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Shard</span><span class="o">&gt;();</span>
+</pre></div>
+</div>
+<p>The expression <code class="docutils literal"><span class="pre">new</span> <span class="pre">ArrayList&lt;Shard&gt;()</span></code> creates an empty <code class="docutils literal"><span class="pre">ArrayList</span></code>
+with nothing in it yet.</p>
+</li>
+<li><p class="first">Add the objects:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">NUM_SHARDS</span> <span class="o">{</span>
+  <span class="n">Shard</span> <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Shard</span><span class="o">();</span>
+  <span class="n">shards</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
+  <span class="o">++</span><span class="n">i</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Every time the body of the loop is executed, a new <code class="docutils literal"><span class="pre">Shard</span></code> is created and
+added to the right end of <code class="docutils literal"><span class="pre">shards</span></code>.</p>
+</li>
+</ol>
+<p>The code for <code class="docutils literal"><span class="pre">draw()</span></code> calls the <code class="docutils literal"><span class="pre">render</span></code> and <code class="docutils literal"><span class="pre">update</span></code> function for each
+object:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+  <span class="k">for</span><span class="o">(</span><span class="n">Shard</span> <span class="n">s</span> <span class="o">:</span> <span class="n">shards</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">s</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="n">s</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Lastly, lets write the code for <code class="docutils literal"><span class="pre">mousePressed</span></code>. We decided above that an
+explosion occurs when and where the user clicks:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">mousePressed</span><span class="o">()</span> <span class="o">{</span>
+  <span class="k">for</span><span class="o">(</span><span class="n">Shard</span> <span class="n">s</span> <span class="o">:</span> <span class="n">shards</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">s</span><span class="o">.</span><span class="na">reset</span><span class="o">();</span>
+    <span class="n">s</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">mouseX</span><span class="o">;</span>
+    <span class="n">s</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">mouseY</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Recall that <code class="docutils literal"><span class="pre">mousePressed()</span></code> is automatically called every time the
+mouse is clicked.</p>
+<p>Notice that this code re-uses the particles from the explosion instead of
+creating new ones. This is to save memory. If you use a lot of explosions in a
+program than the particles could take up a significant chunk of memory that
+could eventually slow your program down.</p>
+</div>
+<div class="section" id="the-program-so-far">
+<h2>The Program So Far<a class="headerlink" href="#the-program-so-far" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Shard</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">;</span>    <span class="c1">// position</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">,</span> <span class="n">dy</span><span class="o">;</span>  <span class="c1">// velocity</span>
+  <span class="kt">float</span> <span class="n">r</span><span class="o">;</span>       <span class="c1">// radius</span>
+  <span class="kt">float</span> <span class="n">dr</span><span class="o">;</span>      <span class="c1">// rate of change of radius</span>
+
+  <span class="kt">boolean</span> <span class="n">visible</span><span class="o">;</span>
+
+  <span class="n">Shard</span><span class="o">()</span> <span class="o">{</span>
+     <span class="n">reset</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">reset</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mf">2.0</span><span class="o">,</span> <span class="mf">2.0</span><span class="o">);</span>   <span class="c1">// try changing these</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mf">2.0</span><span class="o">,</span> <span class="mf">2.0</span><span class="o">);</span>   <span class="c1">// initial random</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mf">4.0</span><span class="o">,</span> <span class="mf">10.0</span><span class="o">);</span>    <span class="c1">// values to get different</span>
+    <span class="n">dr</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mf">0.5</span><span class="o">,</span> <span class="mf">0.0</span><span class="o">);</span>   <span class="c1">// kinds of explosions</span>
+    <span class="n">visible</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">visible</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">r</span><span class="o">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">r</span><span class="o">);</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+    <span class="n">r</span> <span class="o">+=</span> <span class="n">dr</span><span class="o">;</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">r</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>   <span class="c1">// when the shard gets too small, make it disappear</span>
+      <span class="n">visible</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span> <span class="c1">// class Shard</span>
+
+<span class="c1">//////////////////////////////////////////////////////////////////////</span>
+
+<span class="kd">final</span> <span class="kt">int</span> <span class="n">NUM_SHARDS</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>  <span class="c1">// number of particles in an explosion</span>
+<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Shard</span><span class="o">&gt;</span> <span class="n">shards</span><span class="o">;</span>  <span class="c1">// initialized to null</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">smooth</span><span class="o">();</span>
+  <span class="n">noStroke</span><span class="o">();</span>
+  <span class="n">fill</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>   <span class="c1">// yellow</span>
+
+  <span class="c1">// an explosion consists of many small shards</span>
+  <span class="n">shards</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Shard</span><span class="o">&gt;();</span>
+  <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">NUM_SHARDS</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">Shard</span> <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Shard</span><span class="o">();</span>
+    <span class="n">shards</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+  <span class="k">for</span><span class="o">(</span><span class="n">Shard</span> <span class="n">s</span> <span class="o">:</span> <span class="n">shards</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">s</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="n">s</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">mousePressed</span><span class="o">()</span> <span class="o">{</span>
+  <span class="k">for</span><span class="o">(</span><span class="n">Shard</span> <span class="n">s</span> <span class="o">:</span> <span class="n">shards</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">s</span><span class="o">.</span><span class="na">reset</span><span class="o">();</span>
+    <span class="n">s</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">mouseX</span><span class="o">;</span>
+    <span class="n">s</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">mouseY</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="an-explosion-class">
+<h2>An Explosion Class<a class="headerlink" href="#an-explosion-class" title="Permalink to this headline">¶</a></h2>
+<p>Our demo program draws a single explosion, which is useful for testing.
+However, if you want multiple explosions, or if you want to use them in
+another program, then its best to create a class to handle the explosion.</p>
+<p>So lets create a class called <code class="docutils literal"><span class="pre">Explosion</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Explosion</span> <span class="o">{</span>
+  <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Shard</span><span class="o">&gt;</span> <span class="n">shards</span><span class="o">;</span>
+
+  <span class="n">Explosion</span><span class="o">(</span><span class="kt">int</span> <span class="n">numParticles</span><span class="o">,</span> <span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="kt">float</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">shards</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Shard</span><span class="o">&gt;();</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">numParticles</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">Shard</span> <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Shard</span><span class="o">();</span>
+      <span class="n">s</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">;</span>
+      <span class="n">s</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">;</span>
+      <span class="n">shards</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
+      <span class="o">++</span><span class="n">i</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">for</span><span class="o">(</span><span class="n">Shard</span> <span class="n">s</span> <span class="o">:</span> <span class="n">shards</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">s</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">for</span><span class="o">(</span><span class="n">Shard</span> <span class="n">s</span> <span class="o">:</span> <span class="n">shards</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">s</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+<span class="o">}</span> <span class="c1">// class Explosion</span>
+</pre></div>
+</div>
+<p>This contains all the code from our explosion demo program in the
+previous section, but re-organized. Now the demo program can be easily
+re-written:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Explosion</span> <span class="n">e</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">smooth</span><span class="o">();</span>
+  <span class="n">noStroke</span><span class="o">();</span>
+  <span class="n">fill</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>   <span class="c1">// yellow</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">e</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="k">return</span><span class="o">;</span>
+  <span class="n">e</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+  <span class="n">e</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">mousePressed</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">e</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Explosion</span><span class="o">(</span><span class="mi">50</span><span class="o">,</span> <span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>We&#8217;ve introduced a new idea in <code class="docutils literal"><span class="pre">draw()</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="k">if</span> <span class="o">(</span><span class="n">e</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="k">return</span><span class="o">;</span>
+</pre></div>
+</div>
+<p>This if-statement immediately exits the function if variable <code class="docutils literal"><span class="pre">e</span></code>
+does not refer to an object.</p>
+<p>Recall that when you create an object variable like <code class="docutils literal"><span class="pre">e</span></code>, it&#8217;s
+initialized with the special value <code class="docutils literal"><span class="pre">null</span></code>. When <code class="docutils literal"><span class="pre">e</span></code> is <code class="docutils literal"><span class="pre">null</span></code>,
+the statements <code class="docutils literal"><span class="pre">e.render()</span></code> and <code class="docutils literal"><span class="pre">e.update()</span></code> are both errors
+because <code class="docutils literal"><span class="pre">null</span></code> is not an object and so doesn&#8217;t have any functions
+named <code class="docutils literal"><span class="pre">render()</span></code> or <code class="docutils literal"><span class="pre">update()</span></code>. Without this if-statement, the
+program would crash with a run-time error when it tries to execute
+<code class="docutils literal"><span class="pre">e.render()</span></code>.</p>
+</div>
+<div class="section" id="adding-gravity">
+<h2>Adding Gravity<a class="headerlink" href="#adding-gravity" title="Permalink to this headline">¶</a></h2>
+<p>Lets add gravity to our explosions so that as the particles fly away from the
+center they also get pulled downwards by a gravitational force.</p>
+<p>We&#8217;ll do this by adding gravity to <em>each</em> shard:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Shard</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">;</span>    <span class="c1">// position</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">,</span> <span class="n">dy</span><span class="o">;</span>  <span class="c1">// velocity</span>
+  <span class="kt">float</span> <span class="n">r</span><span class="o">;</span>       <span class="c1">// radius</span>
+  <span class="kt">float</span> <span class="n">dr</span><span class="o">;</span>      <span class="c1">// rate of change of radius</span>
+  <span class="kt">float</span> <span class="n">gravity</span><span class="o">;</span> <span class="c1">// force of gravity</span>
+
+  <span class="kt">boolean</span> <span class="n">visible</span><span class="o">;</span>
+
+  <span class="n">Shard</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mf">2.0</span><span class="o">,</span> <span class="mf">2.0</span><span class="o">);</span>   <span class="c1">// try changing these</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mf">2.0</span><span class="o">,</span> <span class="mf">2.0</span><span class="o">);</span>   <span class="c1">// initial random</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mf">4.0</span><span class="o">,</span> <span class="mf">10.0</span><span class="o">);</span>    <span class="c1">// values to get different</span>
+    <span class="n">dr</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mf">0.5</span><span class="o">,</span> <span class="mf">0.0</span><span class="o">);</span>   <span class="c1">// kinds of explosions</span>
+    <span class="n">gravity</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mf">0.1</span><span class="o">,</span> <span class="mf">0.2</span><span class="o">);</span>
+    <span class="n">visible</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">visible</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">r</span><span class="o">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">r</span><span class="o">);</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+    <span class="n">r</span> <span class="o">+=</span> <span class="n">dr</span><span class="o">;</span>
+
+    <span class="n">dy</span> <span class="o">+=</span> <span class="n">gravity</span><span class="o">;</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">r</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>   <span class="c1">// when the shard gets too small, make it disappear</span>
+      <span class="n">visible</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span> <span class="c1">// class Shard</span>
+</pre></div>
+</div>
+<p>What we&#8217;ve done here is add a new variable called <code class="docutils literal"><span class="pre">gravity</span></code> that we set to
+random value in the constructor. Then in <code class="docutils literal"><span class="pre">update</span></code> we add <code class="docutils literal"><span class="pre">gravity</span></code> to
+<code class="docutils literal"><span class="pre">dy</span></code>.</p>
+<p>The result is quite nice: the particles now get pulled downwards as they fly
+out.</p>
+</div>
+<div class="section" id="programming-questions">
+<h2>Programming Questions<a class="headerlink" href="#programming-questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Modify the <code class="docutils literal"><span class="pre">Shard</span></code> class so that shards are drawn with a
+color. Set the color randomly in the constructor. Test your changes
+with one of the sample programs.</li>
+<li>Create a demo program that allows 2 (or more, if you wish)
+explosions to appear on the screen at the same time.</li>
+<li>Make a demo program that initially displays a balloon slowly
+floating up the screen. When the mouse pointers clicks on the
+balloon, it pops (disappears) and explodes. Use an <code class="docutils literal"><span class="pre">Explosion</span></code>
+object to make the explosion.</li>
+<li>Create a fireworks demo.</li>
+</ol>
+</div>
+<div class="section" id="the-program">
+<h2>The Program<a class="headerlink" href="#the-program" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Shard</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">;</span>    <span class="c1">// position</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">,</span> <span class="n">dy</span><span class="o">;</span>  <span class="c1">// velocity</span>
+  <span class="kt">float</span> <span class="n">r</span><span class="o">;</span>       <span class="c1">// radius</span>
+  <span class="kt">float</span> <span class="n">dr</span><span class="o">;</span>      <span class="c1">// rate of change of radius</span>
+  <span class="kt">float</span> <span class="n">gravity</span><span class="o">;</span> <span class="c1">// force of gravity</span>
+
+  <span class="kt">boolean</span> <span class="n">visible</span><span class="o">;</span>
+
+  <span class="n">Shard</span><span class="o">()</span> <span class="o">{</span>
+     <span class="n">reset</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">reset</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mf">2.0</span><span class="o">,</span> <span class="mf">2.0</span><span class="o">);</span>   <span class="c1">// try changing these</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mf">2.0</span><span class="o">,</span> <span class="mf">2.0</span><span class="o">);</span>   <span class="c1">// initial random</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mf">4.0</span><span class="o">,</span> <span class="mf">10.0</span><span class="o">);</span>    <span class="c1">// values to get different</span>
+    <span class="n">dr</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mf">0.5</span><span class="o">,</span> <span class="mf">0.0</span><span class="o">);</span>   <span class="c1">// kinds of explosions</span>
+    <span class="n">gravity</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mf">0.1</span><span class="o">,</span> <span class="mf">0.2</span><span class="o">);</span>
+    <span class="n">visible</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">visible</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">r</span><span class="o">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">r</span><span class="o">);</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+    <span class="n">r</span> <span class="o">+=</span> <span class="n">dr</span><span class="o">;</span>
+
+    <span class="n">dy</span> <span class="o">+=</span> <span class="n">gravity</span><span class="o">;</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">r</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>   <span class="c1">// when the shard gets too small, make it disappear</span>
+      <span class="n">visible</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span> <span class="c1">// class Shard</span>
+
+<span class="c1">/////////////////////////////////////////////////////////////////////////</span>
+
+<span class="kd">class</span> <span class="nc">Explosion</span> <span class="o">{</span>
+  <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Shard</span><span class="o">&gt;</span> <span class="n">shards</span><span class="o">;</span>
+
+  <span class="n">Explosion</span><span class="o">(</span><span class="kt">int</span> <span class="n">numParticles</span><span class="o">,</span> <span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="kt">float</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">shards</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Shard</span><span class="o">&gt;();</span>
+    <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numParticles</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">Shard</span> <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Shard</span><span class="o">();</span>
+      <span class="n">s</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">;</span>
+      <span class="n">s</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">;</span>
+      <span class="n">shards</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">for</span><span class="o">(</span><span class="n">Shard</span> <span class="n">s</span> <span class="o">:</span> <span class="n">shards</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">s</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">for</span><span class="o">(</span><span class="n">Shard</span> <span class="n">s</span> <span class="o">:</span> <span class="n">shards</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">s</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+<span class="o">}</span> <span class="c1">// class Explosion</span>
+
+<span class="c1">/////////////////////////////////////////////////////////////////////////</span>
+
+<span class="n">Explosion</span> <span class="n">e</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">smooth</span><span class="o">();</span>
+  <span class="n">noStroke</span><span class="o">();</span>
+  <span class="n">fill</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>   <span class="c1">// yellow</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">e</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="k">return</span><span class="o">;</span>
+  <span class="n">e</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+  <span class="n">e</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">mousePressed</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">e</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Explosion</span><span class="o">(</span><span class="mi">50</span><span class="o">,</span> <span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="explosion_image.html" title="(Extra) Creating an Explosion with an Image"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="features_not_covered.html" title="Top 10 Processing Features Not Covered"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Toby Donaldson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

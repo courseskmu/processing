@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>(Extra) The Finch Robot &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
+    <link rel="next" title="(Extra) Making a Car" href="car_demo.html" />
+    <link rel="prev" title="Multiple Screens" href="text_screens.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="car_demo.html" title="(Extra) Making a Car"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="text_screens.html" title="Multiple Screens"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">(Extra) The Finch Robot</a><ul>
+<li><a class="reference internal" href="#using-the-finch-in-processing">Using the Finch in Processing</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="text_screens.html"
+                        title="previous chapter">Multiple Screens</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="car_demo.html"
+                        title="next chapter">(Extra) Making a Car</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="extra-the-finch-robot">
+<h1>(Extra) The Finch Robot<a class="headerlink" href="#extra-the-finch-robot" title="Permalink to this headline">¶</a></h1>
+<p>In this note, we are going to look a the <a class="reference external" href="http://www.finchrobot.com/">Finch robot</a>. The Finch is an easy-to- use robot that cost
+about $100 each. Not only can they move around, but they have obstacle, light,
+acceleration, and temperature sensors. Plus, they can play tones, and have a
+nose-cone that lights up in any RGB color.</p>
+<a class="reference internal image-reference" href="_images/finchTwo.jpg"><img alt="The Finch robot." class="align-center" src="_images/finchTwo.jpg" style="width: 200.0px; height: 300.0px;" /></a>
+<p>The original design goal of the Finch was to create a cheap, easy-to-use robot
+that beginning programmers could use in their first programming course.
+Instead of buying a $100 textbook, students buy a Finch and then learn by
+writing programs for it. While it does not seem to have become popular in
+teaching (yet?), it is still a fun and easy way to get learn a little bit
+about how to write programs that control hardware.</p>
+<a class="reference internal image-reference" href="_images/finchOutside.png"><img alt="The Finch robot and its sensors." class="align-center" src="_images/finchOutside.png" style="width: 600.0px; height: 388.0px;" /></a>
+<div class="section" id="using-the-finch-in-processing">
+<h2>Using the Finch in Processing<a class="headerlink" href="#using-the-finch-in-processing" title="Permalink to this headline">¶</a></h2>
+<p>To use the Finch in <a class="reference external" href="http://processing.org/">Processing</a> is relatively easy. After you install the
+Finch code library, you plug a Finch into your computer via a USB port, and
+then run a program.</p>
+<p>For example, this program causes the Finch to beep repeatedly (sounding like
+an alarm) if you turn it over:</p>
+<div class="highlight-python"><div class="highlight"><pre>import edu.cmu.ri.createlab.terk.robot.finch.*;
+
+Finch finch;   // initially null
+
+boolean upsideDown;
+
+void setup() {
+  finch = new Finch();
+}
+
+void draw() {
+  if (finch.isFinchUpsideDown()) {
+    if (upsideDown) {
+      finch.buzz(262, 100); // 262 Hertz (middle C) for 100 milliseconds
+    } else {
+      upsideDown = true;
+    }
+  } else {  // finch is right-side up
+    if (upsideDown) {
+      upsideDown = false;
+    }
+  }
+}
+</pre></div>
+</div>
+<p>The Finch robot is accessed through the <code class="docutils literal"><span class="pre">finch</span></code> variable. If the Finch is
+not plugged into the computer, then this program will crash.</p>
+<p>The expression <code class="docutils literal"><span class="pre">finch.isFinchUpsideDown()</span></code> asks the Finch if it is currently
+upside down. If it is, then it returns <code class="docutils literal"><span class="pre">true</span></code>; if it&#8217;s not, it returns
+<code class="docutils literal"><span class="pre">false</span></code>. The variable <code class="docutils literal"><span class="pre">upsideDown</span></code> is used to remember the state of the
+Finch so that the program can recognize when it goes from upside down to
+right-side up, and vice-versa.</p>
+<p>While this program is simple, it is actually quite useful: it shows how you
+can use the Finch as an &#8220;alarm&#8221;. It&#8217;s not hard to think of interesting
+modifications. For instance, instead of triggering the alarm when the Finch is
+turned over, you could trigger it when the clock on the computer reaches a
+certain time. And you could also make it, say, move forward when the alarm
+goes off. Now you have an alarm clock that runs away when it goes off (so you
+can&#8217;t easily turn it off).</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="car_demo.html" title="(Extra) Making a Car"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="text_screens.html" title="Multiple Screens"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Toby Donaldson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

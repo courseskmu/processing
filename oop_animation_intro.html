@@ -1,0 +1,530 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>More Complex Sprites &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
+    <link rel="next" title="A Spinning Box" href="oop_animation_box.html" />
+    <link rel="prev" title="Translating and Rotating" href="translation_rotation.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="oop_animation_box.html" title="A Spinning Box"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="translation_rotation.html" title="Translating and Rotating"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">More Complex Sprites</a><ul>
+<li><a class="reference internal" href="#a-better-sprite-class">A Better Sprite Class</a></li>
+<li><a class="reference internal" href="#an-animated-ball">An Animated Ball</a></li>
+<li><a class="reference internal" href="#inheritance">Inheritance</a></li>
+<li><a class="reference internal" href="#improving-ball">Improving Ball</a></li>
+<li><a class="reference internal" href="#calling-a-super-function">Calling a super Function</a></li>
+<li><a class="reference internal" href="#questions">Questions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="translation_rotation.html"
+                        title="previous chapter">Translating and Rotating</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="oop_animation_box.html"
+                        title="next chapter">A Spinning Box</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="more-complex-sprites">
+<h1>More Complex Sprites<a class="headerlink" href="#more-complex-sprites" title="Permalink to this headline">¶</a></h1>
+<p>In these notes you will learn:</p>
+<ul class="simple">
+<li>A general approach for modelling animated objects using object-oriented
+programming (OOP).</li>
+<li>How to write a class that extends <code class="docutils literal"><span class="pre">Sprite</span></code>.</li>
+<li>The definition of  <strong>base class</strong>, <strong>inherting class</strong>, <strong>subclass</strong>, and
+<strong>super class</strong>.</li>
+<li>How to use the <code class="docutils literal"><span class="pre">super</span></code> variable.</li>
+</ul>
+<div class="section" id="a-better-sprite-class">
+<h2>A Better Sprite Class<a class="headerlink" href="#a-better-sprite-class" title="Permalink to this headline">¶</a></h2>
+<p>In <a class="reference internal" href="basic_sprites.html"><em>previous notes</em></a> we introduced the <code class="docutils literal"><span class="pre">Sprite</span></code> class to
+help simplify creating animated objects:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dy</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>With it we could write code like this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">color</span> <span class="n">ballColor</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">165</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+
+<span class="n">Sprite</span> <span class="n">ball</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Sprite</span><span class="o">();</span>
+<span class="kt">float</span> <span class="n">radius</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">smooth</span><span class="o">();</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
+  <span class="n">radius</span> <span class="o">=</span> <span class="mi">25</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="n">noStroke</span><span class="o">();</span>
+  <span class="n">fill</span><span class="o">(</span><span class="n">ballColor</span><span class="o">);</span>
+  <span class="n">ellipse</span><span class="o">(</span><span class="n">ball</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">ball</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">radius</span><span class="o">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">radius</span><span class="o">);</span>
+
+  <span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">+=</span> <span class="n">ball</span><span class="o">.</span><span class="na">dx</span><span class="o">;</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">+=</span> <span class="n">ball</span><span class="o">.</span><span class="na">dy</span><span class="o">;</span>
+
+  <span class="c1">// hit the left edge?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">-</span> <span class="n">radius</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">ball</span><span class="o">.</span><span class="na">dx</span><span class="o">;</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">radius</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// hit the right edge?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="n">radius</span> <span class="o">&gt;=</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">ball</span><span class="o">.</span><span class="na">dx</span><span class="o">;</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">499</span> <span class="o">-</span> <span class="n">radius</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// hit the top edge?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">-</span> <span class="n">radius</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">ball</span><span class="o">.</span><span class="na">dy</span><span class="o">;</span>
+    <span class="n">radius</span> <span class="o">+=</span> <span class="mi">5</span><span class="o">;</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">radius</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// hit the bottom edge?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">+</span> <span class="n">radius</span> <span class="o">&gt;=</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">ball</span><span class="o">.</span><span class="na">dy</span><span class="o">;</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">499</span> <span class="o">-</span> <span class="n">radius</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Using the <code class="docutils literal"><span class="pre">Sprite</span></code> class makes it easier to declare <code class="docutils literal"><span class="pre">x</span></code>, <code class="docutils literal"><span class="pre">y</span></code>, <code class="docutils literal"><span class="pre">dx</span></code>,
+and <code class="docutils literal"><span class="pre">dy</span></code>, and also makes the source code a little easier to read.</p>
+<p>But we still have to do a lot of typing. For example, every animated objected
+needs these two lines like this in <code class="docutils literal"><span class="pre">draw()</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">+=</span> <span class="n">ball</span><span class="o">.</span><span class="na">dx</span><span class="o">;</span>
+<span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">+=</span> <span class="n">ball</span><span class="o">.</span><span class="na">dy</span><span class="o">;</span>
+</pre></div>
+</div>
+<p>These lines move the location of the ball, and so every animated object needs
+them. When you have multiple animated objects, these lines soon get tedious to
+type and start to clutter your program (making it harder to read).</p>
+<p>So what we can do is add a function in the <code class="docutils literal"><span class="pre">Sprite</span></code> class that does the
+update for us:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dy</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Then we can replace the two <code class="docutils literal"><span class="pre">+=</span></code> statements in <code class="docutils literal"><span class="pre">draw()</span></code> with one call to
+<code class="docutils literal"><span class="pre">update()</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// ... setup same as before ...</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="n">white</span><span class="o">);</span>
+
+  <span class="c1">// ...</span>
+
+  <span class="c1">// ball.x += ball.dx;</span>
+  <span class="c1">// ball.y += ball.dy;</span>
+
+  <span class="n">ball</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+
+  <span class="c1">// ...</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>This is a small but useful change. It saves us from writing two messy lines of
+code and makes our program a little shorter and easier to read.</p>
+</div>
+<div class="section" id="an-animated-ball">
+<h2>An Animated Ball<a class="headerlink" href="#an-animated-ball" title="Permalink to this headline">¶</a></h2>
+<p>We&#8217;ve seen an animated ball many times in this course, and now we want to
+create an object-oriented version of such a ball. For many programs, this is
+probably the best way to create animated objects.</p>
+<p>The first step is to create a class for the animated object:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Ball</span> <span class="o">{</span>
+    <span class="c1">// ...</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>The name of class should describe the thing it is modelling: a class that
+animates the sun should be called <code class="docutils literal"><span class="pre">Sun</span></code>, a class that animates a bird should
+be called <code class="docutils literal"><span class="pre">Bird</span></code>, and so on.</p>
+<p>Because <code class="docutils literal"><span class="pre">Ball</span></code> is an animated object, we need to add variables for its
+position and velocity:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Ball</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dy</span><span class="o">;</span>
+
+  <span class="c1">// ...</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>While this works, there is a better way.</p>
+</div>
+<div class="section" id="inheritance">
+<h2>Inheritance<a class="headerlink" href="#inheritance" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">Sprite</span></code> class we&#8217;ve been using already has <code class="docutils literal"><span class="pre">x</span></code>, <code class="docutils literal"><span class="pre">y</span></code>, <code class="docutils literal"><span class="pre">dx</span></code>, and
+<code class="docutils literal"><span class="pre">dy</span></code> (plus <code class="docutils literal"><span class="pre">update()</span></code>):</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dy</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Instead of adding these four variables (and <code class="docutils literal"><span class="pre">update()</span></code>) all again by hand to
+<code class="docutils literal"><span class="pre">Ball</span></code>, we can use <strong>inheritance</strong> like this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Ball</span> <span class="kd">extends</span> <span class="n">Sprite</span> <span class="o">{</span>
+  <span class="c1">// ...</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">Ball</span></code> inherits all the variables and functions from <code class="docutils literal"><span class="pre">Sprite</span></code>. We say that
+<code class="docutils literal"><span class="pre">Sprite</span></code> is the <strong>base class</strong>, and <code class="docutils literal"><span class="pre">Sprite</span></code> is the <strong>inheriting</strong> class.
+Some programmers use different terminology: they say <code class="docutils literal"><span class="pre">Ball</span></code> is a
+<strong>subclass</strong> of <code class="docutils literal"><span class="pre">Sprite</span></code> in this case, and, conversely, that <code class="docutils literal"><span class="pre">Sprite</span></code> is a
+<strong>superclass</strong> of ``</p>
+<p>Now we can write code like this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Ball</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Ball</span><span class="o">();</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+
+  <span class="n">b</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">b</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">b</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.6</span><span class="o">;</span>
+  <span class="n">b</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="mf">1.1</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">Ball</span></code> behaves exactly the same as if we had written it like this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Ball</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dy</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Obviously, using <code class="docutils literal"><span class="pre">extends</span></code> is much simpler than typing all this out, and so
+that it was we will do from now on for every animated class we create.</p>
+</div>
+<div class="section" id="improving-ball">
+<h2>Improving Ball<a class="headerlink" href="#improving-ball" title="Permalink to this headline">¶</a></h2>
+<p>Every ball has its own radius and fill color, and so that means we should add
+a <code class="docutils literal"><span class="pre">radius</span></code> and <code class="docutils literal"><span class="pre">fillColor</span></code> variable to <code class="docutils literal"><span class="pre">Ball</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Ball</span> <span class="kd">extends</span> <span class="n">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">radius</span><span class="o">;</span>
+  <span class="n">color</span> <span class="n">fillColor</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Next, lets add a function for drawing the <code class="docutils literal"><span class="pre">Ball</span></code>. To avoid confusion with
+the main <code class="docutils literal"><span class="pre">draw()</span></code> function, we&#8217;ll call it <code class="docutils literal"><span class="pre">render()</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Ball</span> <span class="kd">extends</span> <span class="n">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">radius</span><span class="o">;</span>
+  <span class="n">color</span> <span class="n">fillColor</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">noStroke</span><span class="o">();</span>
+    <span class="n">fill</span><span class="o">(</span><span class="n">fillColor</span><span class="o">);</span>
+    <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">radius</span><span class="o">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">radius</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Now we can program a moving ball:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Ball</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Ball</span><span class="o">();</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+
+  <span class="c1">// initialize the ball</span>
+  <span class="n">b</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">b</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">b</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.6</span><span class="o">;</span>
+  <span class="n">b</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="mf">1.1</span><span class="o">;</span>
+  <span class="n">b</span><span class="o">.</span><span class="na">radius</span> <span class="o">=</span> <span class="mi">25</span><span class="o">;</span>
+  <span class="n">b</span><span class="o">.</span><span class="na">fillColor</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="n">b</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+  <span class="n">b</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>This code is pretty simple: the details of how, exactly, the ball is rendered
+and updated are hidden in the <code class="docutils literal"><span class="pre">Sprite</span></code> and <code class="docutils literal"><span class="pre">Ball</span></code> class.</p>
+<p>Enabling the ball to bounce off the edges requires adding the usual set of if-
+statements:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Ball</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Ball</span><span class="o">();</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+
+  <span class="n">b</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">b</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">b</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.6</span><span class="o">;</span>
+  <span class="n">b</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="mf">1.1</span><span class="o">;</span>
+  <span class="n">b</span><span class="o">.</span><span class="na">radius</span> <span class="o">=</span> <span class="mi">25</span><span class="o">;</span>
+  <span class="n">b</span><span class="o">.</span><span class="na">fillColor</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="n">b</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+  <span class="n">b</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+
+  <span class="c1">// hit left edge?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">b</span><span class="o">.</span><span class="na">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">b</span><span class="o">.</span><span class="na">dx</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// hit right edge?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">b</span><span class="o">.</span><span class="na">x</span> <span class="o">&gt;</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">499</span><span class="o">;</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">b</span><span class="o">.</span><span class="na">dx</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// hit top edge?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">b</span><span class="o">.</span><span class="na">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">b</span><span class="o">.</span><span class="na">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// hit bottom edge?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">b</span><span class="o">.</span><span class="na">y</span> <span class="o">&gt;</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">499</span><span class="o">;</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">b</span><span class="o">.</span><span class="na">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="calling-a-super-function">
+<h2>Calling a super Function<a class="headerlink" href="#calling-a-super-function" title="Permalink to this headline">¶</a></h2>
+<p>A better place to put the edge-detection if-statements is in the <code class="docutils literal"><span class="pre">update()</span></code>
+for <code class="docutils literal"><span class="pre">Ball</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Ball</span> <span class="kd">extends</span> <span class="n">Sprite</span> <span class="o">{</span>
+    <span class="c1">// ...</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="c1">// ...</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kd">super</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>  <span class="c1">// calls the update() function from Sprite</span>
+
+    <span class="c1">// hit left edge?</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+      <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// hit right edge?</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="mi">499</span><span class="o">;</span>
+      <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// hit top edge?</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+      <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// hit bottom edge?</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">&gt;</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">y</span> <span class="o">=</span> <span class="mi">499</span><span class="o">;</span>
+      <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>With this change our main code becomes short and sweet again:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Ball</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Ball</span><span class="o">();</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+
+  <span class="n">b</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">b</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">b</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.6</span><span class="o">;</span>
+  <span class="n">b</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="mf">1.1</span><span class="o">;</span>
+  <span class="n">b</span><span class="o">.</span><span class="na">radius</span> <span class="o">=</span> <span class="mi">25</span><span class="o">;</span>
+  <span class="n">b</span><span class="o">.</span><span class="na">fillColor</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="n">b</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+  <span class="n">b</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>An important detail in the <code class="docutils literal"><span class="pre">update()</span></code> function for <code class="docutils literal"><span class="pre">Ball</span></code> is the very
+first line:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kd">super</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+
+    <span class="c1">// ...</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="http://processing.org/">Processing</a> automatically adds a special variable called <code class="docutils literal"><span class="pre">super</span></code> to every
+object you create. It is how you can access functions defined in the &#8220;super
+class&#8221;, i.e. the <code class="docutils literal"><span class="pre">Sprite</span></code> class, that happen to have the same name as a
+function in <code class="docutils literal"><span class="pre">Ball</span></code>. Inside <code class="docutils literal"><span class="pre">Ball</span></code>, the statement <code class="docutils literal"><span class="pre">super.update()</span></code> calls
+the <code class="docutils literal"><span class="pre">update()</span></code> in <code class="docutils literal"><span class="pre">Sprite</span></code>, while the statement <code class="docutils literal"><span class="pre">update()</span></code> (without
+<code class="docutils literal"><span class="pre">super</span></code>) calls the <code class="docutils literal"><span class="pre">update()</span></code> function <code class="docutils literal"><span class="pre">Ball</span></code>.</p>
+</div>
+<div class="section" id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Briefly describe what inheritance is in <a class="reference external" href="http://processing.org/">Processing</a>, and how it works. Use
+an example in your answer.</p>
+</li>
+<li><p class="first">Consider the following code fragment:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Monster</span> <span class="kd">extends</span> <span class="n">Sprite</span> <span class="o">{</span>
+
+   <span class="c1">// ...</span>
+
+<span class="o">}</span>
+</pre></div>
+</div>
+<ol class="loweralpha simple">
+<li>How many different classes are named in this code?</li>
+<li>Which class is the <em>base</em> class?</li>
+<li>Which class is the <em>inheriting</em> class?</li>
+<li>Which class is the <em>subclass</em>?</li>
+<li>Which class is the <em>super</em> class?</li>
+</ol>
+</li>
+<li><p class="first">What is the purpose of using <code class="docutils literal"><span class="pre">super</span></code> in a class? Give an example of how
+to use it.</p>
+</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="oop_animation_box.html" title="A Spinning Box"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="translation_rotation.html" title="Translating and Rotating"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Toby Donaldson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

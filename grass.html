@@ -1,0 +1,530 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Case Study: Watching Grass Grow &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
+    <link rel="next" title="An Exploding Hamburger" href="exploding_burgers.html" />
+    <link rel="prev" title="More Complex Animations with State Variables" href="paratroopers.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="exploding_burgers.html" title="An Exploding Hamburger"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="paratroopers.html" title="More Complex Animations with State Variables"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Case Study: Watching Grass Grow</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#storing-a-range-of-numbers">Storing a Range of Numbers</a></li>
+<li><a class="reference internal" href="#blades-of-grass">Blades of Grass</a></li>
+<li><a class="reference internal" href="#dandelions">Dandelions</a></li>
+<li><a class="reference internal" href="#a-growing-lawn">A Growing Lawn</a></li>
+<li><a class="reference internal" href="#questions">Questions</a></li>
+<li><a class="reference internal" href="#the-source-code">The Source Code</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="paratroopers.html"
+                        title="previous chapter">More Complex Animations with State Variables</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="exploding_burgers.html"
+                        title="next chapter">An Exploding Hamburger</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="case-study-watching-grass-grow">
+<h1>Case Study: Watching Grass Grow<a class="headerlink" href="#case-study-watching-grass-grow" title="Permalink to this headline">¶</a></h1>
+<p>In these notes you will learn how to:</p>
+<ul class="simple">
+<li>Create a helper class for representing numeric ranges.</li>
+<li>Model a real-world object using OOP.</li>
+<li>Generate animated graphical scenes using random numbers.</li>
+</ul>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>In this note we&#8217;ll create a program that displays some grass and dandelions
+that grow over time. Each individual blade of grass will have its own
+corresponding object that controls how it is drawn and how it grows.</p>
+<p>The graphics are quite simple but still effective, e.g. a blade of grass is a
+line segment with a random height, thickness, color, and orientation.</p>
+</div>
+<div class="section" id="storing-a-range-of-numbers">
+<h2>Storing a Range of Numbers<a class="headerlink" href="#storing-a-range-of-numbers" title="Permalink to this headline">¶</a></h2>
+<p>In our example programs so far, we have often given a variables random values
+chosen from a given range, e.g.:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">float</span> <span class="n">lowValue</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.43</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">highValue</span> <span class="o">=</span> <span class="mf">8.04</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">r</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="n">lowValue</span><span class="o">,</span> <span class="n">highValue</span><span class="o">);</span>
+</pre></div>
+</div>
+<p>The problem with this is that if you have <em>many</em> different ranges (as we will
+for the program below), then keeping track of so many variables and values is
+a real headache.</p>
+<p>So instead of storing the low value and high value of a range in separate
+variables, we will create a new kind of object that stores both at the same
+time:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Range</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">lo</span><span class="o">,</span> <span class="n">hi</span><span class="o">;</span>
+
+  <span class="n">Range</span><span class="o">(</span><span class="kt">float</span> <span class="n">lo_init</span><span class="o">,</span> <span class="kt">float</span> <span class="n">hi_init</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">lo</span> <span class="o">=</span> <span class="n">lo_init</span><span class="o">;</span>
+    <span class="n">hi</span> <span class="o">=</span> <span class="n">hi_init</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">float</span> <span class="nf">randValue</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">random</span><span class="o">(</span><span class="n">lo</span><span class="o">,</span> <span class="n">hi</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>This class is simple but useful. It reduces the number of variables we need to
+represent a range. The example above can be re-written like this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Range</span> <span class="n">rng</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Range</span><span class="o">(-</span><span class="mf">2.43</span><span class="o">,</span> <span class="mf">8.04</span><span class="o">);</span>
+<span class="kt">float</span> <span class="n">r</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="na">randValue</span><span class="o">();</span>
+</pre></div>
+</div>
+<p>We can also access the low and high values if we need them, e.g.:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Range</span> <span class="n">rng</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Range</span><span class="o">(-</span><span class="mf">2.43</span><span class="o">,</span> <span class="mf">8.04</span><span class="o">);</span>
+<span class="n">println</span><span class="o">(</span><span class="s">&quot;rng = [&quot;</span> <span class="o">+</span> <span class="n">rng</span><span class="o">.</span><span class="na">lo</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="n">rng</span><span class="o">.</span><span class="na">hi</span> <span class="o">+</span> <span class="s">&quot;]&quot;</span><span class="o">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="blades-of-grass">
+<h2>Blades of Grass<a class="headerlink" href="#blades-of-grass" title="Permalink to this headline">¶</a></h2>
+<p>We&#8217;re going to represent each blade of grass as its own <code class="docutils literal"><span class="pre">GrassBlade</span></code> object.
+The attributes of a blade of grass that we&#8217;ll include are its position,
+thickness, length, angle, color, and rate of growth:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Range</span> <span class="n">thicknessRange</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Range</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+<span class="n">Range</span> <span class="n">lengthRange</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Range</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+<span class="n">Range</span> <span class="n">angleRange</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Range</span><span class="o">(-</span><span class="mi">25</span><span class="o">,</span> <span class="mi">25</span><span class="o">);</span>
+<span class="n">Range</span> <span class="n">greenRange</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Range</span><span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">256</span><span class="o">);</span>
+
+<span class="c1">// ...</span>
+
+<span class="kd">class</span> <span class="nc">GrassBlade</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">thickness</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">length</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">angle</span><span class="o">;</span>
+  <span class="n">color</span> <span class="n">clr</span><span class="o">;</span>
+
+  <span class="kt">float</span> <span class="n">growthRate</span> <span class="o">=</span> <span class="mf">0.01</span><span class="o">;</span>
+
+  <span class="n">GrassBlade</span><span class="o">(</span><span class="kt">float</span> <span class="n">x_init</span><span class="o">,</span> <span class="kt">float</span> <span class="n">y_init</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x_init</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">y_init</span><span class="o">;</span>
+    <span class="n">thickness</span> <span class="o">=</span> <span class="n">thicknessRange</span><span class="o">.</span><span class="na">randValue</span><span class="o">();</span>
+    <span class="n">length</span> <span class="o">=</span> <span class="n">lengthRange</span><span class="o">.</span><span class="na">randValue</span><span class="o">();</span>
+    <span class="n">angle</span> <span class="o">=</span> <span class="n">angleRange</span><span class="o">.</span><span class="na">randValue</span><span class="o">();</span>
+    <span class="n">clr</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">greenRange</span><span class="o">.</span><span class="na">randValue</span><span class="o">(),</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="c1">// a blade of grass is drawn as a line</span>
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">pushMatrix</span><span class="o">();</span>
+    <span class="n">stroke</span><span class="o">(</span><span class="n">clr</span><span class="o">);</span>
+    <span class="n">strokeWeight</span><span class="o">(</span><span class="n">thickness</span><span class="o">);</span>
+    <span class="n">translate</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+    <span class="n">rotate</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="n">angle</span><span class="o">));</span>
+    <span class="n">line</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="o">-</span><span class="n">length</span><span class="o">);</span>
+    <span class="n">popMatrix</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">grow</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="mf">0.0</span><span class="o">,</span> <span class="mf">1.0</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">growthRate</span><span class="o">)</span>
+      <span class="n">length</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="o">}</span>
+
+<span class="o">}</span> <span class="c1">// class GrassBlade</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">grow()</span></code> function is serves the same purpose as the <code class="docutils literal"><span class="pre">update()</span></code>
+function we&#8217;ve seem in previous examples; we use the name <code class="docutils literal"><span class="pre">grow</span></code> here
+because it is more suggestive of how the blade changes than the generic term
+<code class="docutils literal"><span class="pre">update</span></code>. It works by <em>sometimes</em> increasing the length of the blade.</p>
+</div>
+<div class="section" id="dandelions">
+<h2>Dandelions<a class="headerlink" href="#dandelions" title="Permalink to this headline">¶</a></h2>
+<p>For us, a dandelion will consist of a stem and a circular &#8220;flower&#8221; on one
+end:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Range</span> <span class="n">greenRange</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Range</span><span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">256</span><span class="o">);</span>
+<span class="n">Range</span> <span class="n">radiusRange</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Range</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="mi">7</span><span class="o">);</span>
+<span class="n">Range</span> <span class="n">stemLengthRange</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Range</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="mi">15</span><span class="o">);</span>
+<span class="n">Range</span> <span class="n">stemThicknessRange</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Range</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">5</span><span class="o">);</span>
+
+<span class="kd">class</span> <span class="nc">Dandelion</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">radius</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">stemLength</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">stemThickness</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">stemAngle</span><span class="o">;</span>
+
+  <span class="n">color</span> <span class="n">headColor</span><span class="o">;</span>
+  <span class="n">color</span> <span class="n">stemColor</span><span class="o">;</span>
+
+  <span class="kt">float</span> <span class="n">growthRate</span> <span class="o">=</span> <span class="mf">0.02</span><span class="o">;</span>
+
+  <span class="n">Dandelion</span><span class="o">(</span><span class="kt">float</span> <span class="n">x_init</span><span class="o">,</span> <span class="kt">float</span> <span class="n">y_init</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x_init</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">y_init</span><span class="o">;</span>
+    <span class="n">radius</span> <span class="o">=</span> <span class="n">radiusRange</span><span class="o">.</span><span class="na">randValue</span><span class="o">();</span>
+    <span class="n">stemLength</span> <span class="o">=</span> <span class="n">stemLengthRange</span><span class="o">.</span><span class="na">randValue</span><span class="o">();</span>
+    <span class="n">stemThickness</span> <span class="o">=</span> <span class="n">stemThicknessRange</span><span class="o">.</span><span class="na">randValue</span><span class="o">();</span>
+    <span class="n">stemAngle</span> <span class="o">=</span> <span class="n">angleRange</span><span class="o">.</span><span class="na">randValue</span><span class="o">();</span>
+    <span class="n">headColor</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+    <span class="n">stemColor</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">greenRange</span><span class="o">.</span><span class="na">randValue</span><span class="o">(),</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="c1">// dandelion is a line with a circle on top</span>
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">pushMatrix</span><span class="o">();</span>
+    <span class="n">translate</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+    <span class="n">rotate</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="n">stemAngle</span><span class="o">));</span>
+
+    <span class="n">stroke</span><span class="o">(</span><span class="n">stemColor</span><span class="o">);</span>
+    <span class="n">strokeWeight</span><span class="o">(</span><span class="n">stemThickness</span><span class="o">);</span>
+    <span class="n">line</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="o">-</span><span class="n">stemLength</span><span class="o">);</span>
+
+    <span class="n">noStroke</span><span class="o">();</span>
+    <span class="n">fill</span><span class="o">(</span><span class="n">headColor</span><span class="o">);</span>
+    <span class="n">ellipse</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="o">-</span><span class="n">stemLength</span><span class="o">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">radius</span><span class="o">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">radius</span><span class="o">);</span>
+
+    <span class="n">popMatrix</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">grow</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="mf">0.0</span><span class="o">,</span> <span class="mf">1.0</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">growthRate</span><span class="o">)</span>
+      <span class="n">stemLength</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="o">}</span>
+
+<span class="o">}</span> <span class="c1">// class Dandelion</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="a-growing-lawn">
+<h2>A Growing Lawn<a class="headerlink" href="#a-growing-lawn" title="Permalink to this headline">¶</a></h2>
+<p>Finally, we need code to draw the lawn. For this program, a lawn is collection
+of grass blades and dandelions:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">GrassBlade</span><span class="o">&gt;</span> <span class="n">lawn</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">bladeGap</span><span class="o">;</span>
+
+<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Dandelion</span><span class="o">&gt;</span> <span class="n">weeds</span><span class="o">;</span>
+
+<span class="kt">int</span> <span class="n">numBlades</span> <span class="o">=</span> <span class="mi">500</span><span class="o">;</span>
+<span class="kt">int</span> <span class="n">numWeeds</span> <span class="o">=</span> <span class="mi">5</span><span class="o">;</span>
+
+<span class="n">Range</span> <span class="n">thicknessRange</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Range</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+<span class="n">Range</span> <span class="n">lengthRange</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Range</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+<span class="n">Range</span> <span class="n">angleRange</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Range</span><span class="o">(-</span><span class="mi">25</span><span class="o">,</span> <span class="mi">25</span><span class="o">);</span>
+<span class="n">Range</span> <span class="n">greenRange</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Range</span><span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">256</span><span class="o">);</span>
+
+<span class="n">Range</span> <span class="n">gapRange</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Range</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+
+<span class="n">Range</span> <span class="n">radiusRange</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Range</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="mi">7</span><span class="o">);</span>
+<span class="n">Range</span> <span class="n">stemLengthRange</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Range</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="mi">15</span><span class="o">);</span>
+<span class="n">Range</span> <span class="n">stemThicknessRange</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Range</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">5</span><span class="o">);</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+
+  <span class="c1">// initialize the grass blades</span>
+  <span class="n">lawn</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">GrassBlade</span><span class="o">&gt;();</span>
+  <span class="n">bladeGap</span> <span class="o">=</span> <span class="n">gapRange</span><span class="o">.</span><span class="na">randValue</span><span class="o">();</span>
+  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">numBlades</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">GrassBlade</span> <span class="n">g</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GrassBlade</span><span class="o">(</span><span class="n">bladeGap</span> <span class="o">*</span> <span class="n">i</span><span class="o">,</span> <span class="mi">250</span><span class="o">);</span>
+    <span class="n">lawn</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">g</span><span class="o">);</span>
+    <span class="o">++</span><span class="n">i</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// initialize the weeds</span>
+  <span class="n">weeds</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Dandelion</span><span class="o">&gt;();</span>
+  <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>   <span class="c1">// no &quot;int&quot; because i was already defined above</span>
+  <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">numWeeds</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">Dandelion</span> <span class="n">d</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Dandelion</span><span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="n">width</span> <span class="o">-</span> <span class="mi">10</span><span class="o">),</span> <span class="mi">250</span><span class="o">);</span>
+    <span class="n">weeds</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">d</span><span class="o">);</span>
+    <span class="o">++</span><span class="n">i</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span> <span class="c1">// setup</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">224</span><span class="o">,</span> <span class="mi">255</span><span class="o">,</span> <span class="mi">255</span><span class="o">);</span>
+
+  <span class="c1">// draw weeds</span>
+  <span class="k">for</span><span class="o">(</span><span class="n">Dandelion</span> <span class="n">d</span> <span class="o">:</span> <span class="n">weeds</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">d</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="n">d</span><span class="o">.</span><span class="na">grow</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="c1">// draw blades of grass</span>
+  <span class="k">for</span><span class="o">(</span><span class="n">GrassBlade</span> <span class="n">g</span> <span class="o">:</span> <span class="n">lawn</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">g</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="n">g</span><span class="o">.</span><span class="na">grow</span><span class="o">();</span>
+  <span class="o">}</span>
+
+<span class="o">}</span>  <span class="c1">// draw</span>
+</pre></div>
+</div>
+<p>It&#8217;s not hard to spot problems, e.g. the dandelions seem to grow too big too
+quickly. Plus, you can probably think of other features you might add to this
+simulation to make it more realistic or interesting. The simplest thing to try
+is to change the ranges for the various variables &#8212; the results can be quite
+intriguing.</p>
+</div>
+<div class="section" id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Add maximum height variables to the grass and dandelions that
+neither can grow beyond.</li>
+<li>Nothing grows forever. Modify the <code class="docutils literal"><span class="pre">grow</span></code> function of <code class="docutils literal"><span class="pre">GrassBlade</span></code> so that,
+eventually, the blade of grass stops growing bigger, and starts to get smaller and,
+at the same time, turn brown.</li>
+</ol>
+</div>
+<div class="section" id="the-source-code">
+<h2>The Source Code<a class="headerlink" href="#the-source-code" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">numBlades</span> <span class="o">=</span> <span class="mi">500</span><span class="o">;</span>
+<span class="kt">int</span> <span class="n">numWeeds</span> <span class="o">=</span> <span class="mi">5</span><span class="o">;</span>
+
+<span class="kt">float</span> <span class="n">bladeGap</span><span class="o">;</span>  <span class="c1">// distance between each blade of grass</span>
+
+<span class="c1">// ranges for blades of grass</span>
+<span class="n">Range</span> <span class="n">thicknessRange</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Range</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+<span class="n">Range</span> <span class="n">lengthRange</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Range</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+<span class="n">Range</span> <span class="n">angleRange</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Range</span><span class="o">(-</span><span class="mi">25</span><span class="o">,</span> <span class="mi">25</span><span class="o">);</span>
+<span class="n">Range</span> <span class="n">greenRange</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Range</span><span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">256</span><span class="o">);</span>
+<span class="kt">float</span> <span class="n">grassBladeGrowthRate</span> <span class="o">=</span> <span class="mf">0.01</span><span class="o">;</span>
+
+<span class="c1">// distance between blades of grass</span>
+<span class="n">Range</span> <span class="n">gapRange</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Range</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+
+<span class="c1">// ranges for dandelions</span>
+<span class="n">Range</span> <span class="n">headRadiusRange</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Range</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="mi">7</span><span class="o">);</span>  <span class="c1">// size of dandelion head</span>
+<span class="n">Range</span> <span class="n">stemLengthRange</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Range</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="mi">15</span><span class="o">);</span>
+<span class="n">Range</span> <span class="n">stemThicknessRange</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Range</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">5</span><span class="o">);</span>
+<span class="n">Range</span> <span class="n">weedPositionRange</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Range</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="mi">490</span><span class="o">);</span>
+<span class="kt">float</span> <span class="n">weedGrowthRate</span> <span class="o">=</span> <span class="mf">0.01</span><span class="o">;</span>
+
+<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">GrassBlade</span><span class="o">&gt;</span> <span class="n">lawn</span><span class="o">;</span>
+<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Dandelion</span><span class="o">&gt;</span> <span class="n">weeds</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+
+  <span class="c1">// initialize the grass blades</span>
+  <span class="n">lawn</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">GrassBlade</span><span class="o">&gt;();</span>
+  <span class="n">bladeGap</span> <span class="o">=</span> <span class="n">gapRange</span><span class="o">.</span><span class="na">randValue</span><span class="o">();</span>
+  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">numBlades</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">GrassBlade</span> <span class="n">g</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GrassBlade</span><span class="o">(</span><span class="n">bladeGap</span> <span class="o">*</span> <span class="n">i</span><span class="o">,</span> <span class="mi">250</span><span class="o">);</span>
+    <span class="n">lawn</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">g</span><span class="o">);</span>
+    <span class="o">++</span><span class="n">i</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// initialize the weeds</span>
+  <span class="n">weeds</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Dandelion</span><span class="o">&gt;();</span>
+  <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>   <span class="c1">// no &quot;int&quot; because i was already defined above</span>
+  <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">numWeeds</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">Dandelion</span> <span class="n">d</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Dandelion</span><span class="o">(</span><span class="n">weedPositionRange</span><span class="o">.</span><span class="na">randValue</span><span class="o">(),</span> <span class="mi">250</span><span class="o">);</span>
+    <span class="n">weeds</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">d</span><span class="o">);</span>
+    <span class="o">++</span><span class="n">i</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span> <span class="c1">// setup</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">224</span><span class="o">,</span> <span class="mi">255</span><span class="o">,</span> <span class="mi">255</span><span class="o">);</span>
+
+  <span class="c1">// draw weeds</span>
+  <span class="k">for</span> <span class="o">(</span><span class="n">Dandelion</span> <span class="n">d</span> <span class="o">:</span> <span class="n">weeds</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">d</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="n">d</span><span class="o">.</span><span class="na">grow</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="c1">// draw blades of grass</span>
+  <span class="k">for</span> <span class="o">(</span><span class="n">GrassBlade</span> <span class="n">g</span> <span class="o">:</span> <span class="n">lawn</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">g</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="n">g</span><span class="o">.</span><span class="na">grow</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>  <span class="c1">// draw</span>
+
+<span class="c1">///////////////////////////////////////////////////////////////////</span>
+
+<span class="kd">class</span> <span class="nc">Dandelion</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">radius</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">stemLength</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">stemThickness</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">stemAngle</span><span class="o">;</span>
+
+  <span class="n">color</span> <span class="n">headColor</span><span class="o">;</span>
+  <span class="n">color</span> <span class="n">stemColor</span><span class="o">;</span>
+
+  <span class="n">Dandelion</span><span class="o">(</span><span class="kt">float</span> <span class="n">x_init</span><span class="o">,</span> <span class="kt">float</span> <span class="n">y_init</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x_init</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">y_init</span><span class="o">;</span>
+    <span class="n">radius</span> <span class="o">=</span> <span class="n">headRadiusRange</span><span class="o">.</span><span class="na">randValue</span><span class="o">();</span>
+    <span class="n">stemLength</span> <span class="o">=</span> <span class="n">stemLengthRange</span><span class="o">.</span><span class="na">randValue</span><span class="o">();</span>
+    <span class="n">stemThickness</span> <span class="o">=</span> <span class="n">stemThicknessRange</span><span class="o">.</span><span class="na">randValue</span><span class="o">();</span>
+    <span class="n">stemAngle</span> <span class="o">=</span> <span class="n">angleRange</span><span class="o">.</span><span class="na">randValue</span><span class="o">();</span>
+    <span class="n">headColor</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+    <span class="n">stemColor</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">greenRange</span><span class="o">.</span><span class="na">randValue</span><span class="o">(),</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">pushMatrix</span><span class="o">();</span>
+    <span class="n">translate</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+    <span class="n">rotate</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="n">stemAngle</span><span class="o">));</span>
+
+    <span class="n">stroke</span><span class="o">(</span><span class="n">stemColor</span><span class="o">);</span>
+    <span class="n">strokeWeight</span><span class="o">(</span><span class="n">stemThickness</span><span class="o">);</span>
+    <span class="n">line</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="o">-</span><span class="n">stemLength</span><span class="o">);</span>
+
+    <span class="n">noStroke</span><span class="o">();</span>
+    <span class="n">fill</span><span class="o">(</span><span class="n">headColor</span><span class="o">);</span>
+    <span class="n">ellipse</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="o">-</span><span class="n">stemLength</span><span class="o">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">radius</span><span class="o">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">radius</span><span class="o">);</span>
+
+    <span class="n">popMatrix</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">grow</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="mf">0.0</span><span class="o">,</span> <span class="mf">1.0</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">weedGrowthRate</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">stemLength</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span> <span class="c1">// class Dandelion</span>
+
+<span class="c1">///////////////////////////////////////////////////////////////////</span>
+
+<span class="kd">class</span> <span class="nc">GrassBlade</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">thickness</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">length</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">angle</span><span class="o">;</span>
+  <span class="n">color</span> <span class="n">clr</span><span class="o">;</span>
+
+  <span class="kt">float</span> <span class="n">growthRate</span> <span class="o">=</span> <span class="mf">0.01</span><span class="o">;</span>
+
+  <span class="n">GrassBlade</span><span class="o">(</span><span class="kt">float</span> <span class="n">x_init</span><span class="o">,</span> <span class="kt">float</span> <span class="n">y_init</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x_init</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">y_init</span><span class="o">;</span>
+    <span class="n">thickness</span> <span class="o">=</span> <span class="n">thicknessRange</span><span class="o">.</span><span class="na">randValue</span><span class="o">();</span>
+    <span class="n">length</span> <span class="o">=</span> <span class="n">lengthRange</span><span class="o">.</span><span class="na">randValue</span><span class="o">();</span>
+    <span class="n">angle</span> <span class="o">=</span> <span class="n">angleRange</span><span class="o">.</span><span class="na">randValue</span><span class="o">();</span>
+    <span class="n">clr</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">greenRange</span><span class="o">.</span><span class="na">randValue</span><span class="o">(),</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">pushMatrix</span><span class="o">();</span>
+    <span class="n">stroke</span><span class="o">(</span><span class="n">clr</span><span class="o">);</span>
+    <span class="n">strokeWeight</span><span class="o">(</span><span class="n">thickness</span><span class="o">);</span>
+    <span class="n">translate</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+    <span class="n">rotate</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="n">angle</span><span class="o">));</span>
+    <span class="n">line</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="o">-</span><span class="n">length</span><span class="o">);</span>
+    <span class="n">popMatrix</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">grow</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="mf">0.0</span><span class="o">,</span> <span class="mf">1.0</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">grassBladeGrowthRate</span><span class="o">)</span>
+      <span class="n">length</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span> <span class="c1">// class GrassBlade</span>
+
+<span class="kd">class</span> <span class="nc">Range</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">lo</span><span class="o">,</span> <span class="n">hi</span><span class="o">;</span>
+
+  <span class="n">Range</span><span class="o">(</span><span class="kt">float</span> <span class="n">lo_init</span><span class="o">,</span> <span class="kt">float</span> <span class="n">hi_init</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">lo</span> <span class="o">=</span> <span class="n">lo_init</span><span class="o">;</span>
+    <span class="n">hi</span> <span class="o">=</span> <span class="n">hi_init</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">float</span> <span class="nf">randValue</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">random</span><span class="o">(</span><span class="n">lo</span><span class="o">,</span> <span class="n">hi</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span> <span class="c1">// class Range</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="exploding_burgers.html" title="An Exploding Hamburger"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="paratroopers.html" title="More Complex Animations with State Variables"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Toby Donaldson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

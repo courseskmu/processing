@@ -1,0 +1,252 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Project 3 &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
+    <link rel="next" title="Example: A Bouncing Ball" href="bouncing_ball.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="proj2.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="bouncing_ball.html" title="Example: A Bouncing Ball"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="proj2.html" title="&lt;no title&gt;"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Project 3</a><ul>
+<li><a class="reference internal" href="#hints">Hints</a></li>
+<li><a class="reference internal" href="#starting-code">Starting Code</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="proj2.html"
+                        title="previous chapter">&lt;no title&gt;</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="bouncing_ball.html"
+                        title="next chapter">Example: A Bouncing Ball</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="project-3">
+<h1>Project 3<a class="headerlink" href="#project-3" title="Permalink to this headline">¶</a></h1>
+<p>For this assignment, your task is to create an animated analog clock, similar
+in style to a traditional wall clock.</p>
+<p>The questions that follow refer to this picture of a typical wall clock. When
+your program is done, it should look somewhat like this:</p>
+<a class="reference internal image-reference" href="_images/TG-0558_Wall_clock.jpg"><img alt="A typical wall clock." class="align-center" src="_images/TG-0558_Wall_clock.jpg" style="width: 307.2px; height: 304.2px;" /></a>
+<p>Of course, the hands of your clock should move and display the correct time!</p>
+<p>To help you get started, we&#8217;ve provided some the <a class="reference internal" href="#proj3-starting-code"><span>code at the end of this
+assignment</span></a> that you should copy and modify.</p>
+<ol class="arabic">
+<li><p class="first">(1 mark) Make <a class="reference internal" href="#proj3-starting-code"><span>the starting code for the clock</span></a>
+more modular by putting the drawing code from <code class="docutils literal"><span class="pre">draw()</span></code> into separate
+functions.</p>
+<p>First, replace the <code class="docutils literal"><span class="pre">draw()</span></code> function with this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="c1">// get the current time</span>
+  <span class="kt">int</span> <span class="n">s</span> <span class="o">=</span> <span class="n">second</span><span class="o">();</span>  <span class="c1">// values from 0 - 59</span>
+  <span class="kt">int</span> <span class="n">m</span> <span class="o">=</span> <span class="n">minute</span><span class="o">();</span>  <span class="c1">// values from 0 - 59</span>
+  <span class="kt">int</span> <span class="n">h</span> <span class="o">=</span> <span class="n">hour</span><span class="o">();</span>    <span class="c1">// values from 0 - 23</span>
+
+  <span class="c1">// move origin to center of the screen</span>
+  <span class="n">translate</span><span class="o">(</span><span class="mi">250</span><span class="o">,</span> <span class="mi">250</span><span class="o">);</span>
+
+  <span class="n">drawSecondsHand</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
+  <span class="n">drawMinutesHand</span><span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">m</span><span class="o">);</span>
+  <span class="n">drawHoursHand</span><span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">m</span><span class="o">,</span> <span class="n">h</span><span class="o">);</span>
+  <span class="n">drawCenterPin</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>For this to work, you will need to create the following four <code class="docutils literal"><span class="pre">void</span></code>
+functions:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">drawSecondsHand(s)</span></code></li>
+<li><code class="docutils literal"><span class="pre">drawMinutesHand(s,</span> <span class="pre">m)</span></code></li>
+<li><code class="docutils literal"><span class="pre">drawHoursHand(s,</span> <span class="pre">m,</span> <span class="pre">h)</span></code></li>
+<li><code class="docutils literal"><span class="pre">drawCenterPin()</span></code></li>
+</ul>
+<p>When this is done, the program should behave exactly the same, but now the
+source code is easier to read.</p>
+</li>
+<li><p class="first">(1 mark) Add a feature to the program that &#8220;toggles&#8221; the seconds-hand. If
+the user presses the <em>S</em> key when the seconds-hand is displayed, the
+seconds-hand disappears (and the other hands remain visible). When the
+seconds-hand is not displayed, pressing the <em>S</em> key makes it re-appear.</p>
+<p>Make sure your program handles both lowercase <em>s</em> and uppercase <em>S</em>.</p>
+</li>
+<li><p class="first">(1 mark) Create a new function called <code class="docutils literal"><span class="pre">drawName()</span></code> that puts your name in
+the same location as the words &#8220;A-ONE&#8221; in the clock in the picture (i.e.
+below the 12), and puts &#8220;CMPT 166&#8221; at the same position as &#8220;QUARTZ&#8221; (i.e.
+above the 6). The font choice is up to you.</p>
+<p>The hands of the clock should be drawn on top of this text.</p>
+<p>Be sure to call <code class="docutils literal"><span class="pre">drawName()</span></code> inside the <code class="docutils literal"><span class="pre">draw()</span></code> function!</p>
+</li>
+<li><p class="first">(1 mark) Create a new function called <code class="docutils literal"><span class="pre">drawNumbers()</span></code> that draws the
+numbers from 1 to 12 on the clock face. Position the numbers as carefully
+as possible so that it looks like a real clock. The font choice is up to
+you.</p>
+<p>Be sure to call <code class="docutils literal"><span class="pre">drawNumbers()</span></code> inside the <code class="docutils literal"><span class="pre">draw()</span></code> function!</p>
+</li>
+<li><p class="first">(1 mark) Create a new function called <code class="docutils literal"><span class="pre">drawTicks()</span></code> that draws 60
+equally-spaced &#8220;tick marks&#8221; at every minute around the edge of the clock
+face. The ticks should appear &#8220;above&#8221; the numbers as in the picture.</p>
+<p>Just as in the picture, the tick marks should be short line segments that
+are drawn <strong>at the same angle</strong> the seconds-hand would be at if it were on
+that exact second. <strong>This is important!</strong></p>
+<p>It&#8217;s <em>not</em> necessary to make the tick marks on the hours thicker than the
+other tick marks (as in the picture).</p>
+<p>Be sure to call <code class="docutils literal"><span class="pre">drawTicks()</span></code> inside the <code class="docutils literal"><span class="pre">draw()</span></code> function!</p>
+</li>
+<li><p class="first">(1 mark) Make the entire clock bounce around the screen like a ball. When
+the clock hits an edge, it should bounce off of it at the same angle and
+continue moving at the same speed. All the components of the clock should
+move &#8212; hands, numbers, text, etc. &#8212; and the hands of the clock should
+continue to move as usual as the clock bounces around. Don&#8217;t let any part
+of the clock go off the screen.</p>
+</li>
+</ol>
+<div class="section" id="hints">
+<h2>Hints<a class="headerlink" href="#hints" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>The questions are given in approximate order of difficulty.</li>
+<li>You don&#8217;t need to write any of your own classes for this assignment.</li>
+</ul>
+</div>
+<div class="section" id="starting-code">
+<span id="proj3-starting-code"></span><h2>Starting Code<a class="headerlink" href="#starting-code" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">smooth</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="c1">// get the current time</span>
+  <span class="kt">int</span> <span class="n">s</span> <span class="o">=</span> <span class="n">second</span><span class="o">();</span>  <span class="c1">// values from 0 - 59</span>
+  <span class="kt">int</span> <span class="n">m</span> <span class="o">=</span> <span class="n">minute</span><span class="o">();</span>  <span class="c1">// values from 0 - 59</span>
+  <span class="kt">int</span> <span class="n">h</span> <span class="o">=</span> <span class="n">hour</span><span class="o">();</span>    <span class="c1">// values from 0 - 23</span>
+
+  <span class="c1">// move origin to center of the screen</span>
+  <span class="n">translate</span><span class="o">(</span><span class="mi">250</span><span class="o">,</span> <span class="mi">250</span><span class="o">);</span>
+
+  <span class="c1">// draw the seconds hand</span>
+  <span class="n">pushMatrix</span><span class="o">();</span>
+  <span class="n">rotate</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="n">map</span><span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">59</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">360</span><span class="o">)));</span>
+  <span class="n">stroke</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="n">strokeWeight</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+  <span class="n">line</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="o">-</span><span class="mi">225</span><span class="o">);</span>
+  <span class="n">popMatrix</span><span class="o">();</span>
+
+  <span class="c1">// draw the minutes hand</span>
+  <span class="n">pushMatrix</span><span class="o">();</span>
+  <span class="n">rotate</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="n">map</span><span class="o">(</span><span class="n">m</span> <span class="o">+</span> <span class="n">s</span> <span class="o">/</span> <span class="mf">60.0</span><span class="o">,</span> <span class="mf">0.0</span><span class="o">,</span> <span class="mf">60.0</span><span class="o">,</span> <span class="mf">0.0</span><span class="o">,</span> <span class="mf">360.0</span><span class="o">)));</span>
+  <span class="n">stroke</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">255</span><span class="o">);</span>
+  <span class="n">strokeWeight</span><span class="o">(</span><span class="mi">5</span><span class="o">);</span>
+  <span class="n">line</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="o">-</span><span class="mi">200</span><span class="o">);</span>
+  <span class="n">popMatrix</span><span class="o">();</span>
+
+  <span class="c1">// draw the hours hand</span>
+  <span class="n">pushMatrix</span><span class="o">();</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">h</span> <span class="o">&gt;</span> <span class="mi">12</span><span class="o">)</span> <span class="n">h</span> <span class="o">-=</span> <span class="mi">12</span><span class="o">;</span>
+  <span class="n">rotate</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="n">map</span><span class="o">(</span><span class="n">h</span> <span class="o">+</span> <span class="n">m</span> <span class="o">/</span> <span class="mf">60.0</span><span class="o">,</span> <span class="mf">0.0</span><span class="o">,</span> <span class="mi">12</span><span class="o">,</span> <span class="mf">0.0</span><span class="o">,</span> <span class="mf">360.0</span><span class="o">)));</span>
+  <span class="n">strokeWeight</span><span class="o">(</span><span class="mi">5</span><span class="o">);</span>
+  <span class="n">stroke</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="n">line</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="o">-</span><span class="mi">100</span><span class="o">);</span>
+  <span class="n">popMatrix</span><span class="o">();</span>
+
+  <span class="c1">// &quot;pin&quot; at the center</span>
+  <span class="n">fill</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+  <span class="n">noStroke</span><span class="o">();</span>
+  <span class="n">ellipse</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">15</span><span class="o">,</span> <span class="mi">15</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="bouncing_ball.html" title="Example: A Bouncing Ball"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="proj2.html" title="&lt;no title&gt;"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Toby Donaldson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

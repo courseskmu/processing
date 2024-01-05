@@ -1,0 +1,739 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Example: A Bouncing Ball &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
+    <link rel="next" title="Special Effect: A Fading Circle" href="fading_circle.html" />
+    <link rel="prev" title="Project 3" href="proj3.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="fading_circle.html" title="Special Effect: A Fading Circle"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="proj3.html" title="Project 3"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Example: A Bouncing Ball</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#variables-and-initialization">Variables and Initialization</a></li>
+<li><a class="reference internal" href="#animating-the-ball">Animating the Ball</a></li>
+<li><a class="reference internal" href="#another-way-to-write-the-if-statements">Another Way to Write the If-statements</a></li>
+<li><a class="reference internal" href="#bouncing-off-the-ball-s-edge">Bouncing Off the Ball&#8217;s Edge</a></li>
+<li><a class="reference internal" href="#stopping-at-the-top">Stopping at the Top</a></li>
+<li><a class="reference internal" href="#expanding-when-it-hits-the-top">Expanding When it Hits the Top</a></li>
+<li><a class="reference internal" href="#debugging-finding-a-bug">Debugging: Finding a Bug</a></li>
+<li><a class="reference internal" href="#debugging-fixing-the-problem">Debugging: Fixing the Problem</a></li>
+<li><a class="reference internal" href="#questions">Questions</a></li>
+<li><a class="reference internal" href="#programming-questions">Programming Questions</a></li>
+<li><a class="reference internal" href="#code-the-bouncing-ball-program">Code: The Bouncing Ball Program</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="proj3.html"
+                        title="previous chapter">Project 3</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="fading_circle.html"
+                        title="next chapter">Special Effect: A Fading Circle</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="example-a-bouncing-ball">
+<h1>Example: A Bouncing Ball<a class="headerlink" href="#example-a-bouncing-ball" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Now lets create a program that makes a ball &#8212; or any shape or image &#8212; move
+in <em>any</em> direction and bounce off <em>any</em> edge of the screen.</p>
+<p>To allow a ball to move in any direction we need to take into account its
+speed in both the x-direction and the y-direction. Thus we will be using two
+variables, <code class="docutils literal"><span class="pre">dx</span></code> and <code class="docutils literal"><span class="pre">dy</span></code>, to control the ball&#8217;s speed. The variable <code class="docutils literal"><span class="pre">dx</span></code>
+is how many pixels the ball moves in the x-direction on each call to
+<code class="docutils literal"><span class="pre">draw()</span></code>, and <code class="docutils literal"><span class="pre">dy</span></code> is how many pixels it moves in the y-direction.</p>
+<p>Another assumption we will make is that every time the ball hits an edge it
+bounces off at an out-going angle that is the same as the incoming angle. i.e.
+<span class="math">\(a = b\)</span> in the following diagram:</p>
+<a class="reference internal image-reference" href="_images/edge_bounce.png"><img alt="Incoming angle is the same as outgoing angle." class="align-center" src="_images/edge_bounce.png" style="width: 174.0px; height: 173.0px;" /></a>
+<p>Finally, we will ignore things like gravity and air friction. Such details can
+be added later.</p>
+</div>
+<div class="section" id="variables-and-initialization">
+<h2>Variables and Initialization<a class="headerlink" href="#variables-and-initialization" title="Permalink to this headline">¶</a></h2>
+<p>Lets walk through the creation of our bouncing-ball program step-by-step.
+First, we need a couple of variables to keep track of the position of the
+ball:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">float</span> <span class="n">x</span><span class="o">;</span>   <span class="c1">// (x, y) is the center</span>
+<span class="kt">float</span> <span class="n">y</span><span class="o">;</span>   <span class="c1">// of the ball</span>
+</pre></div>
+</div>
+<p>And then we need two speed variables to keep track of how far the ball moves
+along the x-axis and y-axis on each call to <code class="docutils literal"><span class="pre">draw()</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">float</span> <span class="n">dx</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">dy</span><span class="o">;</span>
+</pre></div>
+</div>
+<p>For convenience, lets also add a couple of color variables:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">color</span> <span class="n">orange</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">165</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+<span class="n">color</span> <span class="n">white</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">255</span><span class="o">,</span> <span class="mi">255</span><span class="o">);</span>
+</pre></div>
+</div>
+<p>Note that all six of these variables are declared <em>outside</em> of any function,
+i.e. they are all <a class="reference internal" href="glossary.html#term-global-variable"><span class="xref std std-term">global variable</span></a>s.</p>
+<p>We initialize the screen and the four ball variables in <code class="docutils literal"><span class="pre">setup()</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">smooth</span><span class="o">();</span>
+
+  <span class="c1">// set the ball&#39;s initial position and velocity</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>    <span class="c1">// start in the center of the screen</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">dx</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>   <span class="c1">// move up and to the right</span>
+  <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>The precise starting values of <code class="docutils literal"><span class="pre">x</span></code>, <code class="docutils literal"><span class="pre">y</span></code>, <code class="docutils literal"><span class="pre">dx</span></code>, and <code class="docutils literal"><span class="pre">dy</span></code>, are, of
+course, up to you.</p>
+</div>
+<div class="section" id="animating-the-ball">
+<h2>Animating the Ball<a class="headerlink" href="#animating-the-ball" title="Permalink to this headline">¶</a></h2>
+<p>Now we need to think about how to animate the ball. The essential idea
+is to repeat the following steps:</p>
+<ul class="simple">
+<li>draw the background</li>
+<li>draw the ball at (<code class="docutils literal"><span class="pre">x</span></code>, <code class="docutils literal"><span class="pre">y</span></code>)</li>
+<li>move the ball to its next position by adding <code class="docutils literal"><span class="pre">dx</span></code> to <code class="docutils literal"><span class="pre">x</span></code> and
+<code class="docutils literal"><span class="pre">dy</span></code> to <code class="docutils literal"><span class="pre">y</span></code></li>
+<li>check if the ball has hit one of the four edges, and, if so, change
+the direction of the ball by negating either <code class="docutils literal"><span class="pre">dx</span></code> or <code class="docutils literal"><span class="pre">dy</span></code></li>
+</ul>
+<p>The above way of describing a program is called <a class="reference internal" href="glossary.html#term-pseudocode"><span class="xref std std-term">pseudocode</span></a>: it is a
+little bit like computer code, but written in English. We can also describe
+code using a <a class="reference internal" href="glossary.html#term-flow-chart"><span class="xref std std-term">flow chart</span></a>. However, flow charts are not very common with
+modern programmers since they take up a lot more space than pseudocode without
+providing much (or any) more information.</p>
+<a class="reference internal image-reference" href="_images/ballBounceFlowChart.png"><img alt="Flow chart for a bouncing ball." class="align-center" src="_images/ballBounceFlowChart.png" style="width: 486.0px; height: 768.75px;" /></a>
+<p>Following the flow chart, the actual <a class="reference external" href="http://processing.org/">Processing</a> code we write uses four if-
+statements, one for each edge:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="c1">// re-draw the background</span>
+  <span class="n">background</span><span class="o">(</span><span class="n">white</span><span class="o">);</span>
+
+  <span class="c1">// draw the ball</span>
+  <span class="n">noStroke</span><span class="o">();</span>
+  <span class="n">fill</span><span class="o">(</span><span class="n">orange</span><span class="o">);</span>
+  <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="mi">50</span><span class="o">,</span> <span class="mi">50</span><span class="o">);</span>
+
+  <span class="c1">// move the ball to its next position</span>
+  <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+
+  <span class="c1">// hit the top edge?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// hit the bottom edge?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">&gt;=</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// hit the left edge?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// hit the right edge?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="another-way-to-write-the-if-statements">
+<h2>Another Way to Write the If-statements<a class="headerlink" href="#another-way-to-write-the-if-statements" title="Permalink to this headline">¶</a></h2>
+<p>There&#8217;s often more than one correct way to write an if-statement. For
+instance, we can use <code class="docutils literal"><span class="pre">||</span></code> (&#8220;or&#8221;) to combine the top/bottom test into one
+statement, and the left/right test into another:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// hit top or bottom edge?</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">y</span> <span class="o">&gt;=</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+   <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// hit left or right edge?</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+   <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>The expression <code class="docutils literal"><span class="pre">y</span> <span class="pre">&lt;=</span> <span class="pre">0</span> <span class="pre">||</span> <span class="pre">y</span> <span class="pre">&gt;=</span> <span class="pre">499</span></code> is true when <code class="docutils literal"><span class="pre">y</span> <span class="pre">&lt;=</span> <span class="pre">0</span></code> is true, or when
+<code class="docutils literal"><span class="pre">y</span> <span class="pre">&gt;=</span> <span class="pre">499</span></code> is true, or when <em>both</em> <code class="docutils literal"><span class="pre">y</span> <span class="pre">&lt;=</span> <span class="pre">0</span></code> and <code class="docutils literal"><span class="pre">y</span> <span class="pre">&gt;=</span> <span class="pre">499</span></code> are true. The
+only time it is false is when <em>both</em> <code class="docutils literal"><span class="pre">y</span> <span class="pre">&lt;=</span> <span class="pre">0</span></code> is false, and <code class="docutils literal"><span class="pre">y</span> <span class="pre">&gt;=</span> <span class="pre">499</span></code> is
+false. Here it is a flow chart:</p>
+<a class="reference internal image-reference" href="_images/ballBounceFlowChart2.png"><img alt="Flow chart for the other style of if-statements." class="align-center" src="_images/ballBounceFlowChart2.png" style="width: 315.0px; height: 375.75px;" /></a>
+<p>It might seem that two if-statements are preferable to four &#8212; it&#8217;s less code
+after all!. But it&#8217;s not so simple. First, the two if-statement version has
+<em>more complicated</em> conditions. Second, the two if-statement version is less
+<em>changeable</em>. If you use this code in, say, a game, then it&#8217;s likely that
+you&#8217;ll want something different to happen to the ball depending on <em>which</em>
+edge it hits. Maybe the top edge is the sky and the bottom edge is the ground,
+and so the ball should fly off the screen if it hits the top, but bounce when
+it hits the bottom. You&#8217;ll need one if-statement for each different kind of
+edge behaviour, as we wrote in the first program.</p>
+</div>
+<div class="section" id="bouncing-off-the-ball-s-edge">
+<h2>Bouncing Off the Ball&#8217;s Edge<a class="headerlink" href="#bouncing-off-the-ball-s-edge" title="Permalink to this headline">¶</a></h2>
+<p>The basic bouncing ball program can be changed in many different ways. For
+instance, right now the ball changes direction when its <em>center</em> points hits
+an edge, which causes part of the ball to go off the screen.</p>
+<p>Suppose, instead, we want the ball never to leave the screen when it bounces.
+Then we need to test if one of its four edge points has gone off the screen:</p>
+<a class="reference internal image-reference" href="_images/circlePoints.png"><img alt="Four points in the edge of a circle." class="align-center" src="_images/circlePoints.png" style="width: 267.0px; height: 202.0px;" /></a>
+<p>Recall that, by default, <a class="reference external" href="http://processing.org/">Processing</a> sets the location on an ellipse by
+specifying its center point, (x, y). So when the ball hits the right edge of
+the screen, we want it to reverse its x-direction as soon as its right-most
+point &#8212; (x + 25, y) &#8212; hits the right edge. Similarly, we want the ball to
+reverse its y-direction when the point (x, y + 25) hits the bottom edge.</p>
+<p>Thus we can change the if-statements in draw to test for these four new
+points:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// hit the top edge?</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">-</span> <span class="mi">25</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// hit the bottom edge?</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">+</span> <span class="mi">25</span> <span class="o">&gt;=</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// hit the left edge?</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">25</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// hit the right edge?</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">25</span> <span class="o">&gt;=</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Make these changes in the program and run it. You&#8217;ll see that it makes the
+ball and screen-edges seem solid.</p>
+</div>
+<div class="section" id="stopping-at-the-top">
+<h2>Stopping at the Top<a class="headerlink" href="#stopping-at-the-top" title="Permalink to this headline">¶</a></h2>
+<p>Lets set ourselves another problem: how can we make the ball stop moving
+completely when it hits the top of the screen?</p>
+<p>It turns out to be a simple change:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// hit the top edge?</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">-</span> <span class="mi">25</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">dx</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="n">dy</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>We modify the code in the body of the if-statement that checks for hitting the
+top edge to set the speed of the ball to be 0 in both the x-direction and
+y-direction. This cases the ball to stop dead as soon as it hits the top edge
+of the screen.</p>
+<p>Keep in mind that even though the ball is not moving, <code class="docutils literal"><span class="pre">draw()</span></code> is still
+being called. The ellipse is still being drawn, and <code class="docutils literal"><span class="pre">x</span></code> and <code class="docutils literal"><span class="pre">y</span></code> are still
+being updated. But its position never changes because <code class="docutils literal"><span class="pre">dx</span></code> and <code class="docutils literal"><span class="pre">dy</span></code> are
+both 0.</p>
+</div>
+<div class="section" id="expanding-when-it-hits-the-top">
+<h2>Expanding When it Hits the Top<a class="headerlink" href="#expanding-when-it-hits-the-top" title="Permalink to this headline">¶</a></h2>
+<p>How can we make the ball bigger when it hits the top of the screen? In other
+words, we want the diameter of the ball to get bigger every time hits the top
+edge.</p>
+<p>Currently, the diameter of the ball is always set to 50:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="mi">50</span><span class="o">,</span> <span class="mi">50</span><span class="o">);</span>
+</pre></div>
+</div>
+<p>Since our diameter is now going to change, we need to replace 50 with a
+variable that stores the current diameter. So lets add the variable <code class="docutils literal"><span class="pre">diam</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// ... variables as before ...</span>
+
+<span class="kt">float</span> <span class="n">diam</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+   <span class="c1">// ... code as before ...</span>
+   <span class="n">diam</span> <span class="o">=</span> <span class="mi">50</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+   <span class="c1">// ... code as before ...</span>
+
+   <span class="c1">// draw the ball</span>
+   <span class="n">noStroke</span><span class="o">();</span>
+   <span class="n">fill</span><span class="o">(</span><span class="n">orange</span><span class="o">);</span>
+   <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">diam</span><span class="o">,</span> <span class="n">diam</span><span class="o">);</span>
+
+   <span class="c1">// ... code as before ...</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Now that the diameter of the ball is a variable, we can change it:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// hit the top edge?</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">-</span> <span class="mi">25</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+  <span class="n">diam</span> <span class="o">+=</span> <span class="mi">10</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Make this change and run the program, and you should see that the ball gets a
+little bit bigger each time it hits the top edge.</p>
+<p>A problem you might notice is that part of the ball now goes off the edge of
+the screen. We didn&#8217;t have this problem when the diameter was fixed. What is
+going on?</p>
+<p>The problem is caused by the if-statement conditions that check for edge
+collisions: they all assume that the diameter of the ball is 50. For example:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// hit the right edge?</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">25</span> <span class="o">&gt;=</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>The condition here is <code class="docutils literal"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">25</span> <span class="pre">&gt;=</span> <span class="pre">499</span></code>, and we use <code class="docutils literal"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">25</span></code> because that&#8217;s
+the x-coordinate of the right-most point of the circle of diameter 50. But the
+diameter of our circle is not 50: it&#8217;s <code class="docutils literal"><span class="pre">diam</span></code>. So we have to re-write the
+condition like this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// hit the right edge?</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&gt;=</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>The expression <code class="docutils literal"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">diam</span> <span class="pre">/</span> <span class="pre">2</span></code> is the x-value of the right-most point of a
+ball of diameter <code class="docutils literal"><span class="pre">diam</span></code>:</p>
+<a class="reference internal image-reference" href="_images/circlePointsDiameter.png"><img alt="Four points in the edge of a circle with diameter diam." class="align-center" src="_images/circlePointsDiameter.png" style="width: 317.0px; height: 199.0px;" /></a>
+<p>So we need to adjust each if-statement to take <code class="docutils literal"><span class="pre">diam</span></code> into account:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// hit the top edge?</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+  <span class="n">diam</span> <span class="o">+=</span> <span class="mi">10</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// hit the bottom edge?</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&gt;=</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// hit the left edge?</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// hit the right edge?</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&gt;=</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Make these changes to the program and see what happens. Does it work?</p>
+</div>
+<div class="section" id="debugging-finding-a-bug">
+<h2>Debugging: Finding a Bug<a class="headerlink" href="#debugging-finding-a-bug" title="Permalink to this headline">¶</a></h2>
+<p>Unfortunately, the above changes don&#8217;t quite work. When I run the modified
+program the ball gets stuck on the top edge of the screen and inflates to a
+huge size without ever bouncing off any other edges. Obviously something is
+wrong with the program. But what?</p>
+<p>This is a tricky error to deal with because there is no obvious flaw in any
+line of our code. The fact that the problem only occurs when the ball hits the
+top edge of the screen gives a hint about where the problem might be:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// hit the top edge?</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+  <span class="n">diam</span> <span class="o">+=</span> <span class="mi">10</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>To figure out what is going on, it is helpful to know what lines of code are
+being called. A simple way to check this is to use a <code class="docutils literal"><span class="pre">println</span></code> statement to
+print a message every time the code in the if-statement body is called:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// hit the top edge?</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">println</span><span class="o">(</span><span class="s">&quot;hit top edge?&quot;</span><span class="o">);</span>
+  <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+  <span class="n">diam</span> <span class="o">+=</span> <span class="mi">10</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">println</span></code> prints a message in the black window at the bottom of the
+<a class="reference external" href="http://processing.org/">Processing</a> editor know as the <a class="reference internal" href="glossary.html#term-console-window"><span class="xref std std-term">console window</span></a>. We usually use
+<code class="docutils literal"><span class="pre">println</span></code> to help us understand and fix programs.</p>
+<p>When you run the code after inserting this <code class="docutils literal"><span class="pre">println</span></code>, the ball still gets
+stuck and inflates at the top of the screen. But you should now see this in
+the black window at the bottom:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">hit</span> <span class="n">top</span> <span class="n">edge</span><span class="o">?</span>
+<span class="n">hit</span> <span class="n">top</span> <span class="n">edge</span><span class="o">?</span>
+<span class="n">hit</span> <span class="n">top</span> <span class="n">edge</span><span class="o">?</span>
+<span class="n">hit</span> <span class="n">top</span> <span class="n">edge</span><span class="o">?</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>What this tells us is that the body of the top-edge if-statement is being
+called again and again. Somehow, the top point of the ball has gotten stuck
+above the top edge of the screen and can&#8217;t get out.</p>
+<p>How might this happen? Lets try one more little trick: lets print the values
+of <code class="docutils literal"><span class="pre">y</span></code>, <code class="docutils literal"><span class="pre">dy</span></code>, and <code class="docutils literal"><span class="pre">diam</span></code> the <em>first</em> time the top-edge if-statement body
+is called, and then lets immediately stop the program using <code class="docutils literal"><span class="pre">System.exit(0)</span></code>
+to see the results:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">println</span><span class="o">(</span><span class="s">&quot;hit top edge?&quot;</span><span class="o">);</span>
+  <span class="n">println</span><span class="o">(</span><span class="s">&quot;diam = &quot;</span> <span class="o">+</span> <span class="n">diam</span><span class="o">);</span>
+  <span class="n">println</span><span class="o">(</span><span class="s">&quot;diam / 2 = &quot;</span> <span class="o">+</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">);</span>
+  <span class="n">println</span><span class="o">(</span><span class="s">&quot;y = &quot;</span> <span class="o">+</span> <span class="n">y</span><span class="o">);</span>
+  <span class="n">System</span><span class="o">.</span><span class="na">exit</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>  <span class="c1">// immediately stops the program</span>
+
+  <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+  <span class="n">diam</span> <span class="o">+=</span> <span class="mi">10</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Here&#8217;s the output that is produced on the console when the program
+runs:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">hit</span> <span class="n">top</span> <span class="n">edge</span><span class="o">?</span>
+<span class="n">diam</span> <span class="o">=</span> <span class="mf">50.0</span>
+<span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">=</span> <span class="mf">25.0</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mf">22.0</span>
+<span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="mf">4.0</span>
+</pre></div>
+</div>
+<p>This tells us the value of all the relevant variables the first time that <code class="docutils literal"><span class="pre">y</span>
+<span class="pre">-</span> <span class="pre">diam</span> <span class="pre">/</span> <span class="pre">2</span> <span class="pre">&lt;=</span> <span class="pre">0</span></code> evaluates to true. The expression <code class="docutils literal"><span class="pre">y</span> <span class="pre">-</span> <span class="pre">diam</span> <span class="pre">/</span> <span class="pre">2</span></code> is less
+than 0 because <code class="docutils literal"><span class="pre">y</span></code> is 22 and <code class="docutils literal"><span class="pre">diam</span> <span class="pre">/</span> <span class="pre">2</span></code> is 25.</p>
+<p>So that makes sense. Now lets imagine what happens when the next two
+statements are run:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+<span class="n">diam</span> <span class="o">+=</span> <span class="mi">10</span><span class="o">;</span>
+</pre></div>
+</div>
+<p>After running these, <code class="docutils literal"><span class="pre">dy</span></code> is 4, <code class="docutils literal"><span class="pre">diam</span></code> is 60, and <code class="docutils literal"><span class="pre">y</span></code> is still 22. This
+is where the problem lies: the expression <code class="docutils literal"><span class="pre">y</span> <span class="pre">-</span> <span class="pre">diam</span> <span class="pre">/</span> <span class="pre">2</span> <span class="pre">&lt;=</span> <span class="pre">0</span></code> is <em>true</em>
+because if you substitute the values for their variables, you get the true
+expression 22 - 30 &lt;= 0. So the point we use to test if the ball has gone off
+the top edge of the screen is already off the top edge!</p>
+<p>The next time <code class="docutils literal"><span class="pre">draw()</span></code> is called, <code class="docutils literal"><span class="pre">y</span></code> gets incremented by 2 (by <code class="docutils literal"><span class="pre">y</span> <span class="pre">+=</span>
+<span class="pre">dy</span></code>), and so is now 24. Thus <code class="docutils literal"><span class="pre">y</span> <span class="pre">-</span> <span class="pre">diam</span> <span class="pre">/</span> <span class="pre">2</span> <span class="pre">&lt;=</span> <span class="pre">0</span></code> is true (because it is
+<code class="docutils literal"><span class="pre">24</span> <span class="pre">-</span> <span class="pre">60</span> <span class="pre">/</span> <span class="pre">2</span> <span class="pre">&lt;=</span> <span class="pre">0</span></code>), and the top-edge if-statement body is executed once
+more. When that runs (ignoring <code class="docutils literal"><span class="pre">System.exit(0)</span></code> now), <code class="docutils literal"><span class="pre">diam</span></code> becomes 70
+and <code class="docutils literal"><span class="pre">dy</span></code> becomes -2. The next time <code class="docutils literal"><span class="pre">draw()</span></code> is called, <code class="docutils literal"><span class="pre">y</span></code> is back to 22
+and <code class="docutils literal"><span class="pre">diam</span></code> is 70, and so <code class="docutils literal"><span class="pre">y</span> <span class="pre">-</span> <span class="pre">diam</span> <span class="pre">/</span> <span class="pre">2</span> <span class="pre">&lt;=</span> <span class="pre">0</span></code> is still true.</p>
+<p>So <code class="docutils literal"><span class="pre">y</span></code> flips back and forth between 24 and 26 on each call to <code class="docutils literal"><span class="pre">draw()</span></code>.
+Since <code class="docutils literal"><span class="pre">diam</span></code> also increases on each call, the expression <code class="docutils literal"><span class="pre">y</span> <span class="pre">-</span> <span class="pre">diam</span> <span class="pre">/</span> <span class="pre">2</span> <span class="pre">&lt;=</span>
+<span class="pre">0</span></code> remains true. Thus the ball is trapped off the top edge of the screen.</p>
+<p>This is a tricky problem to catch. To understand it, you need to trace through
+a few calls to <code class="docutils literal"><span class="pre">draw()</span></code> to see that the values of <code class="docutils literal"><span class="pre">y</span></code> are stuck at 24 and
+26. These sorts of errors get easier to catch with experience, but you can
+never be rid of them completely: learning strategies for finding and fixing
+subtle bugs is an important part of programming.</p>
+</div>
+<div class="section" id="debugging-fixing-the-problem">
+<h2>Debugging: Fixing the Problem<a class="headerlink" href="#debugging-fixing-the-problem" title="Permalink to this headline">¶</a></h2>
+<p>So we&#8217;ve identified the problem, but how do we fix it? This is not completely
+obvious because there are many ways that we could modify the value of <code class="docutils literal"><span class="pre">y</span></code>
+(or even <code class="docutils literal"><span class="pre">dy</span></code>) that might fix it.</p>
+<p>But lets try to understand a little more what is going on. The first time that
+the top-edge if-statement condition is true, the image on the screen looks
+something like this:</p>
+<a class="reference internal image-reference" href="_images/overlapBall.png"><img alt="Interpenetrating ball." class="align-center" src="_images/overlapBall.png" style="width: 373.0px; height: 153.0px;" /></a>
+<p>The top of the ball goes a little bit into the top edge of the screen, i.e.
+the ball interpenetrates the edge. The ball and the edge are supposed to be
+hard surfaces that don&#8217;t allow any sort of <a class="reference internal" href="glossary.html#term-interpenetration"><span class="xref std std-term">interpenetration</span></a>. But our
+arithmetic allows for them to intersect, and so we have to do something to
+stop that.</p>
+<p>The solution we&#8217;ll use is as follows: when the ball interpenetrates an edge,
+we&#8217;ll rest its position to be just barely touching the edge. For example:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// hit the left edge?</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>In this if-statement, when the ball hits the left edge of the screen we
+reverse its direction, and then set <code class="docutils literal"><span class="pre">x</span></code> so that the ball is just touching
+the edge without going over. In a sense, we are re-setting the position of the
+ball every time it hits an edge.</p>
+<p>We have to reset the ball&#8217;s position for each if-statement:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// hit the top edge?</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+  <span class="n">diam</span> <span class="o">+=</span> <span class="mi">10</span><span class="o">;</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// hit the bottom edge?</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&gt;=</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="mi">499</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// hit the left edge?</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// hit the right edge?</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&gt;=</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="mi">499</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>This works! Run it and you will see that the ball now stays on the screen and
+expands when it hits the top.</p>
+</div>
+<div class="section" id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">What is pseudocode?</p>
+</li>
+<li><p class="first">Pseudocode and flow charts can both be used to represent
+programs. List the pros and cons of each.</p>
+</li>
+<li><p class="first">For each of the following expressions, state if it is <code class="docutils literal"><span class="pre">true</span></code> or
+<code class="docutils literal"><span class="pre">false</span></code>. Assume that <code class="docutils literal"><span class="pre">x</span></code>, <code class="docutils literal"><span class="pre">y</span></code>, <code class="docutils literal"><span class="pre">dx</span></code>, and <code class="docutils literal"><span class="pre">dy</span></code> are defined
+as follows:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">float</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">32</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">dx</span> <span class="o">=</span> <span class="mf">1.22</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">dy</span> <span class="o">=</span> <span class="mf">1.57</span><span class="o">;</span>
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><code class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">x</span></code></li>
+<li><code class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">y</span></code></li>
+<li><code class="docutils literal"><span class="pre">dx</span> <span class="pre">&lt;</span> <span class="pre">dy</span></code></li>
+<li><code class="docutils literal"><span class="pre">(dy</span> <span class="pre">&gt;</span> <span class="pre">dx)</span> <span class="pre">||</span> <span class="pre">(dy</span> <span class="pre">&lt;</span> <span class="pre">dy)</span></code></li>
+<li><code class="docutils literal"><span class="pre">(y</span> <span class="pre">==</span> <span class="pre">-4)</span> <span class="pre">||</span> <span class="pre">(x</span> <span class="pre">&gt;</span> <span class="pre">0)</span></code></li>
+<li><code class="docutils literal"><span class="pre">(y</span> <span class="pre">&lt;</span> <span class="pre">-4)</span> <span class="pre">||</span> <span class="pre">(x</span> <span class="pre">&lt;=</span> <span class="pre">0)</span></code></li>
+<li><code class="docutils literal"><span class="pre">(x</span> <span class="pre">==</span> <span class="pre">y)</span> <span class="pre">||</span> <span class="pre">(dx</span> <span class="pre">==</span> <span class="pre">dy)</span> <span class="pre">||</span> <span class="pre">(x</span> <span class="pre">+</span> <span class="pre">y</span> <span class="pre">==</span> <span class="pre">dx</span> <span class="pre">+</span> <span class="pre">dy)</span></code></li>
+<li><code class="docutils literal"><span class="pre">(1</span> <span class="pre">&lt;=</span> <span class="pre">2)</span> <span class="pre">||</span> <span class="pre">(x</span> <span class="pre">&gt;</span> <span class="pre">x)</span></code></li>
+<li><code class="docutils literal"><span class="pre">(x</span> <span class="pre">&lt;</span> <span class="pre">0)</span> <span class="pre">||</span> <span class="pre">(x</span> <span class="pre">&gt;</span> <span class="pre">499)</span> <span class="pre">||</span> <span class="pre">(y</span> <span class="pre">&lt;</span> <span class="pre">0)</span> <span class="pre">||</span> <span class="pre">(y</span> <span class="pre">&gt;</span> <span class="pre">499)</span></code></li>
+<li><code class="docutils literal"><span class="pre">(x</span> <span class="pre">&gt;</span> <span class="pre">mouseX)</span> <span class="pre">||</span> <span class="pre">(y</span> <span class="pre">&gt;</span> <span class="pre">mouseY)</span></code></li>
+</ol>
+</li>
+<li><p class="first">Draw a flow chart for the following code snippet:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+<span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">&gt;=</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+<span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+<span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>This code is the same as the if-statements in the sample program,
+except the second, third, and fourth statements begin with
+<code class="docutils literal"><span class="pre">else</span></code>.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="programming-questions">
+<h2>Programming Questions<a class="headerlink" href="#programming-questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Modify <a class="reference internal" href="pulsing_ball.html#ball-bounce-prog-label"><span>the bouncing ball program</span></a> so
+that a small ellipse is drawn under the ball as a shadow to give
+the illusion of 3-dimensions. For example:</p>
+<a class="reference internal image-reference" href="_images/ballShadow.png"><img alt="A ball with an elliptical shadow under it." class="align-center" src="_images/ballShadow.png" style="width: 102.0px; height: 115.0px;" /></a>
+<p>Make sure the shadow gets bigger as the ball&#8217;s size increases.</p>
+</li>
+<li><p class="first">Modify <a class="reference internal" href="pulsing_ball.html#ball-bounce-prog-label"><span>the bouncing ball program</span></a> so
+that when the ball hits the <em>left</em> edge of the screen, its speed
+increases by a factor of 1.5.</p>
+<p>Also, keep the ball&#8217;s size fixed: do <em>not</em> have it change size when
+it hits an edge.</p>
+</li>
+<li><p class="first">Write a program that makes a <em>square</em> bounce around the
+screen. When the squares hits an edge it should hit the edge
+exactly, without any part of it going off the screen.</p>
+<p>Keep the dimensions of the square the same throughout the program
+(e.g. don&#8217;t let it get bigger when it hits an edge).</p>
+</li>
+<li><p class="first">Write a program that makes an image (i.e. a <code class="docutils literal"><span class="pre">PImage</span></code>) bounce
+around the screen. When the image hits an edge it should hit the
+edge exactly, without any part of it going off the screen.</p>
+</li>
+<li><p class="first">Modify <a class="reference internal" href="pulsing_ball.html#ball-bounce-prog-label"><span>the bouncing ball program</span></a> so
+that the ball changes to red when it hits the top edge; to green
+when it hits the right edge; to blue when it hits the bottom edge;
+and to orange when it hits the left edge.</p>
+<p>Also, keep the ball&#8217;s size fixed: do <em>not</em> have it change size when
+it hits an edge.</p>
+</li>
+<li><p class="first">Draw a 200-by-200 square centered in the middle of a 500-by-500
+screen. Write a program that makes a ball bounce <em>inside</em> this
+square.</p>
+</li>
+<li><p class="first">Make <em>two</em> different colored balls bounce around the screen. You&#8217;ll
+need to keep track of the position, velocity, and color of each
+ball, so your program will need at least 10 different variables.</p>
+</li>
+<li><p class="first">Modify <a class="reference internal" href="pulsing_ball.html#ball-bounce-prog-label"><span>the bouncing ball program</span></a> so
+that the ball&#8217;s diameter does <em>not</em> change when it hits an
+edge. Instead, use the <code class="docutils literal"><span class="pre">map</span></code> function to make the balls diameter
+go from 25 to 150 as the mouse pointer moves horizontally across
+the screen.</p>
+<p>For example, when the mouse pointer is halfway across the screen,
+the ball should have a diameter of about 87 (i.e. halfway between
+25 and 150). When the mouse pointer is at the very left of the
+screen, the ball&#8217;s diameter should be 25.</p>
+</li>
+<li><p class="first">Modify <a class="reference internal" href="pulsing_ball.html#ball-bounce-prog-label"><span>the bouncing ball program</span></a> so
+that every <em>fifth</em> time the ball hits any edge it changes color. For
+example, it can start out orange, and the after 5 edge hits it
+turns red. Then after 5 more edge hits it turns red, and so on.</p>
+<p>Also, keep the ball&#8217;s size fixed: do <em>not</em> have it change size when
+it hits an edge.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="code-the-bouncing-ball-program">
+<h2>Code: The Bouncing Ball Program<a class="headerlink" href="#code-the-bouncing-ball-program" title="Permalink to this headline">¶</a></h2>
+<p id="ball-bounce-prog-label">This program makes a ball bounce around the screen, increasing its
+diameter every time it hits the top edge:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">color</span> <span class="n">white</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+<span class="n">color</span> <span class="n">orange</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">165</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+
+<span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">dx</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">dy</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">diam</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">smooth</span><span class="o">();</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>
+  <span class="n">dx</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="n">dy</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
+  <span class="n">diam</span> <span class="o">=</span> <span class="mi">50</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="n">white</span><span class="o">);</span>
+
+  <span class="n">noStroke</span><span class="o">();</span>
+  <span class="n">fill</span><span class="o">(</span><span class="n">orange</span><span class="o">);</span>
+  <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">diam</span><span class="o">,</span> <span class="n">diam</span><span class="o">);</span>
+
+  <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+
+  <span class="c1">// hit the left edge?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// hit the right edge?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&gt;=</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">499</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// hit the top edge?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+    <span class="n">diam</span> <span class="o">+=</span> <span class="mi">10</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// hit the bottom edge?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&gt;=</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">499</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="fading_circle.html" title="Special Effect: A Fading Circle"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="proj3.html" title="Project 3"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Toby Donaldson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,457 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Dots and Lines &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
+    <link rel="next" title="Simulating Water with a Particle System" href="sprite_water_sim.html" />
+    <link rel="prev" title="Simulating Water with a Particle System" href="water_sim.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="sprite_water_sim.html" title="Simulating Water with a Particle System"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="water_sim.html" title="Simulating Water with a Particle System"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Dots and Lines</a><ul>
+<li><a class="reference internal" href="#designing-our-program">Designing Our Program</a></li>
+<li><a class="reference internal" href="#filling-in-the-details">Filling in the Details</a></li>
+<li><a class="reference internal" href="#drawing-the-lines-with-a-for-each-loop">Drawing the Lines with a For-each Loop</a></li>
+<li><a class="reference internal" href="#drawing-the-lines-with-a-while-loop">Drawing the Lines with a While Loop</a></li>
+<li><a class="reference internal" href="#bouncing-points">Bouncing Points</a></li>
+<li><a class="reference internal" href="#programming-questions">Programming Questions</a></li>
+<li><a class="reference internal" href="#final-program-no-bouncing">Final Program (no bouncing)</a></li>
+<li><a class="reference internal" href="#final-program-bouncing">Final Program (bouncing)</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="water_sim.html"
+                        title="previous chapter">Simulating Water with a Particle System</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="sprite_water_sim.html"
+                        title="next chapter">Simulating Water with a Particle System</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="dots-and-lines">
+<h1>Dots and Lines<a class="headerlink" href="#dots-and-lines" title="Permalink to this headline">¶</a></h1>
+<p>Lets write a program that draws a dot wherever the user clicks on the screen.
+Between each dot a line is drawn so that we can see the path of the clicks.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Drawing connected points and lines turns out to be fairly common,
+and so <a class="reference external" href="http://processing.org/">Processing</a> provides some built-in functions to do it for you: see
+<a class="reference external" href="http://processing.org/reference/beginShape_.html">the documentation for beginShape</a> if you are curious.</p>
+</div>
+<div class="section" id="designing-our-program">
+<h2>Designing Our Program<a class="headerlink" href="#designing-our-program" title="Permalink to this headline">¶</a></h2>
+<p>Lets spend a moment thinking about how we want our program to work. When the
+user clicks the screen the first time, a red dot appears at the click point.
+Then, for the every click after that, a red dot is drawn at the click point,
+along with a straight line from its center to the center of the previous
+point.</p>
+<p>We&#8217;ll represent the dots as follows:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dy</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">Dot</span> <span class="kd">extends</span> <span class="n">Sprite</span> <span class="o">{</span>
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">fill</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+    <span class="n">noStroke</span><span class="o">();</span>
+    <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="mi">10</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span> <span class="c1">// class Dot</span>
+</pre></div>
+</div>
+<p>With the <code class="docutils literal"><span class="pre">Point</span></code> class in hand, lets now write a high-level sketch of the
+entire program:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Dot</span><span class="o">&gt;</span> <span class="n">dots</span><span class="o">;</span>  <span class="c1">// dots is initially null</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">smooth</span><span class="o">();</span>
+
+  <span class="n">dots</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Dot</span><span class="o">&gt;();</span> <span class="c1">// make an empty ArrayList of dots</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="c1">// draw all the lines</span>
+
+  <span class="c1">// draw all the points (on top of the lines)</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">mousePressed</span><span class="o">()</span> <span class="o">{</span>
+   <span class="c1">// add (mouseX, mouseY) to points</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>By using comments like this, we can see the overall structure of the program
+without yet needing to worry about the low-level details.</p>
+</div>
+<div class="section" id="filling-in-the-details">
+<h2>Filling in the Details<a class="headerlink" href="#filling-in-the-details" title="Permalink to this headline">¶</a></h2>
+<p>Now lets replace the comments with working code. We&#8217;ll start with
+<code class="docutils literal"><span class="pre">mousePressed</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">mousePressed</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">Dot</span> <span class="n">d</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Dot</span><span class="o">();</span>   <span class="c1">// create a new dot</span>
+  <span class="n">d</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">mouseX</span><span class="o">;</span>        <span class="c1">// set its center to be</span>
+  <span class="n">d</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">mouseY</span><span class="o">;</span>        <span class="c1">// at (mouseX, mouseY)</span>
+  <span class="n">dots</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">d</span><span class="o">);</span>         <span class="c1">// add it to the dots ArrayList</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Next, lets write the code for drawing all the points. This is not too hard:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="c1">// draw the lines</span>
+
+  <span class="c1">// draw the dots</span>
+  <span class="k">for</span> <span class="o">(</span><span class="n">Dot</span> <span class="n">d</span> <span class="o">:</span> <span class="n">dots</span><span class="o">)</span> <span class="o">{</span>   <span class="c1">// for each Dot d in dots</span>
+    <span class="n">d</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>          <span class="c1">// draw d</span>
+    <span class="n">d</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="drawing-the-lines-with-a-for-each-loop">
+<h2>Drawing the Lines with a For-each Loop<a class="headerlink" href="#drawing-the-lines-with-a-for-each-loop" title="Permalink to this headline">¶</a></h2>
+<p>Next, we need to draw the lines between the dots. To draw a line, we will need
+two dots, one for each endpoint of the line. One day to do it is like this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="c1">// draw the lines</span>
+  <span class="n">stroke</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+  <span class="n">Dot</span> <span class="n">prev</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+  <span class="k">for</span> <span class="o">(</span><span class="n">Dot</span> <span class="n">d</span> <span class="o">:</span> <span class="n">dots</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">prev</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">line</span><span class="o">(</span><span class="n">d</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">d</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="n">prev</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">prev</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="n">prev</span> <span class="o">=</span> <span class="n">d</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// draw the dots</span>
+  <span class="k">for</span> <span class="o">(</span><span class="n">Dot</span> <span class="n">d</span> <span class="o">:</span> <span class="n">dots</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">d</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>The variable <code class="docutils literal"><span class="pre">prev</span></code> keeps track of the dot that comes just before the dot
+<code class="docutils literal"><span class="pre">d</span></code> in the for-loop. When the loop starts, <code class="docutils literal"><span class="pre">prev</span></code> is set to the special
+value <code class="docutils literal"><span class="pre">null</span></code> because there is no previous dot. Inside the loop, we need an
+if-statement to make sure that <code class="docutils literal"><span class="pre">prev</span></code> is non-null before drawing a line.</p>
+<p>Recall that <code class="docutils literal"><span class="pre">null</span></code> is a special value that is used with object variables to
+indicate they are not referring to any object (yet). That makes sense here:
+there&#8217;s is no point before the first one.</p>
+</div>
+<div class="section" id="drawing-the-lines-with-a-while-loop">
+<h2>Drawing the Lines with a While Loop<a class="headerlink" href="#drawing-the-lines-with-a-while-loop" title="Permalink to this headline">¶</a></h2>
+<p>An alternative way to draw the lines is to use a while-loop like this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// draw the lines</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">dots</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="c1">// i starts at 1 because dots.get(i - 1) is an error when i == 0</span>
+  <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">dots</span><span class="o">.</span><span class="na">size</span><span class="o">())</span> <span class="o">{</span>
+    <span class="n">Dot</span> <span class="n">a</span> <span class="o">=</span> <span class="n">dots</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+    <span class="n">Dot</span> <span class="n">b</span> <span class="o">=</span> <span class="n">dots</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+    <span class="n">stroke</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+    <span class="n">line</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">a</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="n">b</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">b</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>The idea here is to make the index variable <code class="docutils literal"><span class="pre">i</span></code> take on the values 1, 2, 3,
+..., n - 1 (where n is <code class="docutils literal"><span class="pre">dots.size()</span></code>), and then to draw a line from the
+<code class="docutils literal"><span class="pre">Dot</span></code> at location <code class="docutils literal"><span class="pre">i</span> <span class="pre">-</span> <span class="pre">1</span></code> to the <code class="docutils literal"><span class="pre">Dot</span></code> at location <code class="docutils literal"><span class="pre">i</span></code>.</p>
+</div>
+<div class="section" id="bouncing-points">
+<h2>Bouncing Points<a class="headerlink" href="#bouncing-points" title="Permalink to this headline">¶</a></h2>
+<p>As a fun example, lets modify the above program so that the points fall down
+and bounce on the bottom of the screen. While not terribly practical, it is a
+nice-looking effect that might give you ideas for other kinds of animation.</p>
+<p>We want this new program to work just like the previous one, except that when
+you press any key suddenly gravity is turned on and the dots all begin to fall
+downwards.</p>
+<p>We saw in <a class="reference internal" href="simple_gravity.html"><em>earlier notes</em></a> how to make a ball fall down
+and bounce on the screen. The idea is add two new variables: <code class="docutils literal"><span class="pre">gravity</span></code>, to
+control how fast a dot falls downwards, and <code class="docutils literal"><span class="pre">elasticity</span></code> to control how
+high it bounces:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Dot</span> <span class="kd">extends</span> <span class="n">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">gravity</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">elasticity</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">fill</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+    <span class="n">noStroke</span><span class="o">();</span>
+    <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="mi">10</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+
+    <span class="n">dy</span> <span class="o">+=</span> <span class="n">gravity</span><span class="o">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">&gt;=</span> <span class="n">height</span><span class="o">)</span> <span class="o">{</span>  <span class="c1">// check if ball has hit the bottom edge</span>
+      <span class="n">dy</span> <span class="o">=</span> <span class="o">-(</span><span class="n">dy</span> <span class="o">*</span> <span class="n">elasticity</span><span class="o">);</span>
+      <span class="n">y</span> <span class="o">=</span> <span class="n">height</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span> <span class="c1">// class Dot</span>
+</pre></div>
+</div>
+<p>When the mouse is clicked, we need to set the dots gravity and elasticity:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">mousePressed</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">Dot</span> <span class="n">d</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Dot</span><span class="o">();</span>
+  <span class="n">d</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">mouseX</span><span class="o">;</span>
+  <span class="n">d</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">mouseY</span><span class="o">;</span>
+  <span class="n">d</span><span class="o">.</span><span class="na">gravity</span> <span class="o">=</span> <span class="mf">0.1</span><span class="o">;</span>
+  <span class="n">d</span><span class="o">.</span><span class="na">elasticity</span> <span class="o">=</span> <span class="mf">0.8</span><span class="o">;</span>
+  <span class="n">dots</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">d</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Now when you run the program, the dots bounce on the bottom of the screen.</p>
+</div>
+<div class="section" id="programming-questions">
+<h2>Programming Questions<a class="headerlink" href="#programming-questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Modify the bouncing dots program so that the dots don&#8217;t start moving until
+the user presses a key. If the user then presses a key while the dots are
+moving, they should immediately stop where they are and not move again
+until the user presses any key.</li>
+</ol>
+</div>
+<div class="section" id="final-program-no-bouncing">
+<span id="oop-point-line-prog-label"></span><h2>Final Program (no bouncing)<a class="headerlink" href="#final-program-no-bouncing" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dy</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">Dot</span> <span class="kd">extends</span> <span class="n">Sprite</span> <span class="o">{</span>
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">fill</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+    <span class="n">noStroke</span><span class="o">();</span>
+    <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="mi">10</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span> <span class="c1">// class Dot</span>
+
+<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Dot</span><span class="o">&gt;</span> <span class="n">dots</span><span class="o">;</span>  <span class="c1">// dots is initially null</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">smooth</span><span class="o">();</span>
+
+  <span class="n">dots</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Dot</span><span class="o">&gt;();</span> <span class="c1">// make an empty ArrayList of dots</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="c1">// draw the lines</span>
+  <span class="n">Dot</span> <span class="n">prev</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+  <span class="k">for</span> <span class="o">(</span><span class="n">Dot</span> <span class="n">d</span> <span class="o">:</span> <span class="n">dots</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">prev</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">stroke</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+      <span class="n">line</span><span class="o">(</span><span class="n">d</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">d</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="n">prev</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">prev</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="n">prev</span> <span class="o">=</span> <span class="n">d</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// draw the dots</span>
+  <span class="k">for</span> <span class="o">(</span><span class="n">Dot</span> <span class="n">d</span> <span class="o">:</span> <span class="n">dots</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">d</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">mousePressed</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">Dot</span> <span class="n">d</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Dot</span><span class="o">();</span>
+  <span class="n">d</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">mouseX</span><span class="o">;</span>
+  <span class="n">d</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">mouseY</span><span class="o">;</span>
+  <span class="n">dots</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">d</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="final-program-bouncing">
+<span id="oop-point-line-bounce-prog-label"></span><h2>Final Program (bouncing)<a class="headerlink" href="#final-program-bouncing" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dy</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">Dot</span> <span class="kd">extends</span> <span class="n">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">gravity</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">elasticity</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">fill</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+    <span class="n">noStroke</span><span class="o">();</span>
+    <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="mi">10</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+
+    <span class="n">dy</span> <span class="o">+=</span> <span class="n">gravity</span><span class="o">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">&gt;=</span> <span class="n">height</span><span class="o">)</span> <span class="o">{</span>  <span class="c1">// check if ball has hit the bottom edge</span>
+      <span class="n">dy</span> <span class="o">=</span> <span class="o">-(</span><span class="n">dy</span> <span class="o">*</span> <span class="n">elasticity</span><span class="o">);</span>
+      <span class="n">y</span> <span class="o">=</span> <span class="n">height</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span> <span class="c1">// class Dot</span>
+
+<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Dot</span><span class="o">&gt;</span> <span class="n">dots</span><span class="o">;</span>  <span class="c1">// dots is initially null</span>
+
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">smooth</span><span class="o">();</span>
+
+  <span class="n">dots</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Dot</span><span class="o">&gt;();</span> <span class="c1">// make an empty ArrayList of dots</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="c1">// draw the lines</span>
+  <span class="n">Dot</span> <span class="n">prev</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+  <span class="k">for</span> <span class="o">(</span><span class="n">Dot</span> <span class="n">d</span> <span class="o">:</span> <span class="n">dots</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">prev</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">stroke</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+      <span class="n">line</span><span class="o">(</span><span class="n">d</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">d</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="n">prev</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">prev</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="n">prev</span> <span class="o">=</span> <span class="n">d</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// draw the dots</span>
+  <span class="k">for</span> <span class="o">(</span><span class="n">Dot</span> <span class="n">d</span> <span class="o">:</span> <span class="n">dots</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">d</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="n">d</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">mousePressed</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">Dot</span> <span class="n">d</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Dot</span><span class="o">();</span>
+  <span class="n">d</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">mouseX</span><span class="o">;</span>
+  <span class="n">d</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">mouseY</span><span class="o">;</span>
+  <span class="n">d</span><span class="o">.</span><span class="na">gravity</span> <span class="o">=</span> <span class="mf">0.1</span><span class="o">;</span>
+  <span class="n">d</span><span class="o">.</span><span class="na">elasticity</span> <span class="o">=</span> <span class="mf">0.8</span><span class="o">;</span>
+  <span class="n">dots</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">d</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="sprite_water_sim.html" title="Simulating Water with a Particle System"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="water_sim.html" title="Simulating Water with a Particle System"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Toby Donaldson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

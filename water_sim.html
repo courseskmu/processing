@@ -1,0 +1,426 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Simulating Water with a Particle System &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
+    <link rel="next" title="Dots and Lines" href="dots_example.html" />
+    <link rel="prev" title="Example: A Sound Effects Board (Extra)" href="sound_effects_board.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="dots_example.html" title="Dots and Lines"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="sound_effects_board.html" title="Example: A Sound Effects Board (Extra)"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Simulating Water with a Particle System</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#what-is-water">What is Water?</a></li>
+<li><a class="reference internal" href="#one-drop-of-water">One Drop of Water</a></li>
+<li><a class="reference internal" href="#multiple-particles">Multiple Particles</a></li>
+<li><a class="reference internal" href="#programming-questions">Programming Questions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="sound_effects_board.html"
+                        title="previous chapter">Example: A Sound Effects Board (Extra)</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="dots_example.html"
+                        title="next chapter">Dots and Lines</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="simulating-water-with-a-particle-system">
+<h1>Simulating Water with a Particle System<a class="headerlink" href="#simulating-water-with-a-particle-system" title="Permalink to this headline">¶</a></h1>
+<p>In these notes you will learn:</p>
+<ul class="simple">
+<li>About particle systems and their many uses.</li>
+<li>How to model a drop of water as an object.</li>
+<li>How to model a flow of water as an <code class="docutils literal"><span class="pre">ArrayList</span></code> of objects.</li>
+</ul>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>One of the things that&#8217;s easy to do in object-oriented programming is create
+many copies of an object. In this note, we&#8217;ll see how to simulate flowing
+water by create hundreds of small rectangles each representing one droplet of
+water. This is an example of a technique called <a class="reference external" href="http://en.wikipedia.org/wiki/Particle_system">particle systems</a>, which is often used to
+simulate things like water, smoke, fire, clouds, and so on.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Particle systems can be used to create many different kinds of
+special effects. For instance, if you search for &#8220;particle system&#8221;
+on YouTube you&#8217;ll find impressive demos like <a class="reference external" href="http://www.youtube.com/watch?v=7wWsYTYGX78">this</a>.</p>
+</div>
+</div>
+<div class="section" id="what-is-water">
+<h2>What is Water?<a class="headerlink" href="#what-is-water" title="Permalink to this headline">¶</a></h2>
+<p>Roughly speaking, water consists of many small particles called &#8220;drops of
+water&#8221;. Each droplet has a position and velocity, and so we can write this
+class:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Droplet</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">;</span>    <span class="c1">// position of the droplet</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">,</span> <span class="n">dy</span><span class="o">;</span>  <span class="c1">// velocity of the droplet</span>
+  <span class="kt">float</span> <span class="n">gravity</span><span class="o">;</span> <span class="c1">// force of gravity on this droplet</span>
+
+  <span class="n">Droplet</span><span class="o">()</span> <span class="o">{</span>   <span class="c1">// constructor</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">290</span><span class="o">;</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="mf">2.86</span><span class="o">;</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.30</span><span class="o">;</span>
+    <span class="n">gravity</span> <span class="o">=</span> <span class="mf">0.01</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">pushMatrix</span><span class="o">();</span>
+    <span class="n">noStroke</span><span class="o">();</span>
+    <span class="n">fill</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">255</span><span class="o">);</span>
+    <span class="n">translate</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+    <span class="n">rect</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">15</span><span class="o">,</span> <span class="mi">15</span><span class="o">);</span>
+    <span class="n">popMatrix</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+
+    <span class="n">dy</span> <span class="o">+=</span> <span class="n">gravity</span><span class="o">;</span>
+  <span class="o">}</span>
+
+<span class="o">}</span> <span class="c1">// class Droplet</span>
+</pre></div>
+</div>
+<p>Note the following:</p>
+<ul>
+<li><p class="first">The <code class="docutils literal"><span class="pre">render()</span></code> function uses <code class="docutils literal"><span class="pre">translate</span></code> to move the origin of the
+coordinate system to where we want to draw the droplet. Thus the <code class="docutils literal"><span class="pre">rect</span></code>
+function always draws the drop at (0, 0).</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">pushMatrix</span></code> saves the current coordinate system, and <code class="docutils literal"><span class="pre">popMatrix</span></code>
+restores the coordinate system to the way it was before the (most recent)
+call to <code class="docutils literal"><span class="pre">pushMatrix</span></code>.</p>
+</li>
+<li><p class="first"><a class="reference internal" href="simple_gravity.html"><em>As we&#8217;ve seen before</em></a>, gravity is simulated as a
+downward acceleration. For a <code class="docutils literal"><span class="pre">Droplet</span></code> object this means that we add a
+small value (the &#8220;gravitational constant&#8221; for the droplet) to <code class="docutils literal"><span class="pre">dy</span></code> every
+frame.</p>
+</li>
+<li><p class="first">The constructor for the droplet doesn&#8217;t need any input values:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">droplet</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Droplet</span><span class="o">();</span>
+</pre></div>
+</div>
+<p>This creates a new <code class="docutils literal"><span class="pre">Droplet</span></code> object and calls the <code class="docutils literal"><span class="pre">Droplet()</span></code>
+constructor, which in turn sets all the variables of the droplet to some
+default values.</p>
+<p>The <code class="docutils literal"><span class="pre">Droplet()</span></code> constructor is designed just for drawing one particle, and
+so we will soon have to change it.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="one-drop-of-water">
+<h2>One Drop of Water<a class="headerlink" href="#one-drop-of-water" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have the <code class="docutils literal"><span class="pre">Droplet</span></code> class, lets think about the path a single
+drop of water takes when it is shot out of a hose. Suppose the particle comes
+out of a hose on the left side of the screen and moves to the right at an
+(initially) upward angle.  As it moves across the screen, gravity is
+constantly pulling it down towards the bottom of the screen. Thus the particle
+traces a curve across the screen: it starts low, goes high, and then goes low
+again.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If this were a physics class we would sharpen this description to
+the point where a particle&#8217;s path can be described mathematically. However,
+we are not interested in the exact equations of movement here. Instead, we
+want to simulate particle movement well enough to look good for whatever
+application we are using it for.</p>
+</div>
+<p>So lets get this working in code:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// ... Droplet class as above ...</span>
+
+<span class="n">Droplet</span> <span class="n">droplet</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">900</span><span class="o">,</span> <span class="mi">400</span><span class="o">);</span>
+
+  <span class="n">droplet</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Droplet</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+  <span class="n">droplet</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+  <span class="n">droplet</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Run this program and you&#8217;ll see a small blue square fly across the screen
+following a curved trajectory.</p>
+</div>
+<div class="section" id="multiple-particles">
+<h2>Multiple Particles<a class="headerlink" href="#multiple-particles" title="Permalink to this headline">¶</a></h2>
+<p>To simulate a flow of water out of a hose, we need to make some modifications:</p>
+<ul>
+<li><p class="first">We need to add many more droplets &#8212; enough to make it look somewhat like a
+stream of water.</p>
+</li>
+<li><p class="first">We&#8217;ll add some randomness to the starting position and velocity of the
+droplets so that they spread out a bit. If we don&#8217;t do this then all the
+particles will follow exactly the same path.</p>
+</li>
+<li><p class="first">We will want to &#8220;recycle&#8221; water droplets. With so many <code class="docutils literal"><span class="pre">Droplet</span></code> objects
+being animated at once, our program might start to slow down or eat up a lot
+of memory.</p>
+<p>So we&#8217;ll re-use droplets once they have flown off the screen and are no
+longer visible. This is a common trick, and it gives the illusion of a
+continuous flow of water while using a fixed amount of memory.</p>
+</li>
+</ul>
+<p>Here&#8217;s the modified program:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">final</span> <span class="kt">int</span> <span class="n">NUM_DROPLETS</span> <span class="o">=</span> <span class="mi">200</span><span class="o">;</span>
+<span class="kd">final</span> <span class="kt">float</span> <span class="n">SPEED</span> <span class="o">=</span> <span class="mi">8</span><span class="o">;</span>
+
+<span class="kd">class</span> <span class="nc">Droplet</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">,</span> <span class="n">dy</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">gravity</span><span class="o">;</span>
+
+  <span class="n">Droplet</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">randomReset</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">randomReset</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">height</span> <span class="o">-</span> <span class="mi">10</span><span class="o">;</span>  <span class="c1">// height is the height of the screen</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">SPEED</span> <span class="o">*</span> <span class="n">random</span><span class="o">(</span><span class="mf">0.24</span><span class="o">,</span> <span class="mf">0.245</span><span class="o">);</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">SPEED</span> <span class="o">*</span> <span class="n">random</span><span class="o">(-</span><span class="mf">0.45</span><span class="o">,</span> <span class="o">-</span><span class="mf">0.35</span><span class="o">);</span>
+    <span class="n">gravity</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">random</span><span class="o">(</span><span class="mf">0.005</span><span class="o">,</span> <span class="mf">0.015</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">pushMatrix</span><span class="o">();</span>
+    <span class="n">noStroke</span><span class="o">();</span>
+    <span class="n">fill</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">255</span><span class="o">);</span>
+    <span class="n">translate</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+    <span class="n">rect</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">15</span><span class="o">,</span> <span class="mi">15</span><span class="o">);</span>
+    <span class="n">popMatrix</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+
+    <span class="n">dy</span> <span class="o">+=</span> <span class="n">gravity</span><span class="o">;</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">offScreen</span><span class="o">())</span> <span class="o">{</span>
+      <span class="n">randomReset</span><span class="o">();</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="kt">boolean</span> <span class="nf">offScreen</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">&gt;</span> <span class="n">height</span> <span class="o">||</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">width</span> <span class="o">||</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span> <span class="c1">// class Droplet</span>
+
+
+<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Droplet</span><span class="o">&gt;</span> <span class="n">droplets</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">900</span><span class="o">,</span> <span class="mi">400</span><span class="o">);</span>
+
+  <span class="n">droplets</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Droplet</span><span class="o">&gt;();</span>
+  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">NUM_DROPLETS</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">Droplet</span> <span class="n">d</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Droplet</span><span class="o">();</span>
+    <span class="n">droplets</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">d</span><span class="o">);</span>
+    <span class="o">++</span><span class="n">i</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+  <span class="k">for</span> <span class="o">(</span><span class="n">Droplet</span> <span class="n">drop</span> <span class="o">:</span> <span class="n">droplets</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">drop</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="n">drop</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Notice the following:</p>
+<ul>
+<li><p class="first">The constant <code class="docutils literal"><span class="pre">NUM_DROPLETS</span></code> is how many droplets of water will be in the
+simulation. Play around with this value to see the results you get.</p>
+<p>Keep in mind that the bigger the value of <code class="docutils literal"><span class="pre">NUM_DROPLETS</span></code>, the more time
+and memory the program takes to run.</p>
+</li>
+<li><p class="first">The constant <code class="docutils literal"><span class="pre">SPEED</span></code> is used as a convenient way to speed-up or slow-down
+all the particles at once. It&#8217;s used in <code class="docutils literal"><span class="pre">randomReset</span></code>.</p>
+</li>
+<li><p class="first">The <code class="docutils literal"><span class="pre">randomReset</span></code> function in <code class="docutils literal"><span class="pre">Droplet</span></code> re-sets the droplet to be at the
+left side of the screen. Its velocity and gravity are then set randomly.</p>
+</li>
+<li><p class="first">The <code class="docutils literal"><span class="pre">offScreen</span></code> function returns <code class="docutils literal"><span class="pre">true</span></code> if the droplet is off the
+screen, and <code class="docutils literal"><span class="pre">false</span></code> if it is on the screen.</p>
+</li>
+<li><p class="first">The <code class="docutils literal"><span class="pre">update</span></code> function calls <code class="docutils literal"><span class="pre">randomReset</span></code> whenever it goes off the
+screen. In this way particles that are no longer visible get re-used in the
+animation.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">Droplet</span></code> objects are stored in an <code class="docutils literal"><span class="pre">ArrayList&lt;Droplet&gt;</span></code> container:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// ...</span>
+
+<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Droplet</span><span class="o">&gt;</span> <span class="n">droplets</span><span class="o">;</span>  <span class="c1">// initialized to null</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="c1">// ...</span>
+
+  <span class="n">droplets</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Droplet</span><span class="o">&gt;();</span>  <span class="c1">// creates an empty ArrayList</span>
+
+  <span class="c1">// ...</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">We add <code class="docutils literal"><span class="pre">Droplet</span></code> objects to <code class="docutils literal"><span class="pre">droplets</span></code> using a while-loop:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// ...</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="c1">//  ...</span>
+
+  <span class="n">droplets</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Droplet</span><span class="o">&gt;();</span>
+  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">NUM_DROPLETS</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">Droplet</span> <span class="n">d</span> <span class="o">=</span> <span class="n">randomDroplet</span><span class="o">();</span>
+    <span class="n">droplets</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">d</span><span class="o">);</span>
+    <span class="o">++</span><span class="n">i</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>The while-loop repeatedly creates a new random droplet, adds it to
+<code class="docutils literal"><span class="pre">droplets</span></code>, and then increments <code class="docutils literal"><span class="pre">i</span></code>. Eventually, the condition <code class="docutils literal"><span class="pre">i</span> <span class="pre">&lt;</span>
+<span class="pre">NUM_DROPLETS</span></code> will become <code class="docutils literal"><span class="pre">false</span></code>, thus terminating the loop.</p>
+</li>
+<li><p class="first">The for-each loop in the <code class="docutils literal"><span class="pre">draw</span></code> function draws and updates each water
+droplet:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+  <span class="k">for</span> <span class="o">(</span><span class="n">Droplet</span> <span class="n">drop</span> <span class="o">:</span> <span class="n">droplets</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">drop</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="n">drop</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>The results of this program are quite interesting: it creates an effect that
+is, at least, suggestive of water. It&#8217;s far from perfect, though, and you
+would need to play around with it some more to get it looking just right.</p>
+</div>
+<div class="section" id="programming-questions">
+<h2>Programming Questions<a class="headerlink" href="#programming-questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>The pre-defined <a class="reference external" href="http://processing.org/">Processing</a> variable <code class="docutils literal"><span class="pre">frameRate</span></code> is the approximate
+number of frames per second that a program is running at. Print the value
+of <code class="docutils literal"><span class="pre">frameRate</span></code> in the upper-left corner of the screen so that it is easy
+to see what the current frame rate is. This is a good way to get a quick
+estimate of the performance of your program after you add some new special
+effect, e.g. some effects like smoothing or using alpha values can have a
+significant impact on the frame rate.</li>
+<li>Modify <code class="docutils literal"><span class="pre">randomReset</span></code> so that the size of the droplet is randomly chosen
+within a min/max range of values of your choosing.</li>
+<li>Modify the program so that the source of the water is the location of the
+mouse pointer. Thus, as you move the pointer around the screen the <em>entire</em>
+flow of water moves with it.</li>
+<li>Modify your answer to the previous question so that if you click on the
+screen, then the water flow is &#8220;pinned&#8221; to that location for the rest of
+the program. That is, the water flow will <em>not</em> follow the mouse after you
+have clicked a button.</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="dots_example.html" title="Dots and Lines"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="sound_effects_board.html" title="Example: A Sound Effects Board (Extra)"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Toby Donaldson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

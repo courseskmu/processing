@@ -1,0 +1,550 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Designing a Game &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
+    <link rel="next" title="Random Numbers" href="random_numbers.html" />
+    <link rel="prev" title="Constructors" href="constructors.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="random_numbers.html" title="Random Numbers"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="constructors.html" title="Constructors"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Designing a Game</a><ul>
+<li><a class="reference internal" href="#iterative-implementation">Iterative Implementation</a></li>
+<li><a class="reference internal" href="#step-1-get-a-basic-idea">Step 1: Get a Basic Idea</a><ul>
+<li><a class="reference internal" href="#using-make-believe-players">Using Make-believe Players</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#step-2-expand-upon-the-basic-idea">Step 2: Expand Upon the Basic Idea</a><ul>
+<li><a class="reference internal" href="#iterative-design">Iterative Design</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#step-3-implement-the-next-version">Step 3: Implement the Next Version</a></li>
+<li><a class="reference internal" href="#step-4-add-one-feature-then-test-it">Step 4: Add One Feature &#8212; then Test It</a></li>
+<li><a class="reference internal" href="#step-5-go-back-to-step-4">Step 5: Go Back to Step 4</a></li>
+<li><a class="reference internal" href="#conclusion">Conclusion</a></li>
+<li><a class="reference internal" href="#the-game">The Game</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="constructors.html"
+                        title="previous chapter">Constructors</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="random_numbers.html"
+                        title="next chapter">Random Numbers</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="designing-a-game">
+<h1>Designing a Game<a class="headerlink" href="#designing-a-game" title="Permalink to this headline">¶</a></h1>
+<p>In this note we&#8217;re going to discuss how to go about creating a game. While
+there is no guaranteed recipe for designing a good game (or for designing
+anything!), it wise to at least try to follow a systematic process and plan
+things out ahead of time.</p>
+<p>Before you get started, you should have a basic idea of what you want your
+game to be about, and if you can actually implement it. For example, you might
+consider:</p>
+<ul>
+<li><p class="first"><strong>Theme</strong>, <strong>setting</strong>, <strong>characters</strong>: What is your game about? Are there
+characters in it? Or is it completely abstract (like checkers)? Does it have
+a story?</p>
+</li>
+<li><p class="first"><strong>Game-play mechanics</strong>: How would you describe the basic actions that the
+player can do in the game? Is it a first-person shooter? A driving game? A
+puzzle-solving game?</p>
+</li>
+<li><p class="first"><strong>Game audience</strong>: Who will be playing it, and how they&#8217;ll be interacting
+with it? For example, a game for kids in kindergarten to grade 1 can&#8217;t have
+much text in it because many such kids can&#8217;t read yet. Or if you are
+designing a game for a mobile phone, you probably don&#8217;t want your game to
+require extensive use of a keyboard.</p>
+</li>
+<li><p class="first"><strong>Programming know-how</strong>: Do you know enough about programming to implement
+the game you have in mind? If not, you need to modify your idea so that it
+is something that you are pretty sure you can implement.</p>
+</li>
+<li><p class="first"><strong>Time</strong>: How much time do you have to get the game done? This includes the
+time to write the code, and also to play-test the game.</p>
+<p>In general, it&#8217;s a good idea to plan to spend about 50% of your time writing
+the code for a game, and 50% of your time testing it. So if you have 10
+hours to get a game done, spend about 5 hours writing code, and 5 hours
+testing it.</p>
+</li>
+</ul>
+<div class="section" id="iterative-implementation">
+<h2>Iterative Implementation<a class="headerlink" href="#iterative-implementation" title="Permalink to this headline">¶</a></h2>
+<p>Once you have the basic idea in mind of what you want to do, it&#8217;s time to
+start programming it. A good general approach to follow is this:</p>
+<ul class="simple">
+<li>Step 1: Get a basic idea</li>
+<li>Step 2: Make the basic idea more concrete.</li>
+<li>Step 3: Implement the next version of your game.</li>
+<li>Step 4: Add one feature and test it (fix it if it&#8217;s not working!).</li>
+<li>Step 5: Go back to step 4.</li>
+</ul>
+<p>The key idea is to <strong>work on one feature at a time</strong>. It&#8217;s easier to think
+about and test one thing at a time, and you will always be making a little bit
+of progress. You should have a working program at all times that you can test,
+or demo to people.</p>
+<p>Here&#8217;s a <strong>bad</strong> process to follow when implementing a program: implement a
+bunch of features, and then test them all at once. This is sometimes called
+<strong>big bang implementation</strong>, and it usually doesn&#8217;t work out very well. The
+problem with implementing multiple features at once is that the features can
+interact with each other in unexpected ways. It can be very difficult to
+figure out which feature, or features, is the cause of a problem.</p>
+<p>In what follows, suppose you are working for <a class="reference external" href="https://www.scienceworld.ca/">Science World</a>, and they want you to create a game that
+helps explain germs to kids. The exact details of the game are up to you, so
+long as it is somehow about germs, and is easy enough for little kids to play.
+And, of course, it should be fun!</p>
+</div>
+<div class="section" id="step-1-get-a-basic-idea">
+<h2>Step 1: Get a Basic Idea<a class="headerlink" href="#step-1-get-a-basic-idea" title="Permalink to this headline">¶</a></h2>
+<p>The first step in creating a game is to get an idea of what you want the game
+to be about. Sometimes a boss, teacher, or client tells you what to do, and
+other times it will be up to you.</p>
+<p>While there is no simple recipe for coming up with ideas, designers often
+think about games in two specific ways: theme-driven, or mechanics-driven:</p>
+<ul class="simple">
+<li><strong>Theme-driven</strong> game designs starts with a theme &#8212; Nazi zombies, bakery
+management, be Justin Bieber for day, etc. &#8212; and then adds game mechanics
+to fit the theme. Games based on movies are a good example of theme-first
+games.</li>
+<li><strong>Mechanics-driven</strong> games start with a game-play idea, and then add a theme
+later. For example, <a class="reference external" href="https://en.wikipedia.org/wiki/Tetris">Tetris</a> and
+<a class="reference external" href="https://en.wikipedia.org/wiki/Pong">Pong</a> are examples of mechanics-
+driven games with very little theme.</li>
+</ul>
+<p>In practice, most games are mix of theme and mechanics, and they may be
+developed haphazardly: sometimes a theme will suggest a game-play mechanic,
+and sometimes a game-play mechanic will suggest a theme.</p>
+<p>For our Science World game, let&#8217;s take a mechanics-driven approach and start
+with the game-play idea of <em>dodging obstacles</em>. We will assume that the player
+controls an on-screen sprite that needs to avoid <em>monster</em> sprites. If a
+monster touches a player, it&#8217;s game over.</p>
+<div class="section" id="using-make-believe-players">
+<h3>Using Make-believe Players<a class="headerlink" href="#using-make-believe-players" title="Permalink to this headline">¶</a></h3>
+<p>A trick that&#8217;s sometimes useful for designing games (or anything!) is to have
+specific players in mind. Thinking about what a make-believe player wants can
+help you make decisions about your game. Some designers even go so far as to
+give their make-believe players a name and a personal back story!</p>
+<p>Let&#8217;s assume that the main audience for our game is young kids, around grades
+1 or 2, who are just learning how to read. They understand how to play video
+games, of course, but they won&#8217;t play anything too complicated or with too
+many words. If older kids, or adults, find the game too simplistic that&#8217;s okay
+&#8212; they are not the target audience.</p>
+</div>
+</div>
+<div class="section" id="step-2-expand-upon-the-basic-idea">
+<h2>Step 2: Expand Upon the Basic Idea<a class="headerlink" href="#step-2-expand-upon-the-basic-idea" title="Permalink to this headline">¶</a></h2>
+<p>Next let&#8217;s fill in some of the details of the game. One way to do this is to
+sketch a diagram on paper what some screens of the game look like. You will
+eventually need to write code everything you sketch, and so try to stick to
+things you know how to do, or are pretty sure you can figure out.</p>
+<p>Here are some details:</p>
+<ul class="simple">
+<li>The player is a big happy face, or some other representation of a human.</li>
+<li>The germs are mean-looking greenish blobs. If the player touches a germ they
+get infected, and the player loses. If the player and the germs are both
+drawn as circles or rectangles, then it will be relatively easy to test if
+they overlap.</li>
+<li>The number of germs on the screen will start out small, and then increase
+over time, e.g. every few seconds a new germ appears. Thus the game gets
+harder the longer the player survives.</li>
+<li>The germs bounce around the screen like bouncing balls &#8212; because we know
+how to do that! To make things more interesting, lets also have the germs
+reverse their direction at random times. This may, or may not be a good
+idea: we&#8217;ll have to see how it works out in the implemented game.</li>
+<li>The game score is the number of germs on the screen times the number of
+seconds the player survived. The longer the player survives, the higher
+their score.</li>
+</ul>
+<p>That&#8217;s enough for now &#8212; if we can get these features working we will have a
+basic game to play with.</p>
+<div class="section" id="iterative-design">
+<h3>Iterative Design<a class="headerlink" href="#iterative-design" title="Permalink to this headline">¶</a></h3>
+<p>An important aspect of design is that it should be <strong>iterative</strong>. That means
+that we start simple, and add features one at a time: after each new feature
+is added we have a new version of the game. <strong>Don&#8217;t</strong> start out by making it
+complex in the first version, because it is easy to get overwhelmed by all the
+details. There are many things we are not <em>yet</em> worrying about. For instance:</p>
+<ul class="simple">
+<li>Since we decided to start with a dodging mechanic, we won&#8217;t be very
+concerned with the graphical look and feel. We&#8217;ll stick to colored circles
+and rectangles at first. Later, we can cover them with good-looking images.</li>
+<li>There&#8217;s no notion of the player <em>fighting</em> germs. While fighting fits well
+with the theme, we&#8217;ve decided not to worry about it in the first few
+iterations. Later, we could some element where the user could, for example,
+kill some of the germs, or maybe make them smaller.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="step-3-implement-the-next-version">
+<h2>Step 3: Implement the Next Version<a class="headerlink" href="#step-3-implement-the-next-version" title="Permalink to this headline">¶</a></h2>
+<p>After you&#8217;ve fleshed out the details and are reasonably sure they are things
+you are able to implement, then it&#8217;s time to start writing the program.</p>
+<p>A good general strategy is to start with a simple working program, e.g.:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">size</span><span class="o">(</span><span class="mi">1000</span><span class="o">,</span> <span class="mi">1000</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>It doesn&#8217;t do much, but, <em>it works</em>, and it works <em>correctly</em>.</p>
+</div>
+<div class="section" id="step-4-add-one-feature-then-test-it">
+<h2>Step 4: Add One Feature &#8212; then Test It<a class="headerlink" href="#step-4-add-one-feature-then-test-it" title="Permalink to this headline">¶</a></h2>
+<p>At this point we have a simple working game. It&#8217;s may not yet be a great game,
+and or even that much fun to play, but that&#8217;s okay. It&#8217;s just one step along
+the way to the finished program.</p>
+<p>When deciding what feature to add next try to pick one that you understand and
+is easy to implement. If a feature is too big or complicated, implementing it
+can turn into hours of frustration.</p>
+<p>Testing is an important part of any program, and you should test each feature
+immediately after you implement it. If, instead, you were to add a bunch of
+features and then test them all at once, debugging tends to be much harder.
+Multiple features could interact in ways that make it difficult to determine
+the root problem. By adding, and then immediately testing, one feature at a
+time, it is usually easier to locate and fix bugs.</p>
+<p>For our first feature, lets add a player sprite:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Player</span> <span class="n">player</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">size</span><span class="o">(</span><span class="mi">1000</span><span class="o">,</span> <span class="mi">1000</span><span class="o">);</span>
+
+    <span class="n">player</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Player</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+    <span class="n">player</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+    <span class="n">player</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Of course, we haven&#8217;t yet written the <code class="docutils literal"><span class="pre">Player</span></code> class. So let&#8217;s do that
+next:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Player</span> <span class="kd">extends</span> <span class="n">Sprite</span> <span class="o">{</span>
+    <span class="n">color</span> <span class="n">fillColor</span><span class="o">;</span>
+    <span class="kt">float</span> <span class="n">radius</span><span class="o">;</span>
+
+    <span class="n">Player</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">fillColor</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>  <span class="c1">// yellow</span>
+        <span class="n">radius</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+      <span class="n">pushMatrix</span><span class="o">();</span>
+      <span class="n">fill</span><span class="o">(</span><span class="n">fillColor</span><span class="o">);</span>
+      <span class="n">stroke</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+      <span class="n">strokeWeight</span><span class="o">(</span><span class="mi">3</span><span class="o">);</span>
+      <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">radius</span><span class="o">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">radius</span><span class="o">);</span>
+      <span class="n">popMatrix</span><span class="o">();</span>
+   <span class="o">}</span>
+
+   <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="n">mouseX</span><span class="o">;</span>
+      <span class="n">y</span> <span class="o">=</span> <span class="n">mouseY</span><span class="o">;</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>If you add this to the source code (along with the <code class="docutils literal"><span class="pre">Sprite</span></code> class), you
+should have a working program that lets you move a yellow ball around the
+screen.</p>
+<p>Don&#8217;t add any other features until you are confident this one is working
+correctly!</p>
+</div>
+<div class="section" id="step-5-go-back-to-step-4">
+<h2>Step 5: Go Back to Step 4<a class="headerlink" href="#step-5-go-back-to-step-4" title="Permalink to this headline">¶</a></h2>
+<p>When we finish testing the feature from the previous step, we can implement
+and test another feature. And then we repeat this until the game is done.</p>
+<p>So for the next feature, lets add germs. Since there are multiple germs, we&#8217;ll
+store them in an <code class="docutils literal"><span class="pre">ArrayList</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Player</span> <span class="n">player</span><span class="o">;</span>
+<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Monster</span><span class="o">&gt;</span> <span class="n">monsters</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">size</span><span class="o">(</span><span class="mi">1000</span><span class="o">,</span> <span class="mi">1000</span><span class="o">);</span>
+
+    <span class="n">player</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Player</span><span class="o">();</span>
+
+    <span class="n">monsters</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Monster</span><span class="o">&gt;();</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+    <span class="n">player</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+    <span class="n">player</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+
+    <span class="k">for</span><span class="o">(</span><span class="n">Monster</span> <span class="n">m</span> <span class="o">:</span> <span class="n">monsters</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">m</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+        <span class="n">m</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>We&#8217;ve decided to call the germs &#8220;monsters&#8221;, just in case we later add other
+kinds of enemies.</p>
+<p>We haven&#8217;t written the <code class="docutils literal"><span class="pre">Monster</span></code> class yet, but notice how much code we can
+still write: we can initialize the <code class="docutils literal"><span class="pre">ArrayList</span></code>, and also write the basic
+loop for updating and rendering all the individual monster objects.</p>
+<p>Here&#8217;s a first version of the <code class="docutils literal"><span class="pre">Monster</span></code> class:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Monster</span> <span class="kd">extends</span> <span class="n">Sprite</span> <span class="o">{</span>
+  <span class="n">color</span> <span class="n">fillColor</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">radius</span><span class="o">;</span>
+
+  <span class="n">Monster</span><span class="o">(</span><span class="kt">float</span> <span class="n">initX</span><span class="o">,</span> <span class="kt">float</span> <span class="n">initY</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">fillColor</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">107</span><span class="o">,</span> <span class="mi">142</span><span class="o">,</span> <span class="mi">35</span><span class="o">);</span> <span class="c1">// olive drab</span>
+    <span class="n">radius</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mi">25</span><span class="o">,</span> <span class="mi">75</span><span class="o">);</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="n">initX</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">initY</span><span class="o">;</span>
+
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mf">3.0</span><span class="o">,</span> <span class="mf">7.0</span><span class="o">);</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mf">3.0</span><span class="o">,</span> <span class="mf">7.0</span><span class="o">);</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="mf">1.0</span><span class="o">)</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="mf">1.0</span><span class="o">)</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">pushMatrix</span><span class="o">();</span>
+    <span class="n">fill</span><span class="o">(</span><span class="n">fillColor</span><span class="o">);</span>
+    <span class="n">noStroke</span><span class="o">();</span>
+    <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">radius</span><span class="o">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">radius</span><span class="o">);</span>
+    <span class="n">popMatrix</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kd">super</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+
+    <span class="c1">//</span>
+    <span class="c1">// bounce off edges</span>
+    <span class="c1">//</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// left edge</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+      <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">width</span><span class="o">)</span> <span class="o">{</span>  <span class="c1">// right edge</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="n">width</span><span class="o">;</span>
+      <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>  <span class="c1">// top edge</span>
+      <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+      <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">&gt;</span> <span class="n">height</span><span class="o">)</span> <span class="o">{</span>  <span class="c1">// bottom edge</span>
+      <span class="n">y</span> <span class="o">=</span> <span class="n">height</span><span class="o">;</span>
+      <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="kt">boolean</span> <span class="nf">overlaps</span><span class="o">(</span><span class="n">Player</span> <span class="n">p</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">dist</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">p</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">p</span><span class="o">.</span><span class="na">y</span><span class="o">)</span> <span class="o">&lt;=</span> <span class="n">radius</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="na">radius</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span> <span class="c1">// class Monster</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">render</span></code> and <code class="docutils literal"><span class="pre">update</span></code> functions are similar to functions we&#8217;ve written
+for bouncing balls in the past. The <code class="docutils literal"><span class="pre">overlaps</span></code> function is interesting: it
+takes a <code class="docutils literal"><span class="pre">Player</span></code> as input, and tests if the monster overlaps with the
+player.</p>
+<p>Adding this class to the source code, we can now add a monster or two like
+this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// ...</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">size</span><span class="o">(</span><span class="mi">1000</span><span class="o">,</span> <span class="mi">1000</span><span class="o">);</span>
+
+    <span class="n">player</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Player</span><span class="o">();</span>
+
+    <span class="n">monsters</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Monster</span><span class="o">&gt;();</span>
+    <span class="n">monsters</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Monster</span><span class="o">());</span>
+<span class="o">}</span>
+
+<span class="c1">// ...</span>
+</pre></div>
+</div>
+<p>Now, assuming we&#8217;ve implemented all this code correctly, when the program runs
+we should see a green ball bouncing around the screen alongside the user-
+controlled yellow ball.</p>
+<p>Next, lets have the monsters check to see if they&#8217;ve hit the player. When that
+happens, the game is over, and so we&#8217;ll keep track of that using a boolean
+variable:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// ...</span>
+
+<span class="kt">boolean</span> <span class="n">gameOver</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">size</span><span class="o">(</span><span class="mi">1000</span><span class="o">,</span> <span class="mi">1000</span><span class="o">);</span>
+
+    <span class="n">player</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Player</span><span class="o">();</span>
+
+    <span class="n">monsters</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Monster</span><span class="o">&gt;();</span>
+    <span class="n">monsters</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Monster</span><span class="o">());</span>
+
+    <span class="n">gameOver</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// ...</span>
+</pre></div>
+</div>
+<p>Inside <code class="docutils literal"><span class="pre">draw()</span></code>, we&#8217;ll have every monster call its <code class="docutils literal"><span class="pre">overlap</span></code> function to
+check to see if it has hit the player. It one of the monsters hits the player,
+then <code class="docutils literal"><span class="pre">gameOver</span></code> is set to <code class="docutils literal"><span class="pre">true</span></code>. Then, at the end of <code class="docutils literal"><span class="pre">draw()</span></code>, we use
+an if-statement to check if the game is over and, if so, print a message:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+    <span class="n">player</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+    <span class="n">player</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+
+    <span class="k">for</span><span class="o">(</span><span class="n">Monster</span> <span class="n">m</span> <span class="o">:</span> <span class="n">monsters</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">m</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+        <span class="n">m</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">m</span><span class="o">.</span><span class="na">overlaps</span><span class="o">(</span><span class="n">player</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">gameOver</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">gameOver</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">println</span><span class="o">(</span><span class="s">&quot;Game over --- you lose!&quot;</span><span class="o">);</span>
+        <span class="n">player</span><span class="o">.</span><span class="na">fillColor</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>When the game is over, two things happen: a message is printed in the console
+window, and they players circle changes to red. We use <code class="docutils literal"><span class="pre">println</span></code> for the
+message because it is quicker and easier than using fonts &#8212; later we can add
+a fancier font message that appears on the main screen. Changing the player&#8217;s
+circle to red gives them useful feedback that the game has ended.</p>
+<p>Lets take a moment to think about whether or not our pretend players
+&#8212; kids around grade 1 or 2 &#8212; would like these features. There&#8217;s no
+wordiness or complexity here, so the kids would probably not complain.
+They (and us!) might not think it&#8217;s fun to play, but that&#8217;s okay. Hopefully,
+the game will become more entertaining as more features are added.</p>
+<p>We should also think if our client &#8212; <a class="reference external" href="https://www.scienceworld.ca/">Science World</a> &#8212; would be happy with this feature. It&#8217;s
+still very early in the design of the program, but if a <a class="reference external" href="https://www.scienceworld.ca/">Science World</a> executive saw this version of the game they
+would be able to at least see that the germ theme is starting to emerge.</p>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>The process we&#8217;ve described here is a good one to start with. It&#8217;s just a
+high-level overview, though, and you still need to figure out the details and
+get all the pieces to work together. It takes sweat, but stick to it. As you
+get more experience writing code, you&#8217;ll get better at estimating which
+features are likely to be easy to implement, and which are likely to be hard.</p>
+</div>
+<div class="section" id="the-game">
+<h2>The Game<a class="headerlink" href="#the-game" title="Permalink to this headline">¶</a></h2>
+<p>Here&#8217;s <a class="reference download internal" href="_downloads/avoidance.zip" download=""><code class="xref download docutils literal"><span class="pre">a</span> <span class="pre">later</span> <span class="pre">iteration</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">germ</span> <span class="pre">game,</span> <span class="pre">with</span> <span class="pre">a</span> <span class="pre">number</span> <span class="pre">of</span> <span class="pre">extra</span>
+<span class="pre">features</span> <span class="pre">added</span></code></a>. It still needs some work to be fun
+for more than a few seconds, but it&#8217;s useful to look at the code. You can see
+how all the basic techniques discussed previously in the course work together
+in a single program.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="random_numbers.html" title="Random Numbers"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="constructors.html" title="Constructors"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Toby Donaldson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

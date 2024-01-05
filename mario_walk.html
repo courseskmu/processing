@@ -1,0 +1,662 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Simple Multi-image Animation &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
+    <link rel="next" title="Multi-image Animation Using an ArrayList" href="mario_walk_more.html" />
+    <link rel="prev" title="Arrays" href="arrays.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="mario_walk_more.html" title="Multi-image Animation Using an ArrayList"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="arrays.html" title="Arrays"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Simple Multi-image Animation</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#the-main-program">The Main Program</a></li>
+<li><a class="reference internal" href="#the-mario-class">The Mario Class</a></li>
+<li><a class="reference internal" href="#adding-a-timer-to-the-mario-class">Adding a Timer to the Mario Class</a></li>
+<li><a class="reference internal" href="#random-marios">100 Random Marios</a></li>
+<li><a class="reference internal" href="#questions">Questions</a></li>
+<li><a class="reference internal" href="#source-code-for-1-mario">Source Code for 1 Mario</a></li>
+<li><a class="reference internal" href="#source-code-for-100-marios">Source Code for 100 Marios</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="arrays.html"
+                        title="previous chapter">Arrays</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mario_walk_more.html"
+                        title="next chapter">Multi-image Animation Using an ArrayList</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="simple-multi-image-animation">
+<h1>Simple Multi-image Animation<a class="headerlink" href="#simple-multi-image-animation" title="Permalink to this headline">¶</a></h1>
+<p>In these notes you will learn:</p>
+<ul class="simple">
+<li>How to use a state variable to control an animated object with multiple
+images.</li>
+<li>How to create a simple timer class.</li>
+<li>How to use a timer to control the speed of an animation.</li>
+</ul>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The use of <a class="reference internal" href="paratroopers.html"><em>state variables in the previous notes</em></a> is a
+very useful technique that has many different applications. Here, we will see
+how to use a state variable to control the display of an animated object that
+has multiple images.</p>
+<p>We will use the following 3 images of a famous plumber:
+<a class="reference download internal" href="_downloads/marioWalk1.png" download=""><code class="xref download docutils literal"><span class="pre">marioWalk1.png</span></code></a>,
+<a class="reference download internal" href="_downloads/marioWalk2.png" download=""><code class="xref download docutils literal"><span class="pre">marioWalk2.png</span></code></a>,
+<a class="reference download internal" href="_downloads/marioWalk3.png" download=""><code class="xref download docutils literal"><span class="pre">marioWalk3.png</span></code></a>. When shown quickly in
+sequence, they will make a walking version of Mario.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The way we will do the animation in what follows is not
+necessarily the way a professional programmer would do it. It is meant only
+as an example of how to solve a programming problem. Our main goal is to
+make the code simple to write and as easy as possible to understand. We
+will many details, and so the approach taken here is not necessarily the
+way you should do animation in a more practical program.</p>
+</div>
+</div>
+<div class="section" id="the-main-program">
+<h2>The Main Program<a class="headerlink" href="#the-main-program" title="Permalink to this headline">¶</a></h2>
+<p>First, let&#8217;s create the main program:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">PImage</span> <span class="n">img0</span><span class="o">;</span>
+<span class="n">PImage</span> <span class="n">img1</span><span class="o">;</span>
+<span class="n">PImage</span> <span class="n">img2</span><span class="o">;</span>
+
+<span class="n">Mario</span> <span class="n">mario</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+
+  <span class="n">img0</span> <span class="o">=</span> <span class="n">loadImage</span><span class="o">(</span><span class="s">&quot;marioWalk1.png&quot;</span><span class="o">);</span>
+  <span class="n">img1</span> <span class="o">=</span> <span class="n">loadImage</span><span class="o">(</span><span class="s">&quot;marioWalk2.png&quot;</span><span class="o">);</span>
+  <span class="n">img2</span> <span class="o">=</span> <span class="n">loadImage</span><span class="o">(</span><span class="s">&quot;marioWalk3.png&quot;</span><span class="o">);</span>
+
+  <span class="n">mario</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Mario</span><span class="o">();</span>
+  <span class="n">mario</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="n">mario</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">50</span><span class="o">;</span>
+  <span class="n">mario</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">;</span>
+  <span class="n">mario</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="n">mario</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+  <span class="n">mario</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>There are a couple of things to notice:</p>
+<ul>
+<li><p class="first">The three images, <code class="docutils literal"><span class="pre">img0</span></code>, <code class="docutils literal"><span class="pre">img1</span></code>, and <code class="docutils literal"><span class="pre">img2</span></code>, are loaded in <code class="docutils literal"><span class="pre">setup</span></code>.
+We name the first variable <code class="docutils literal"><span class="pre">img0</span></code> because it turns that later on, when we
+have more images, starting at 0 is more convenient then starting at 1.</p>
+<p>The images only get loaded once each because <code class="docutils literal"><span class="pre">setup</span></code> is only called once.
+So no matter how many Marios we create, we only have to load their images
+once. That&#8217;s important because image loading is relatively slow (think how
+long it takes for video games to start up &#8212; they&#8217;re loading images,
+sounds, and video), and so you should never re-load an image that&#8217;s already
+in memory.</p>
+</li>
+<li><p class="first">Even though we have not yet created the <code class="docutils literal"><span class="pre">Mario</span></code> class, we used it in our
+main program as if it existed. This is a useful because it lets us specify
+how we want it to work without yet worrying about how it is implemented.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="the-mario-class">
+<h2>The Mario Class<a class="headerlink" href="#the-mario-class" title="Permalink to this headline">¶</a></h2>
+<p>Now lets create the <code class="docutils literal"><span class="pre">Mario</span></code> class. In addition to extending the <code class="docutils literal"><span class="pre">Sprite</span></code>
+class, we&#8217;ll use an <code class="docutils literal"><span class="pre">int</span></code> variable called <code class="docutils literal"><span class="pre">state</span></code> to keep track of which
+image to display:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dy</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">Mario</span> <span class="kd">extends</span> <span class="n">Sprite</span> <span class="o">{</span>
+  <span class="kt">int</span> <span class="n">state</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">pushMatrix</span><span class="o">();</span>
+
+    <span class="c1">// ...</span>
+
+    <span class="n">popMatrix</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="c1">// ... update() is inherited from Sprite ...</span>
+
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">update()</span></code> function turns out to be the one inherited from <code class="docutils literal"><span class="pre">Sprite</span></code>,
+so we don&#8217;t need to write a new <code class="docutils literal"><span class="pre">update()</span></code> in the <code class="docutils literal"><span class="pre">Mario</span></code> class.</p>
+<p>The <code class="docutils literal"><span class="pre">render()</span></code> function will use an if-else-if statement to check the
+<code class="docutils literal"><span class="pre">state</span></code> and display the corresponding image:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">pushMatrix</span><span class="o">();</span>
+  <span class="n">scale</span><span class="o">(</span><span class="mi">3</span><span class="o">);</span>  <span class="c1">// make Mario 3 times as big (just for fun)</span>
+
+  <span class="k">if</span> <span class="o">(</span><span class="n">state</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">image</span><span class="o">(</span><span class="n">img0</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">state</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">image</span><span class="o">(</span><span class="n">img1</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
+  <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">state</span> <span class="o">==</span> <span class="mi">2</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">image</span><span class="o">(</span><span class="n">img2</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="n">popMatrix</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Look at the first part of the if-else-if statement:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="k">if</span> <span class="o">(</span><span class="n">state</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">image</span><span class="o">(</span><span class="n">img0</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+  <span class="n">state</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>If <code class="docutils literal"><span class="pre">state</span></code> is 0, then it displays <code class="docutils literal"><span class="pre">img0</span></code> at (<code class="docutils literal"><span class="pre">x</span></code>, <code class="docutils literal"><span class="pre">y</span></code>), and then it
+sets <code class="docutils literal"><span class="pre">state</span></code> to 1 to so that the next time <code class="docutils literal"><span class="pre">render()</span></code> is called.</p>
+<p>The other parts of the if-else-statement work similarly. Notice in the last
+if-statement <code class="docutils literal"><span class="pre">state</span></code> is set to 0, and so the pattern of state values is
+this: 0, 1, 2, 0, 1, 2, 0, 1, 2, ....</p>
+<p>We now have a runnable program that will make a Mario walk across the screen.
+But there&#8217;s an obvious problem: the images change so quickly that Mario
+appears to have the jitters. To fix this, we need is some way to control the
+speed at which we change the images.</p>
+<p>So we will need to create a timer to do this for us.</p>
+</div>
+<div class="section" id="adding-a-timer-to-the-mario-class">
+<h2>Adding a Timer to the Mario Class<a class="headerlink" href="#adding-a-timer-to-the-mario-class" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="constructors.html"><em>Previously</em></a>, we saw how to create and use a timer class
+to control the time between events. Now lets add a <code class="docutils literal"><span class="pre">Timer</span></code> to  the
+<code class="docutils literal"><span class="pre">Mario</span></code> class so we can control the speed at which images are shown:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Mario</span> <span class="o">{</span>
+  <span class="c1">// ...</span>
+
+  <span class="n">Timer</span> <span class="n">timer</span><span class="o">;</span>
+  <span class="kt">int</span> <span class="n">imgShowMillis</span><span class="o">;</span>  <span class="c1">// how long to show one image for</span>
+
+  <span class="n">Mario</span><span class="o">()</span> <span class="o">{</span>               <span class="c1">// constructor</span>
+    <span class="n">timer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Timer</span><span class="o">();</span>
+    <span class="n">imgShowMillis</span> <span class="o">=</span> <span class="mi">200</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">pushMatrix</span><span class="o">();</span>
+    <span class="n">scale</span><span class="o">(</span><span class="mi">3</span><span class="o">);</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">state</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">image</span><span class="o">(</span><span class="n">img0</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">timer</span><span class="o">.</span><span class="na">elapsedMillis</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">imgShowMillis</span><span class="o">)</span> <span class="o">{</span>
+         <span class="n">state</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+         <span class="n">timer</span><span class="o">.</span><span class="na">reset</span><span class="o">();</span>
+      <span class="o">}</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">state</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">image</span><span class="o">(</span><span class="n">img1</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">timer</span><span class="o">.</span><span class="na">elapsedMillis</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">imgShowMillis</span><span class="o">)</span> <span class="o">{</span>
+         <span class="n">state</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
+         <span class="n">timer</span><span class="o">.</span><span class="na">reset</span><span class="o">();</span>
+      <span class="o">}</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">state</span> <span class="o">==</span> <span class="mi">2</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">image</span><span class="o">(</span><span class="n">img2</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">timer</span><span class="o">.</span><span class="na">elapsedMillis</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">imgShowMillis</span><span class="o">)</span> <span class="o">{</span>
+         <span class="n">state</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+         <span class="n">timer</span><span class="o">.</span><span class="na">reset</span><span class="o">();</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="n">popMatrix</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+   <span class="c1">// ...</span>
+  <span class="o">}</span>
+
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>We&#8217;ve added two new variables:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">timer</span></code>, which is of type <code class="docutils literal"><span class="pre">Timer</span></code>, stores a timer.</li>
+<li><code class="docutils literal"><span class="pre">imgShowMillis</span></code>, which is of type <code class="docutils literal"><span class="pre">int</span></code>, stores the number of
+milliseconds that we want each image to be displayed for.</li>
+</ul>
+<p>Both are initialized inside the constructor. As we saw with the <code class="docutils literal"><span class="pre">Timer</span></code>
+class, an object&#8217;s constructor is automatically called when you create it with
+<code class="docutils literal"><span class="pre">new</span></code>. It&#8217;s job is to ensure that the object is correctly initialized, which
+usually means that variables get correct initial values.</p>
+<p>The <code class="docutils literal"><span class="pre">render()</span></code> function has some changes. Look at the first if-statement:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="k">if</span> <span class="o">(</span><span class="n">state</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">image</span><span class="o">(</span><span class="n">img0</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">timer</span><span class="o">.</span><span class="na">elapsedMillis</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">imgShowMillis</span><span class="o">)</span> <span class="o">{</span>
+     <span class="n">state</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+     <span class="n">timer</span><span class="o">.</span><span class="na">reset</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>After the image is displayed, we checked to see if the number of elapsed
+milliseconds is bigger than <code class="docutils literal"><span class="pre">imgShowMillis</span></code>. If it&#8217;s <em>not</em>, we do nothing,
+which means that the next time <code class="docutils literal"><span class="pre">render()</span></code> is called the same image
+(<code class="docutils literal"><span class="pre">img0</span></code>) will be displayed again.</p>
+<p>But if the number of elapsed milliseconds <em>is</em> bigger than <code class="docutils literal"><span class="pre">imgShowMillis</span></code>,
+then we do two things:</p>
+<ul class="simple">
+<li>Set <code class="docutils literal"><span class="pre">state</span></code> to its next value, i.e. set it to 1.</li>
+<li>Reset the timer&#8217;s elapsed time to 0.</li>
+</ul>
+<p>Adding the timer makes the animation look much nicer.</p>
+</div>
+<div class="section" id="random-marios">
+<h2>100 Random Marios<a class="headerlink" href="#random-marios" title="Permalink to this headline">¶</a></h2>
+<p>Lets make the following changes to our program:</p>
+<ul>
+<li><p class="first">Add a new <code class="docutils literal"><span class="pre">float</span></code> variable called <code class="docutils literal"><span class="pre">size</span></code> that stores the size of Mario.
+In <code class="docutils literal"><span class="pre">render()</span></code> the statement <code class="docutils literal"><span class="pre">scale(3)</span></code> will be replaced by
+<code class="docutils literal"><span class="pre">scale(size)</span></code>.</p>
+</li>
+<li><p class="first">Add a new <code class="docutils literal"><span class="pre">update()</span></code> function so that Mario will wrap-around the screen
+when he goes off an edge:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+
+  <span class="c1">// wrap-around the screen if necessary</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">width</span> <span class="o">/</span> <span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">width</span> <span class="o">/</span> <span class="n">size</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">height</span> <span class="o">/</span> <span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">&gt;</span> <span class="n">height</span> <span class="o">/</span> <span class="n">size</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>An important detail to notice here is that we use <code class="docutils literal"><span class="pre">width</span> <span class="pre">/</span> <span class="pre">size</span></code> and
+<code class="docutils literal"><span class="pre">height</span> <span class="pre">/</span> <span class="pre">size</span></code> in this function instead of <code class="docutils literal"><span class="pre">width</span></code> and <code class="docutils literal"><span class="pre">size</span></code>. We
+need to divide by <code class="docutils literal"><span class="pre">size</span></code> because we called <code class="docutils literal"><span class="pre">scale(size)</span></code> in
+<code class="docutils literal"><span class="pre">render()</span></code>, which scales the entire coordinate system (thus giving the
+effect of increasing the size of Mario). However, the program window stays
+the same size, and so if we don&#8217;t divide by <code class="docutils literal"><span class="pre">size</span></code> Mario will keep walking
+for a while off-screen before wrapping around, or get stuck on edges.</p>
+</li>
+<li><p class="first">Create a function called <code class="docutils literal"><span class="pre">randomMario()</span></code> that returns a new <code class="docutils literal"><span class="pre">Mario</span></code>
+object with randomly set values:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Mario</span> <span class="nf">randomMario</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">Mario</span> <span class="n">m</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Mario</span><span class="o">();</span>
+
+  <span class="n">m</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="mi">490</span><span class="o">);</span>
+  <span class="n">m</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="mi">490</span><span class="o">);</span>
+  <span class="n">m</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mf">2.0</span><span class="o">,</span> <span class="mf">2.0</span><span class="o">);</span>
+  <span class="n">m</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mf">2.0</span><span class="o">,</span> <span class="mf">2.0</span><span class="o">);</span>
+  <span class="n">m</span><span class="o">.</span><span class="na">imgShowMillis</span> <span class="o">=</span> <span class="kt">int</span><span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">400</span><span class="o">));</span>
+  <span class="n">m</span><span class="o">.</span><span class="na">size</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mf">0.5</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+
+  <span class="k">return</span> <span class="n">m</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Add an <code class="docutils literal"><span class="pre">ArrayList&lt;Mario&gt;</span></code> object to hold 100 Marios.</p>
+</li>
+</ul>
+<p>The complete source code is given at the end of the notes. The program works,
+although you will immediately notice that Mario is always facing to the right
+no matter which direction he is walking!</p>
+</div>
+<div class="section" id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Modify the 100 Marios program so that Mario also rotates as he walks.</li>
+</ol>
+</div>
+<div class="section" id="source-code-for-1-mario">
+<h2>Source Code for 1 Mario<a class="headerlink" href="#source-code-for-1-mario" title="Permalink to this headline">¶</a></h2>
+<p>For this code to work, you must put these files in your program&#8217;s <code class="docutils literal"><span class="pre">data</span></code>
+folder: <a class="reference download internal" href="_downloads/marioWalk1.png" download=""><code class="xref download docutils literal"><span class="pre">marioWalk1.png</span></code></a>,
+<a class="reference download internal" href="_downloads/marioWalk2.png" download=""><code class="xref download docutils literal"><span class="pre">marioWalk2.png</span></code></a>,
+<a class="reference download internal" href="_downloads/marioWalk3.png" download=""><code class="xref download docutils literal"><span class="pre">marioWalk3.png</span></code></a>.</p>
+<p>Here is a single .zip archive of all the Mario images:
+<a class="reference download internal" href="_downloads/marioWalk.zip" download=""><code class="xref download docutils literal"><span class="pre">marioWalk.zip</span></code></a>.</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dy</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">Timer</span> <span class="o">{</span>
+  <span class="kt">int</span> <span class="n">startTime</span><span class="o">;</span>
+
+  <span class="n">Timer</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">reset</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="kt">int</span> <span class="nf">elapsedMillis</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">millis</span><span class="o">()</span> <span class="o">-</span> <span class="n">startTime</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">reset</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">startTime</span> <span class="o">=</span> <span class="n">millis</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+
+<span class="n">PImage</span> <span class="n">img0</span><span class="o">;</span>
+<span class="n">PImage</span> <span class="n">img1</span><span class="o">;</span>
+<span class="n">PImage</span> <span class="n">img2</span><span class="o">;</span>
+
+<span class="n">Mario</span> <span class="n">mario</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+
+  <span class="n">img0</span> <span class="o">=</span> <span class="n">loadImage</span><span class="o">(</span><span class="s">&quot;marioWalk1.png&quot;</span><span class="o">);</span>
+  <span class="n">img1</span> <span class="o">=</span> <span class="n">loadImage</span><span class="o">(</span><span class="s">&quot;marioWalk2.png&quot;</span><span class="o">);</span>
+  <span class="n">img2</span> <span class="o">=</span> <span class="n">loadImage</span><span class="o">(</span><span class="s">&quot;marioWalk3.png&quot;</span><span class="o">);</span>
+
+  <span class="n">mario</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Mario</span><span class="o">();</span>
+  <span class="n">mario</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">50</span><span class="o">;</span>
+  <span class="n">mario</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="n">mario</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+  <span class="n">mario</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+<span class="o">}</span>
+
+
+<span class="kd">class</span> <span class="nc">Mario</span> <span class="kd">extends</span> <span class="n">Sprite</span> <span class="o">{</span>
+  <span class="kt">int</span> <span class="n">state</span><span class="o">;</span>
+  <span class="n">Timer</span> <span class="n">timer</span><span class="o">;</span>
+  <span class="kt">int</span> <span class="n">imgShowMillis</span><span class="o">;</span>  <span class="c1">// how long to show one image for</span>
+
+  <span class="n">Mario</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">timer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Timer</span><span class="o">();</span>
+    <span class="n">imgShowMillis</span> <span class="o">=</span> <span class="mi">200</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">pushMatrix</span><span class="o">();</span>
+    <span class="n">scale</span><span class="o">(</span><span class="mi">3</span><span class="o">);</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">state</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">image</span><span class="o">(</span><span class="n">img0</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">timer</span><span class="o">.</span><span class="na">elapsedMillis</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">imgShowMillis</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="n">timer</span><span class="o">.</span><span class="na">reset</span><span class="o">();</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">state</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">image</span><span class="o">(</span><span class="n">img1</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">timer</span><span class="o">.</span><span class="na">elapsedMillis</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">imgShowMillis</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
+        <span class="n">timer</span><span class="o">.</span><span class="na">reset</span><span class="o">();</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">state</span> <span class="o">==</span> <span class="mi">2</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">image</span><span class="o">(</span><span class="n">img2</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">timer</span><span class="o">.</span><span class="na">elapsedMillis</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">imgShowMillis</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="n">timer</span><span class="o">.</span><span class="na">reset</span><span class="o">();</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="n">popMatrix</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="source-code-for-100-marios">
+<h2>Source Code for 100 Marios<a class="headerlink" href="#source-code-for-100-marios" title="Permalink to this headline">¶</a></h2>
+<p>For this code to work, you must put these files in your program&#8217;s <code class="docutils literal"><span class="pre">data</span></code>
+folder: <a class="reference download internal" href="_downloads/marioWalk1.png" download=""><code class="xref download docutils literal"><span class="pre">marioWalk1.png</span></code></a>,
+<a class="reference download internal" href="_downloads/marioWalk2.png" download=""><code class="xref download docutils literal"><span class="pre">marioWalk2.png</span></code></a>,
+<a class="reference download internal" href="_downloads/marioWalk3.png" download=""><code class="xref download docutils literal"><span class="pre">marioWalk3.png</span></code></a>.</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dy</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">Timer</span> <span class="o">{</span>
+  <span class="kt">int</span> <span class="n">startTime</span><span class="o">;</span>
+
+  <span class="n">Timer</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">reset</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="kt">int</span> <span class="nf">elapsedMillis</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">millis</span><span class="o">()</span> <span class="o">-</span> <span class="n">startTime</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">reset</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">startTime</span> <span class="o">=</span> <span class="n">millis</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+
+<span class="n">PImage</span> <span class="n">img0</span><span class="o">;</span>
+<span class="n">PImage</span> <span class="n">img1</span><span class="o">;</span>
+<span class="n">PImage</span> <span class="n">img2</span><span class="o">;</span>
+
+<span class="kd">final</span> <span class="kt">int</span> <span class="n">NUM_MARIOS</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>
+<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Mario</span><span class="o">&gt;</span> <span class="n">marios</span><span class="o">;</span>
+
+<span class="n">Mario</span> <span class="nf">randomMario</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">Mario</span> <span class="n">m</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Mario</span><span class="o">();</span>
+
+  <span class="n">m</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="mi">490</span><span class="o">);</span>
+  <span class="n">m</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="mi">490</span><span class="o">);</span>
+  <span class="n">m</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mf">2.0</span><span class="o">,</span> <span class="mf">2.0</span><span class="o">);</span>
+  <span class="n">m</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mf">2.0</span><span class="o">,</span> <span class="mf">2.0</span><span class="o">);</span>
+  <span class="n">m</span><span class="o">.</span><span class="na">imgShowMillis</span> <span class="o">=</span> <span class="kt">int</span><span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">400</span><span class="o">));</span>
+  <span class="n">m</span><span class="o">.</span><span class="na">size</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mf">0.5</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+
+  <span class="k">return</span> <span class="n">m</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+
+  <span class="n">img0</span> <span class="o">=</span> <span class="n">loadImage</span><span class="o">(</span><span class="s">&quot;marioWalk1.png&quot;</span><span class="o">);</span>
+  <span class="n">img1</span> <span class="o">=</span> <span class="n">loadImage</span><span class="o">(</span><span class="s">&quot;marioWalk2.png&quot;</span><span class="o">);</span>
+  <span class="n">img2</span> <span class="o">=</span> <span class="n">loadImage</span><span class="o">(</span><span class="s">&quot;marioWalk3.png&quot;</span><span class="o">);</span>
+
+  <span class="n">marios</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Mario</span><span class="o">&gt;();</span>
+  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">NUM_MARIOS</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">Mario</span> <span class="n">m</span> <span class="o">=</span> <span class="n">randomMario</span><span class="o">();</span>
+    <span class="n">marios</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">m</span><span class="o">);</span>
+    <span class="o">++</span><span class="n">i</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="k">for</span> <span class="o">(</span><span class="n">Mario</span> <span class="n">m</span> <span class="o">:</span> <span class="n">marios</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">m</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="n">m</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">Mario</span> <span class="kd">extends</span> <span class="n">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">size</span><span class="o">;</span>
+
+  <span class="kt">int</span> <span class="n">state</span><span class="o">;</span>
+  <span class="n">Timer</span> <span class="n">timer</span><span class="o">;</span>
+  <span class="kt">int</span> <span class="n">imgShowMillis</span><span class="o">;</span>  <span class="c1">// how long to show one image for</span>
+
+  <span class="n">Mario</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">timer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Timer</span><span class="o">();</span>
+    <span class="n">imgShowMillis</span> <span class="o">=</span> <span class="mi">200</span><span class="o">;</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">pushMatrix</span><span class="o">();</span>
+    <span class="n">scale</span><span class="o">(</span><span class="n">size</span><span class="o">);</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">state</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">image</span><span class="o">(</span><span class="n">img0</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">timer</span><span class="o">.</span><span class="na">elapsedMillis</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">imgShowMillis</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="n">timer</span><span class="o">.</span><span class="na">reset</span><span class="o">();</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">state</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">image</span><span class="o">(</span><span class="n">img1</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">timer</span><span class="o">.</span><span class="na">elapsedMillis</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">imgShowMillis</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
+        <span class="n">timer</span><span class="o">.</span><span class="na">reset</span><span class="o">();</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">state</span> <span class="o">==</span> <span class="mi">2</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">image</span><span class="o">(</span><span class="n">img2</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">timer</span><span class="o">.</span><span class="na">elapsedMillis</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">imgShowMillis</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="n">timer</span><span class="o">.</span><span class="na">reset</span><span class="o">();</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="n">popMatrix</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+
+    <span class="c1">// wrap-around the screen if necessary</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="n">width</span> <span class="o">/</span> <span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">width</span> <span class="o">/</span> <span class="n">size</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">y</span> <span class="o">=</span> <span class="n">height</span> <span class="o">/</span> <span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">&gt;</span> <span class="n">height</span> <span class="o">/</span> <span class="n">size</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="mario_walk_more.html" title="Multi-image Animation Using an ArrayList"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="arrays.html" title="Arrays"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Toby Donaldson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,472 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Sprites &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
+    <link rel="next" title="Functions" href="functions.html" />
+    <link rel="prev" title="The Keyboard, the Mouse, and Gravity" href="simple_gravity.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="functions.html" title="Functions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="simple_gravity.html" title="The Keyboard, the Mouse, and Gravity"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Sprites</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#id1">Sprites</a></li>
+<li><a class="reference internal" href="#sample-program">Sample Program</a></li>
+<li><a class="reference internal" href="#assigning-object-variables">Assigning Object Variables</a></li>
+<li><a class="reference internal" href="#garbage-collection">Garbage Collection</a></li>
+<li><a class="reference internal" href="#null-and-nullpointerexception">null and NullPointerException</a></li>
+<li><a class="reference internal" href="#example-a-small-explosion">Example: A Small Explosion</a></li>
+<li><a class="reference internal" href="#questions">Questions</a></li>
+<li><a class="reference internal" href="#programming-questions">Programming Questions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="simple_gravity.html"
+                        title="previous chapter">The Keyboard, the Mouse, and Gravity</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="functions.html"
+                        title="next chapter">Functions</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="sprites">
+<h1>Sprites<a class="headerlink" href="#sprites" title="Permalink to this headline">¶</a></h1>
+<p>In these notes you will learn:</p>
+<ul class="simple">
+<li>How to write a simple class.</li>
+<li>How to use objects with &#8221;.&#8221;-notation.</li>
+<li>How assignment works with object variables.</li>
+<li>What <code class="docutils literal"><span class="pre">null</span></code> is.</li>
+</ul>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Every 2-dimensional animated object needs, at least, these four variables:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">float</span> <span class="n">x</span><span class="o">;</span>  <span class="c1">// (x, y) is the position</span>
+<span class="kt">float</span> <span class="n">y</span><span class="o">;</span>  <span class="c1">// of the object</span>
+<span class="kt">float</span> <span class="n">dx</span><span class="o">;</span> <span class="c1">// speed along the x-axis</span>
+<span class="kt">float</span> <span class="n">dy</span><span class="o">;</span> <span class="c1">// speed along the y-axis</span>
+</pre></div>
+</div>
+<p>So, for example, if you want to animated 3 different objects, you will need at
+least 12 variables:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">float</span> <span class="n">x1</span><span class="o">;</span>  <span class="c1">// object 1</span>
+<span class="kt">float</span> <span class="n">y1</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">dx1</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">dy1</span><span class="o">;</span>
+
+<span class="kt">float</span> <span class="n">x2</span><span class="o">;</span> <span class="c1">// object 2</span>
+<span class="kt">float</span> <span class="n">y2</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">dx2</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">dy2</span><span class="o">;</span>
+
+<span class="kt">float</span> <span class="n">x3</span><span class="o">;</span> <span class="c1">// object 3</span>
+<span class="kt">float</span> <span class="n">y3</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">dx3</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">dy3</span><span class="o">;</span>
+</pre></div>
+</div>
+<p>Dealing with so many similarly-named variables is quite difficult in practice.
+It&#8217;s easy to accidentally write <code class="docutils literal"><span class="pre">y2</span></code> instead of <code class="docutils literal"><span class="pre">y1</span></code>.</p>
+</div>
+<div class="section" id="id1">
+<h2>Sprites<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>One way to deal with this complexity is to group <code class="docutils literal"><span class="pre">x</span></code>, <code class="docutils literal"><span class="pre">y</span></code>, <code class="docutils literal"><span class="pre">dx</span></code>, and
+<code class="docutils literal"><span class="pre">dy</span></code> together into one object. To do this in <a class="reference external" href="http://processing.org/">Processing</a>, we first need to
+create a <strong>class</strong>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Sprite</span> <span class="o">{</span>
+    <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+    <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+    <span class="kt">float</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="kt">float</span> <span class="n">dy</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Using the <code class="docutils literal"><span class="pre">Sprite</span></code> class, we can now create <code class="docutils literal"><span class="pre">Sprite</span></code> objects like this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Sprite</span> <span class="n">ball</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Sprite</span><span class="o">();</span>
+<span class="n">Sprite</span> <span class="n">plate</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Sprite</span><span class="o">();</span>
+</pre></div>
+</div>
+<p>When <code class="docutils literal"><span class="pre">new</span> <span class="pre">Sprite()</span></code> is called, it creates a new object that contains its own
+<code class="docutils literal"><span class="pre">x</span></code>, <code class="docutils literal"><span class="pre">y</span></code>, <code class="docutils literal"><span class="pre">dx</span></code>, and <code class="docutils literal"><span class="pre">dy</span></code> values. We can use it like this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>   <span class="c1">// initialize ball</span>
+<span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+<span class="n">ball</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+<span class="n">ball</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="mf">1.5</span><span class="o">;</span>
+
+<span class="n">plate</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">450</span><span class="o">;</span> <span class="c1">// initialize plate</span>
+<span class="n">plate</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">450</span><span class="o">;</span>
+<span class="n">plate</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.5</span><span class="o">;</span>
+<span class="n">plate</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">.</span></code> is used to access the variables in an object. Clearly, <code class="docutils literal"><span class="pre">ball.x</span></code>
+refers to the <code class="docutils literal"><span class="pre">x</span></code> in the <code class="docutils literal"><span class="pre">ball</span></code> object, while <code class="docutils literal"><span class="pre">plate.x</span></code> refers to the
+<code class="docutils literal"><span class="pre">x</span></code> in <code class="docutils literal"><span class="pre">plate</span></code>.</p>
+<p>Two advantages of using the <code class="docutils literal"><span class="pre">Sprite</span></code> class are:</p>
+<ul class="simple">
+<li>The variable names tend to be more descriptive.</li>
+<li>You don&#8217;t have to define as many variables.</li>
+</ul>
+<p>While this doesn&#8217;t solve all the problems of so many variables, it is an
+important first step. Later, we will see how other features can be used to
+even further simplify the creation of animated objects.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><a class="reference external" href="https://en.wikipedia.org/wiki/Sprite_(computer_graphics)">Sprite</a>
+is the traditional name for a 2-dimensional animated object. It originated
+in early video games, where support for animated objects was often designed
+into the hardware itself.</p>
+</div>
+</div>
+<div class="section" id="sample-program">
+<h2>Sample Program<a class="headerlink" href="#sample-program" title="Permalink to this headline">¶</a></h2>
+<p>Here&#8217;s a complete sample program using a <code class="docutils literal"><span class="pre">Sprite</span></code> to represent a ball:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dy</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="n">color</span> <span class="n">white</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+<span class="n">color</span> <span class="n">orange</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">165</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+
+<span class="n">Sprite</span> <span class="n">ball</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Sprite</span><span class="o">();</span>
+<span class="kt">float</span> <span class="n">diam</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">smooth</span><span class="o">();</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
+  <span class="n">diam</span> <span class="o">=</span> <span class="mi">50</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="n">white</span><span class="o">);</span>
+
+  <span class="n">noStroke</span><span class="o">();</span>
+  <span class="n">fill</span><span class="o">(</span><span class="n">orange</span><span class="o">);</span>
+  <span class="n">ellipse</span><span class="o">(</span><span class="n">ball</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">ball</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="n">diam</span><span class="o">,</span> <span class="n">diam</span><span class="o">);</span>
+
+  <span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">+=</span> <span class="n">ball</span><span class="o">.</span><span class="na">dx</span><span class="o">;</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">+=</span> <span class="n">ball</span><span class="o">.</span><span class="na">dy</span><span class="o">;</span>
+
+  <span class="c1">// hit the left edge?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">ball</span><span class="o">.</span><span class="na">dx</span><span class="o">;</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// hit the right edge?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&gt;=</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">ball</span><span class="o">.</span><span class="na">dx</span><span class="o">;</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">499</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// hit the top edge?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">ball</span><span class="o">.</span><span class="na">dy</span><span class="o">;</span>
+    <span class="n">diam</span> <span class="o">+=</span> <span class="mi">10</span><span class="o">;</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// hit the bottom edge?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">+</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&gt;=</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">ball</span><span class="o">.</span><span class="na">dy</span><span class="o">;</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">499</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="assigning-object-variables">
+<h2>Assigning Object Variables<a class="headerlink" href="#assigning-object-variables" title="Permalink to this headline">¶</a></h2>
+<p>Consider this code fragment:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Sprite</span> <span class="n">ball1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Sprite</span><span class="o">();</span>
+<span class="n">Sprite</span> <span class="n">ball2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Sprite</span><span class="o">();</span>
+
+<span class="n">ball1</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>
+<span class="n">ball2</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">200</span><span class="o">;</span>
+
+<span class="n">println</span><span class="o">(</span><span class="n">ball1</span><span class="o">.</span><span class="na">x</span><span class="o">);</span>  <span class="c1">// prints 100</span>
+<span class="n">println</span><span class="o">(</span><span class="n">ball2</span><span class="o">.</span><span class="na">x</span><span class="o">);</span>  <span class="c1">// prints 200</span>
+</pre></div>
+</div>
+<p>We say <code class="docutils literal"><span class="pre">ball1</span></code> and <code class="docutils literal"><span class="pre">ball2</span></code> refer, or point, to their corresponding
+<code class="docutils literal"><span class="pre">Sprite</span></code> objects. <code class="docutils literal"><span class="pre">ball1.x</span></code> and <code class="docutils literal"><span class="pre">ball2.x</span></code> thus refer to different
+variables.</p>
+<p>Now suppose we write this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Sprite</span> <span class="n">ball1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Sprite</span><span class="o">();</span>
+<span class="n">Sprite</span> <span class="n">ball2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Sprite</span><span class="o">();</span>
+
+<span class="n">ball1</span> <span class="o">=</span> <span class="n">ball2</span><span class="o">;</span>
+
+<span class="n">ball1</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>
+<span class="n">ball2</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">200</span><span class="o">;</span>
+
+<span class="n">println</span><span class="o">(</span><span class="n">ball1</span><span class="o">.</span><span class="na">x</span><span class="o">);</span>  <span class="c1">// prints 200</span>
+<span class="n">println</span><span class="o">(</span><span class="n">ball2</span><span class="o">.</span><span class="na">x</span><span class="o">);</span>  <span class="c1">// prints 200</span>
+</pre></div>
+</div>
+<p>The result is different because the assignment statement <code class="docutils literal"><span class="pre">ball1</span> <span class="pre">=</span> <span class="pre">ball2;</span></code>
+makes <code class="docutils literal"><span class="pre">ball1</span></code> refer to the same object as <code class="docutils literal"><span class="pre">ball2</span></code>. Thus <code class="docutils literal"><span class="pre">ball1.x</span></code> and
+<code class="docutils literal"><span class="pre">ball2.x</span></code> refer to the same variable.</p>
+<p>What&#8217;s important to notice here is that <code class="docutils literal"><span class="pre">ball1</span> <span class="pre">=</span> <span class="pre">ball2;</span></code> does <strong>not</strong> make a
+copy of the underlying object. Instead, it makes the variable <code class="docutils literal"><span class="pre">ball1</span></code> point
+to the same variable <code class="docutils literal"><span class="pre">ball2</span></code> points to.</p>
+</div>
+<div class="section" id="garbage-collection">
+<h2>Garbage Collection<a class="headerlink" href="#garbage-collection" title="Permalink to this headline">¶</a></h2>
+<p>There is a subtle but important issue hidden in the previous example:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Sprite</span> <span class="n">ball1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Sprite</span><span class="o">();</span>
+<span class="n">Sprite</span> <span class="n">ball2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Sprite</span><span class="o">();</span>
+
+<span class="n">ball1</span> <span class="o">=</span> <span class="n">ball2</span><span class="o">;</span>
+
+<span class="n">ball1</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>
+<span class="n">ball2</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">200</span><span class="o">;</span>
+</pre></div>
+</div>
+<p>After the assignment statement <code class="docutils literal"><span class="pre">ball1</span> <span class="pre">=</span> <span class="pre">ball2;</span></code> is executed, what happens to
+the object that <code class="docutils literal"><span class="pre">ball1</span></code> use to refer to? <code class="docutils literal"><span class="pre">ball1</span></code> no longer refers to it,
+and so there is now no way to access the variables that are in it. An object
+that has no references or pointers to it is called a <strong>garbage object</strong>.
+Garbage objects cannot be used by your program, but still take up memory. If
+you have too many garbage objects, your program&#8217;s performance could degrade,
+or your program may even crash.</p>
+<p>In some languages, such as C or C++, garbage objects must be manually deleted
+by the programmer. Deleting a garbage object means telling the program that
+the memory it uses can, if needed, be given out to other new objects.
+Experience has shown that manually deleting garbage objects is surprisingly
+difficult and error-prone, even for the best programmers. Great care must be
+taken to ensure that an object truly is garbage, i.e. that nothing points to
+it.</p>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/Java_(programming_language)">Java</a> does not have manual garbage deletion, and instead handles garbage
+objects in two main ways:</p>
+<ol class="arabic">
+<li><p class="first"><strong>Sometimes it does nothing!</strong> In small programs that don&#8217;t create a lot of
+objects, there may be no need to delete garbage objects. Just let the
+garbage objects accumulate, and ignore them. As long as you enough memory,
+this may not be a big a problem.</p>
+<p>The good thing about this approach is that it is fast, simple, and easy to
+understand. But the bad thing is that it ignores the problem of garbage
+instead of solving it. In longer running programs, small garbage objects
+can add up to waste a lot of memory, requiring they they be deleted
+somehow.</p>
+</li>
+<li><p class="first"><strong>Run an automatic garbage collector sub-program.</strong> When you create a <a class="reference external" href="http://en.wikipedia.org/wiki/Java_(programming_language)">Java</a>
+program, <a class="reference external" href="http://en.wikipedia.org/wiki/Java_(programming_language)">Java</a> automatically gives it a special garbage collector sub-
+program that will, when it decides it is necessary, automatically delete
+garbage objects in your main program. The garbage collector sub-program
+does take a bit of time when it runs, and so because of this <a class="reference external" href="http://en.wikipedia.org/wiki/Java_(programming_language)">Java</a> programs
+are not necessarily as efficient as equivalent programs in languages with
+manual garbage deletion.</p>
+<p>The nice thing about automatic garbage collection is that the programmer
+doesn&#8217;t need to even know about it: it is totally automatic. The actual
+details of how garbage collectors are quite subtle and involved, but using
+it is easy.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="null-and-nullpointerexception">
+<h2>null and NullPointerException<a class="headerlink" href="#null-and-nullpointerexception" title="Permalink to this headline">¶</a></h2>
+<p>If you create a <code class="docutils literal"><span class="pre">Sprite</span></code> variable without making it point to a <code class="docutils literal"><span class="pre">Sprite</span></code>
+object, then it is assigned the special value <code class="docutils literal"><span class="pre">null</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Sprite</span> <span class="n">ball</span><span class="o">;</span>    <span class="c1">// ball is automatically set to null</span>
+
+<span class="n">println</span><span class="o">(</span><span class="n">ball</span><span class="o">);</span>  <span class="c1">// prints &quot;null&quot;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">null</span></code> means that the variable is not referring to any object. You can never
+use &#8221;.&#8221;-notation with <code class="docutils literal"><span class="pre">null</span></code>, e.g.:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Sprite</span> <span class="n">ball</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+<span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">5</span><span class="o">;</span>   <span class="c1">// run-time error: NullPointerException</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">ball.x</span></code> causes the run-time error <code class="docutils literal"><span class="pre">NullPointerException</span></code>. In practice,
+this is a very common error, and often means you forgot to use <code class="docutils literal"><span class="pre">new</span></code> to make
+a new object for your variable.</p>
+</div>
+<div class="section" id="example-a-small-explosion">
+<h2>Example: A Small Explosion<a class="headerlink" href="#example-a-small-explosion" title="Permalink to this headline">¶</a></h2>
+<p>Lets see an example of how to use multiple sprites in the same program. The
+following code makes three &#8220;fragments&#8221; move off from the center of the screen
+in different directions and at different speeds:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dy</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="n">Sprite</span> <span class="n">frag1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Sprite</span><span class="o">();</span>
+<span class="n">Sprite</span> <span class="n">frag2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Sprite</span><span class="o">();</span>
+<span class="n">Sprite</span> <span class="n">frag3</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Sprite</span><span class="o">();</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+
+  <span class="n">smooth</span><span class="o">();</span>
+  <span class="n">noStroke</span><span class="o">();</span>
+
+  <span class="n">frag1</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">frag1</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">frag1</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="o">-</span><span class="mf">4.2</span><span class="o">;</span>
+  <span class="n">frag1</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="mf">3.6</span><span class="o">;</span>
+
+  <span class="n">frag2</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">frag2</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">frag2</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.2</span><span class="o">;</span>
+  <span class="n">frag2</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="o">-</span><span class="mf">4.6</span><span class="o">;</span>
+
+  <span class="n">frag3</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">frag3</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">frag3</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="mf">4.2</span><span class="o">;</span>
+  <span class="n">frag3</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="mf">2.6</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="n">fill</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="n">ellipse</span><span class="o">(</span><span class="n">frag1</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">frag1</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="mi">50</span><span class="o">,</span> <span class="mi">50</span><span class="o">);</span>
+
+  <span class="n">fill</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="n">ellipse</span><span class="o">(</span><span class="n">frag2</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">frag2</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="mi">50</span><span class="o">,</span> <span class="mi">50</span><span class="o">);</span>
+
+  <span class="n">fill</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">255</span><span class="o">);</span>
+  <span class="n">ellipse</span><span class="o">(</span><span class="n">frag3</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">frag3</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="mi">50</span><span class="o">,</span> <span class="mi">50</span><span class="o">);</span>
+
+  <span class="n">frag1</span><span class="o">.</span><span class="na">x</span> <span class="o">+=</span> <span class="n">frag1</span><span class="o">.</span><span class="na">dx</span><span class="o">;</span>
+  <span class="n">frag1</span><span class="o">.</span><span class="na">y</span> <span class="o">+=</span> <span class="n">frag1</span><span class="o">.</span><span class="na">dy</span><span class="o">;</span>
+
+  <span class="n">frag2</span><span class="o">.</span><span class="na">x</span> <span class="o">+=</span> <span class="n">frag2</span><span class="o">.</span><span class="na">dx</span><span class="o">;</span>
+  <span class="n">frag2</span><span class="o">.</span><span class="na">y</span> <span class="o">+=</span> <span class="n">frag2</span><span class="o">.</span><span class="na">dy</span><span class="o">;</span>
+
+  <span class="n">frag3</span><span class="o">.</span><span class="na">x</span> <span class="o">+=</span> <span class="n">frag3</span><span class="o">.</span><span class="na">dx</span><span class="o">;</span>
+  <span class="n">frag3</span><span class="o">.</span><span class="na">y</span> <span class="o">+=</span> <span class="n">frag3</span><span class="o">.</span><span class="na">dy</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">What are two advantages of using the <code class="docutils literal"><span class="pre">Sprite</span></code> class for representing
+animated objects?</p>
+</li>
+<li><p class="first">What does the following code fragment print?</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Sprite</span> <span class="n">ball</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Sprite</span><span class="o">();</span>
+<span class="n">println</span><span class="o">(</span><span class="n">ball</span><span class="o">.</span><span class="na">x</span><span class="o">);</span>
+<span class="n">println</span><span class="o">(</span><span class="n">ball</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+<span class="n">println</span><span class="o">(</span><span class="n">ball</span><span class="o">.</span><span class="na">dx</span><span class="o">);</span>
+<span class="n">println</span><span class="o">(</span><span class="n">ball</span><span class="o">.</span><span class="na">dy</span><span class="o">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">The <code class="docutils literal"><span class="pre">Sprite</span></code> class in these notes is for representing 2-dimensional
+sprites. Write a class called <code class="docutils literal"><span class="pre">Sprite3d</span></code> that could be used to represent
+3-dimensional sprites.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="programming-questions">
+<h2>Programming Questions<a class="headerlink" href="#programming-questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Modify the sample program in &#8220;a small explosion&#8221; so that gravity pulls the
+particles downwards.</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="functions.html" title="Functions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="simple_gravity.html" title="The Keyboard, the Mouse, and Gravity"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Toby Donaldson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,687 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>An Exploding Hamburger &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
+    <link rel="next" title="Multiple Screens" href="text_screens.html" />
+    <link rel="prev" title="Case Study: Watching Grass Grow" href="grass.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="text_screens.html" title="Multiple Screens"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="grass.html" title="Case Study: Watching Grass Grow"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">An Exploding Hamburger</a><ul>
+<li><a class="reference internal" href="#an-exploding-burger-class">An Exploding Burger Class</a></li>
+<li><a class="reference internal" href="#resetting-an-explosion">Resetting an Explosion</a></li>
+<li><a class="reference internal" href="#setting-the-location-and-visibility-of-a-burger">Setting the Location and Visibility of a <code class="docutils literal"><span class="pre">Burger</span></code></a></li>
+<li><a class="reference internal" href="#testing-the-burger-class">Testing the Burger Class</a></li>
+<li><a class="reference internal" href="#creating-reusable-code">Creating Reusable Code</a></li>
+<li><a class="reference internal" href="#programming-questions">Programming Questions</a></li>
+<li><a class="reference internal" href="#the-code">The Code</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="grass.html"
+                        title="previous chapter">Case Study: Watching Grass Grow</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="text_screens.html"
+                        title="next chapter">Multiple Screens</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="an-exploding-hamburger">
+<h1>An Exploding Hamburger<a class="headerlink" href="#an-exploding-hamburger" title="Permalink to this headline">¶</a></h1>
+<p>We&#8217;ve already seen how to make <a class="reference internal" href="shards_example.html"><em>explosions</em></a>, and
+to <a class="reference internal" href="simple_sprite.html"><em>display hamburgers using a sprite</em></a>, and so
+here we combine the two into a single program that makes a bouncing
+hamburger explodes when the user clicks anywhere with the mouse:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Explosion</span> <span class="n">e</span><span class="o">;</span>     <span class="c1">// initially null</span>
+<span class="n">Sprite</span> <span class="n">burger</span><span class="o">;</span>   <span class="c1">// initially null</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">smooth</span><span class="o">();</span>
+
+  <span class="n">burger</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Sprite</span><span class="o">(</span><span class="s">&quot;burger.gif&quot;</span><span class="o">);</span>
+  <span class="n">burger</span><span class="o">.</span><span class="na">visible</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+  <span class="n">burger</span><span class="o">.</span><span class="na">bouncing</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+  <span class="n">burger</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="n">burger</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="mf">1.5</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="k">if</span> <span class="o">(</span><span class="n">e</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>  <span class="c1">// != is &quot;not equal to&quot;</span>
+    <span class="n">e</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="n">e</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="n">burger</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+  <span class="n">burger</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">mousePressed</span><span class="o">()</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">burger</span><span class="o">.</span><span class="na">visible</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">burger</span><span class="o">.</span><span class="na">visible</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Explosion</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="n">burger</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">burger</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+  <span class="o">}</span>
+  <span class="k">else</span> <span class="o">{</span>
+    <span class="n">burger</span><span class="o">.</span><span class="na">visible</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="n">burger</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">mouseX</span><span class="o">;</span>
+    <span class="n">burger</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">mouseY</span><span class="o">;</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>To use this program, click anywhere on the screen with the mouse.</p>
+<div class="section" id="an-exploding-burger-class">
+<h2>An Exploding Burger Class<a class="headerlink" href="#an-exploding-burger-class" title="Permalink to this headline">¶</a></h2>
+<p>If we want more than one exploding burger, or if we want to use it in
+more than one program, then its a good idea to create a class that
+lets us make exploding hamburgers.</p>
+<p>We&#8217;ll create a class called <code class="docutils literal"><span class="pre">Burger</span></code> that stores both a sprite and
+an explosion:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">PImage</span> <span class="n">BURGER_IMAGE</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="c1">// ...</span>
+  <span class="n">BURGER_IMAGE</span> <span class="o">=</span> <span class="n">loadImage</span><span class="o">(</span><span class="s">&quot;burger.gif&quot;</span><span class="o">);</span>
+  <span class="c1">// ...</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">Burger</span> <span class="o">{</span>
+  <span class="n">Sprite</span> <span class="n">b</span><span class="o">;</span>
+  <span class="n">Explosion</span> <span class="n">e</span><span class="o">;</span>
+
+  <span class="n">Burger</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Sprite</span><span class="o">(</span><span class="n">BURGER_IMAGE</span><span class="o">);</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Explosion</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="c1">// ...</span>
+
+<span class="o">}</span> <span class="c1">// class Burger</span>
+</pre></div>
+</div>
+<p>At any time, a <code class="docutils literal"><span class="pre">Burger</span></code> object is either acting as a sprite or an
+explosion. Thus we need some way to keep track of that, and so we
+introduce a new variable called <code class="docutils literal"><span class="pre">state</span></code> that tells us how to treat a
+<code class="docutils literal"><span class="pre">Burger</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Burger</span> <span class="o">{</span>
+  <span class="n">Sprite</span> <span class="n">b</span><span class="o">;</span>
+  <span class="n">Explosion</span> <span class="n">e</span><span class="o">;</span>
+
+  <span class="n">String</span> <span class="n">state</span><span class="o">;</span> <span class="c1">// &quot;burger&quot;, &quot;exploding&quot;</span>
+
+  <span class="n">Burger</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Sprite</span><span class="o">(</span><span class="n">BURGER_IMAGE</span><span class="o">);</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Explosion</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">);</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="s">&quot;burger&quot;</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// ...</span>
+
+<span class="o">}</span> <span class="c1">// class Burger</span>
+</pre></div>
+</div>
+<p>A <code class="docutils literal"><span class="pre">Burger</span></code> has always in one of two possible states: it&#8217;s a
+hamburger, or it&#8217;s an explosion.</p>
+<p>Now we can write <code class="docutils literal"><span class="pre">render()</span></code> and <code class="docutils literal"><span class="pre">update()</span></code> using if-statements
+that check the value of <code class="docutils literal"><span class="pre">state</span></code> in order to decide what to do:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Burger</span> <span class="o">{</span>
+  <span class="n">Sprite</span> <span class="n">b</span><span class="o">;</span>
+  <span class="n">Explosion</span> <span class="n">e</span><span class="o">;</span>
+
+  <span class="n">String</span> <span class="n">state</span><span class="o">;</span> <span class="c1">// &quot;burger&quot;, &quot;exploding&quot;</span>
+
+  <span class="n">Burger</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Sprite</span><span class="o">(</span><span class="n">BURGER_IMAGE</span><span class="o">);</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Explosion</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">);</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="s">&quot;burger&quot;</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">state</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;burger&quot;</span><span class="o">))</span> <span class="o">{</span>
+      <span class="n">b</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">state</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;exploding&quot;</span><span class="o">))</span> <span class="o">{</span>
+      <span class="n">e</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">state</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;burger&quot;</span><span class="o">))</span> <span class="o">{</span>
+      <span class="n">b</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">state</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;exploding&quot;</span><span class="o">))</span> <span class="o">{</span>
+      <span class="n">e</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+<span class="o">}</span> <span class="c1">// class Burger</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Notice that we write <code class="docutils literal"><span class="pre">state.equals(&quot;burger&quot;)</span></code> to test the
+value of <code class="docutils literal"><span class="pre">state</span></code>, and not <code class="docutils literal"><span class="pre">state</span> <span class="pre">==</span> <span class="pre">&quot;burger&quot;</span></code>. The expression
+<code class="docutils literal"><span class="pre">state</span> <span class="pre">==</span> <span class="pre">&quot;burger&quot;</span></code> tests if the two string objects have the same
+memory address, and that is not what we want to test here: we want
+to know if the two strings consist of the same letters in the same
+order. The expression <code class="docutils literal"><span class="pre">state</span> <span class="pre">==</span> <span class="pre">&quot;burger&quot;</span></code> is almost never useful,
+and, unfortunately, <a class="reference external" href="http://processing.org/">Processing</a> does not give you any warning when
+you use it.</p>
+</div>
+<p>Next consider what should happen when we change the value of
+<code class="docutils literal"><span class="pre">state</span></code>. If <code class="docutils literal"><span class="pre">state</span></code> is currently <code class="docutils literal"><span class="pre">&quot;burger&quot;</span></code>, then changing it to
+<code class="docutils literal"><span class="pre">&quot;explosion&quot;</span></code> will, for us, count as the creation of a new
+explosion. Thus when <code class="docutils literal"><span class="pre">state</span></code> goes from <code class="docutils literal"><span class="pre">&quot;burger&quot;</span></code> to
+<code class="docutils literal"><span class="pre">&quot;explosion&quot;</span></code>, we need to reset the explosion to start fresh.</p>
+<p>Going from <code class="docutils literal"><span class="pre">&quot;burger&quot;</span></code> to <code class="docutils literal"><span class="pre">&quot;explosion&quot;</span></code> doesn&#8217;t require anything
+special, and so all we need to do in this case is change the value of
+<code class="docutils literal"><span class="pre">state</span></code>.</p>
+<p>To ensure that the explosion is properly reset when the state changes
+from <code class="docutils literal"><span class="pre">&quot;burger&quot;</span></code> to <code class="docutils literal"><span class="pre">&quot;explosion&quot;</span></code>, we&#8217;ll add a new function called
+<code class="docutils literal"><span class="pre">setState</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Burger</span> <span class="o">{</span>
+
+  <span class="c1">// ...</span>
+
+  <span class="kt">void</span> <span class="nf">setState</span><span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">s</span><span class="o">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">state</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;exploding&quot;</span><span class="o">))</span> <span class="o">{</span>
+      <span class="n">e</span><span class="o">.</span><span class="na">reset</span><span class="o">();</span>
+      <span class="n">setLocation</span><span class="o">(</span><span class="n">b</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">b</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="c1">// ...</span>
+
+<span class="o">}</span> <span class="c1">// class Burger</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It is up to the programmer to remember to set the state by
+calling <code class="docutils literal"><span class="pre">setState</span></code> instead of setting <code class="docutils literal"><span class="pre">state</span></code> directly (e.g. by
+writing <code class="docutils literal"><span class="pre">burger.state</span> <span class="pre">=</span> <span class="pre">&quot;explosion&quot;</span></code>). <a class="reference external" href="http://processing.org/">Processing</a> has a feature
+known as <code class="docutils literal"><span class="pre">private</span></code> variables that can help with this. We could
+have declared <code class="docutils literal"><span class="pre">state</span></code> to be <code class="docutils literal"><span class="pre">private</span></code>, which means that code
+outside of the <code class="docutils literal"><span class="pre">Burger</span></code> class is not allow to read or write
+<code class="docutils literal"><span class="pre">state</span></code>. Thus there would be now way to accidentally set
+<code class="docutils literal"><span class="pre">state</span></code> directly.</p>
+</div>
+<p>If you are reading carefully, then you will have noticed that the
+functions <code class="docutils literal"><span class="pre">e.reset</span></code> and <code class="docutils literal"><span class="pre">setLocation</span></code> don&#8217;t yet exist! So lets
+write those now.</p>
+</div>
+<div class="section" id="resetting-an-explosion">
+<h2>Resetting an Explosion<a class="headerlink" href="#resetting-an-explosion" title="Permalink to this headline">¶</a></h2>
+<p>To avoid using too much memory, we add a <code class="docutils literal"><span class="pre">reset()</span></code> function to
+<code class="docutils literal"><span class="pre">Explosion</span></code> that resets each shard:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Explosion</span> <span class="o">{</span>
+  <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Shard</span><span class="o">&gt;</span> <span class="n">shards</span><span class="o">;</span>
+
+  <span class="c1">// ...</span>
+
+  <span class="kt">void</span> <span class="nf">reset</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">for</span><span class="o">(</span><span class="n">Shard</span> <span class="n">s</span> <span class="o">:</span> <span class="n">shards</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">s</span><span class="o">.</span><span class="na">reset</span><span class="o">();</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="c1">// ...</span>
+
+<span class="o">}</span> <span class="c1">// class Explosion</span>
+</pre></div>
+</div>
+<p>We&#8217;ll call <code class="docutils literal"><span class="pre">reset()</span></code> when we want to re-initialize an explosion.</p>
+</div>
+<div class="section" id="setting-the-location-and-visibility-of-a-burger">
+<h2>Setting the Location and Visibility of a <code class="docutils literal"><span class="pre">Burger</span></code><a class="headerlink" href="#setting-the-location-and-visibility-of-a-burger" title="Permalink to this headline">¶</a></h2>
+<p>We also want to add a function to <code class="docutils literal"><span class="pre">Burger</span></code> that lets us set its
+location on the screen. Since a <code class="docutils literal"><span class="pre">Burger</span></code> contains both a sprite and
+an explosion, we use a function to do the setting:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Burger</span> <span class="o">{</span>
+
+  <span class="c1">// ...</span>
+
+  <span class="kt">void</span> <span class="nf">setLocation</span><span class="o">(</span><span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="kt">float</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// set burger location</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">;</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">;</span>
+
+    <span class="c1">// set explosion location</span>
+    <span class="k">for</span><span class="o">(</span><span class="n">Shard</span> <span class="n">s</span> <span class="o">:</span> <span class="n">e</span><span class="o">.</span><span class="na">shards</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">s</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">;</span>
+      <span class="n">s</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="c1">// ...</span>
+
+<span class="o">}</span> <span class="c1">// class Burger</span>
+</pre></div>
+</div>
+<p>While we&#8217;re at it, lets also add a similar function for setting the
+visibility of a <code class="docutils literal"><span class="pre">Burger</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Burger</span> <span class="o">{</span>
+  <span class="c1">// ...</span>
+
+  <span class="kt">void</span> <span class="nf">setVisibility</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">visible</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// set burger visibility</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">visible</span> <span class="o">=</span> <span class="n">visible</span><span class="o">;</span>
+
+    <span class="c1">// set explosion visibility</span>
+    <span class="k">for</span><span class="o">(</span><span class="n">Shard</span> <span class="n">s</span> <span class="o">:</span> <span class="n">e</span><span class="o">.</span><span class="na">shards</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">s</span><span class="o">.</span><span class="na">visible</span> <span class="o">=</span> <span class="n">visible</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="c1">// ...</span>
+
+<span class="o">}</span> <span class="c1">// class Burger</span>
+</pre></div>
+</div>
+<p>This lets us control whether or not we can see a <code class="docutils literal"><span class="pre">Burger</span></code>, no matter
+its state.</p>
+</div>
+<div class="section" id="testing-the-burger-class">
+<h2>Testing the Burger Class<a class="headerlink" href="#testing-the-burger-class" title="Permalink to this headline">¶</a></h2>
+<p>Now lets test our new <code class="docutils literal"><span class="pre">Burger</span></code> class in a program:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">PImage</span> <span class="n">BURGER_IMAGE</span><span class="o">;</span>  <span class="c1">// needed by the Burger class</span>
+
+<span class="n">Burger</span> <span class="n">burger</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">smooth</span><span class="o">();</span>
+
+  <span class="n">BURGER_IMAGE</span> <span class="o">=</span> <span class="n">loadImage</span><span class="o">(</span><span class="s">&quot;burger.gif&quot;</span><span class="o">);</span>
+
+  <span class="n">burger</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Burger</span><span class="o">();</span>
+  <span class="n">burger</span><span class="o">.</span><span class="na">b</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
+  <span class="n">burger</span><span class="o">.</span><span class="na">b</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="mf">1.5</span><span class="o">;</span>
+  <span class="n">burger</span><span class="o">.</span><span class="na">b</span><span class="o">.</span><span class="na">bouncing</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+  <span class="n">burger</span><span class="o">.</span><span class="na">setVisibility</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="n">burger</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+  <span class="n">burger</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">mousePressed</span><span class="o">()</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">burger</span><span class="o">.</span><span class="na">state</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;burger&quot;</span><span class="o">))</span> <span class="o">{</span>
+    <span class="n">burger</span><span class="o">.</span><span class="na">setState</span><span class="o">(</span><span class="s">&quot;exploding&quot;</span><span class="o">);</span>
+  <span class="o">}</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">burger</span><span class="o">.</span><span class="na">state</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;exploding&quot;</span><span class="o">))</span> <span class="o">{</span>
+    <span class="n">burger</span><span class="o">.</span><span class="na">setState</span><span class="o">(</span><span class="s">&quot;burger&quot;</span><span class="o">);</span>
+    <span class="n">burger</span><span class="o">.</span><span class="na">setLocation</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-reusable-code">
+<h2>Creating Reusable Code<a class="headerlink" href="#creating-reusable-code" title="Permalink to this headline">¶</a></h2>
+<p>If you&#8217;ve read these notes, then you&#8217;ve notice how much more work it
+is to create re-usable code than it is to create one demo. Our
+<code class="docutils literal"><span class="pre">Explosion</span></code> class worked fine when we used it in simple
+demonstration programs, but it proved to be inadequate when we used it
+as part of the <code class="docutils literal"><span class="pre">Burger</span></code> class. This is typical. Making a class (or
+function) usable in <em>any</em> situation is harder than making it work in
+one or two specific demos. It takes experience and practice to get
+good at making re-usable code.</p>
+</div>
+<div class="section" id="programming-questions">
+<h2>Programming Questions<a class="headerlink" href="#programming-questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Add an explosion sound effect to the <code class="docutils literal"><span class="pre">Explosion</span></code> class.</li>
+<li>Make the hamburger explode just when the user clicks on it with the
+mouse. If they click somewhere on the screen but not on the
+hamburger, then nothing happens.</li>
+</ol>
+</div>
+<div class="section" id="the-code">
+<h2>The Code<a class="headerlink" href="#the-code" title="Permalink to this headline">¶</a></h2>
+<p>Here is all the code to make the final example program work:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">PImage</span> <span class="n">BURGER_IMAGE</span><span class="o">;</span>
+
+<span class="n">Burger</span> <span class="n">burger</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">smooth</span><span class="o">();</span>
+
+  <span class="n">BURGER_IMAGE</span> <span class="o">=</span> <span class="n">loadImage</span><span class="o">(</span><span class="s">&quot;burger.gif&quot;</span><span class="o">);</span>
+
+  <span class="n">burger</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Burger</span><span class="o">();</span>
+  <span class="n">burger</span><span class="o">.</span><span class="na">b</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
+  <span class="n">burger</span><span class="o">.</span><span class="na">b</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="mf">1.5</span><span class="o">;</span>
+  <span class="n">burger</span><span class="o">.</span><span class="na">b</span><span class="o">.</span><span class="na">bouncing</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+  <span class="n">burger</span><span class="o">.</span><span class="na">setVisibility</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="n">burger</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+  <span class="n">burger</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">mousePressed</span><span class="o">()</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">burger</span><span class="o">.</span><span class="na">state</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;burger&quot;</span><span class="o">))</span> <span class="o">{</span>
+    <span class="n">burger</span><span class="o">.</span><span class="na">setState</span><span class="o">(</span><span class="s">&quot;exploding&quot;</span><span class="o">);</span>
+  <span class="o">}</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">burger</span><span class="o">.</span><span class="na">state</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;exploding&quot;</span><span class="o">))</span> <span class="o">{</span>
+    <span class="n">burger</span><span class="o">.</span><span class="na">setState</span><span class="o">(</span><span class="s">&quot;burger&quot;</span><span class="o">);</span>
+    <span class="n">burger</span><span class="o">.</span><span class="na">setLocation</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">///////////////////////////////////////////////////////////</span>
+
+<span class="kd">class</span> <span class="nc">Burger</span> <span class="o">{</span>
+  <span class="n">Sprite</span> <span class="n">b</span><span class="o">;</span>
+  <span class="n">Explosion</span> <span class="n">e</span><span class="o">;</span>
+
+  <span class="n">String</span> <span class="n">state</span><span class="o">;</span> <span class="c1">// &quot;burger&quot;, &quot;exploding&quot;</span>
+
+  <span class="n">Burger</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Sprite</span><span class="o">(</span><span class="n">BURGER_IMAGE</span><span class="o">);</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Explosion</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">);</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="s">&quot;burger&quot;</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">state</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;burger&quot;</span><span class="o">))</span> <span class="o">{</span>
+      <span class="n">b</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">state</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;exploding&quot;</span><span class="o">))</span> <span class="o">{</span>
+      <span class="n">e</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">state</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;burger&quot;</span><span class="o">))</span> <span class="o">{</span>
+      <span class="n">b</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">state</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;exploding&quot;</span><span class="o">))</span> <span class="o">{</span>
+      <span class="n">e</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">setState</span><span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">s</span><span class="o">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">state</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;exploding&quot;</span><span class="o">))</span> <span class="o">{</span>
+      <span class="n">e</span><span class="o">.</span><span class="na">reset</span><span class="o">();</span>
+      <span class="n">setLocation</span><span class="o">(</span><span class="n">b</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">b</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">setLocation</span><span class="o">(</span><span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="kt">float</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// set burger location</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">;</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">;</span>
+
+    <span class="c1">// set explosion location</span>
+    <span class="k">for</span><span class="o">(</span><span class="n">Shard</span> <span class="n">s</span> <span class="o">:</span> <span class="n">e</span><span class="o">.</span><span class="na">shards</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">s</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">;</span>
+      <span class="n">s</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">setVisibility</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">visible</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// set burger visibility</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">visible</span> <span class="o">=</span> <span class="n">visible</span><span class="o">;</span>
+
+    <span class="c1">// set explosion visibility</span>
+    <span class="k">for</span><span class="o">(</span><span class="n">Shard</span> <span class="n">s</span> <span class="o">:</span> <span class="n">e</span><span class="o">.</span><span class="na">shards</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">s</span><span class="o">.</span><span class="na">visible</span> <span class="o">=</span> <span class="n">visible</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+<span class="o">}</span> <span class="c1">// class Burger</span>
+
+<span class="c1">/////////////////////////////////////////////////////////////////////////////////</span>
+
+<span class="kd">class</span> <span class="nc">Explosion</span> <span class="o">{</span>
+  <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Shard</span><span class="o">&gt;</span> <span class="n">shards</span><span class="o">;</span>
+
+  <span class="n">Explosion</span><span class="o">(</span><span class="kt">int</span> <span class="n">numParticles</span><span class="o">,</span> <span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="kt">float</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">shards</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Shard</span><span class="o">&gt;();</span>
+    <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numParticles</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">Shard</span> <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Shard</span><span class="o">();</span>
+      <span class="n">s</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">;</span>
+      <span class="n">s</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">;</span>
+      <span class="n">shards</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">reset</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">for</span><span class="o">(</span><span class="n">Shard</span> <span class="n">s</span> <span class="o">:</span> <span class="n">shards</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">s</span><span class="o">.</span><span class="na">reset</span><span class="o">();</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">for</span><span class="o">(</span><span class="n">Shard</span> <span class="n">s</span> <span class="o">:</span> <span class="n">shards</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">s</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">for</span><span class="o">(</span><span class="n">Shard</span> <span class="n">s</span> <span class="o">:</span> <span class="n">shards</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">s</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+<span class="o">}</span> <span class="c1">// class Explosion</span>
+
+<span class="c1">/////////////////////////////////////////////////////////////////////////////////</span>
+
+<span class="kd">class</span> <span class="nc">Shard</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">;</span>    <span class="c1">// position</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">,</span> <span class="n">dy</span><span class="o">;</span>  <span class="c1">// velocity</span>
+  <span class="kt">float</span> <span class="n">r</span><span class="o">;</span>       <span class="c1">// radius</span>
+  <span class="kt">float</span> <span class="n">dr</span><span class="o">;</span>      <span class="c1">// rate of change of radius</span>
+
+  <span class="kt">boolean</span> <span class="n">visible</span><span class="o">;</span>
+
+  <span class="n">Shard</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">reset</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">reset</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mf">2.0</span><span class="o">,</span> <span class="mf">2.0</span><span class="o">);</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mf">2.0</span><span class="o">,</span> <span class="mf">2.0</span><span class="o">);</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">random</span><span class="o">(</span><span class="mf">2.0</span><span class="o">,</span> <span class="mf">5.0</span><span class="o">);</span>
+    <span class="n">dr</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mf">0.5</span><span class="o">,</span> <span class="mf">0.0</span><span class="o">);</span>
+    <span class="n">visible</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">visible</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">r</span><span class="o">,</span> <span class="n">r</span><span class="o">);</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+    <span class="n">r</span> <span class="o">+=</span> <span class="n">dr</span><span class="o">;</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">r</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>   <span class="c1">// when the shard gets too small, make it disappear</span>
+      <span class="n">visible</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span> <span class="c1">// class Shard</span>
+
+<span class="c1">/////////////////////////////////////////////////////////////////////////////////</span>
+
+<span class="kd">class</span> <span class="nc">Sprite</span> <span class="o">{</span>
+  <span class="n">PImage</span> <span class="n">img</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">,</span> <span class="n">dy</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">angle</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">spinRate</span><span class="o">;</span>
+
+  <span class="kt">boolean</span> <span class="n">visible</span><span class="o">;</span>
+  <span class="kt">boolean</span> <span class="n">bouncing</span><span class="o">;</span>
+  <span class="kt">boolean</span> <span class="n">boundingBoxVisible</span><span class="o">;</span>
+
+  <span class="n">Sprite</span><span class="o">(</span><span class="n">PImage</span> <span class="n">init_img</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">init_img</span><span class="o">;</span>
+    <span class="n">visible</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="n">bouncing</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="n">boundingBoxVisible</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="n">Sprite</span><span class="o">(</span><span class="n">String</span> <span class="n">fname</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">loadImage</span><span class="o">(</span><span class="n">fname</span><span class="o">);</span>
+    <span class="n">visible</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="n">bouncing</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="n">boundingBoxVisible</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">visible</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">pushMatrix</span><span class="o">();</span>
+
+      <span class="c1">// move and rotate the coordinate system</span>
+      <span class="n">translate</span><span class="o">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">img</span><span class="o">.</span><span class="na">height</span> <span class="o">/</span> <span class="mi">2</span><span class="o">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">img</span><span class="o">.</span><span class="na">height</span> <span class="o">/</span> <span class="mi">2</span><span class="o">);</span>
+      <span class="n">rotate</span><span class="o">(</span><span class="n">angle</span><span class="o">);</span>
+
+      <span class="c1">// draw the image</span>
+      <span class="n">image</span><span class="o">(</span><span class="n">img</span><span class="o">,</span> <span class="o">-</span><span class="n">img</span><span class="o">.</span><span class="na">width</span> <span class="o">/</span> <span class="mi">2</span><span class="o">,</span> <span class="o">-</span><span class="n">img</span><span class="o">.</span><span class="na">height</span> <span class="o">/</span> <span class="mi">2</span><span class="o">);</span>
+
+      <span class="n">popMatrix</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">boundingBoxVisible</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">pushStyle</span><span class="o">();</span>
+      <span class="n">noFill</span><span class="o">();</span>
+      <span class="n">stroke</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+      <span class="n">rect</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">img</span><span class="o">.</span><span class="na">width</span><span class="o">,</span> <span class="n">img</span><span class="o">.</span><span class="na">height</span><span class="o">);</span>
+      <span class="n">popStyle</span><span class="o">();</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+    <span class="n">angle</span> <span class="o">+=</span> <span class="n">spinRate</span><span class="o">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">bouncing</span><span class="o">)</span> <span class="n">checkEdgeCollisions</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">checkEdgeCollisions</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="n">dy</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>       <span class="c1">// hit the top edge?</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">&gt;=</span> <span class="n">height</span><span class="o">)</span> <span class="n">dy</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span> <span class="c1">// hit the bottom edge?</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="n">dx</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>       <span class="c1">// hit the left edge?</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="n">width</span><span class="o">)</span> <span class="n">dx</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>  <span class="c1">// hit the right edge?</span>
+  <span class="o">}</span>
+
+  <span class="c1">// Returns true when point (a, b) is inside this sprite&#39;s</span>
+  <span class="c1">// bounding box, and false otherwise.</span>
+  <span class="kt">boolean</span> <span class="nf">pointInBoundingBox</span><span class="o">(</span><span class="kt">float</span> <span class="n">a</span><span class="o">,</span> <span class="kt">float</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="n">x</span> <span class="o">&amp;&amp;</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">img</span><span class="o">.</span><span class="na">width</span> <span class="o">&amp;&amp;</span>  <span class="n">b</span> <span class="o">&gt;</span> <span class="n">y</span> <span class="o">&amp;&amp;</span> <span class="n">b</span> <span class="o">&lt;</span> <span class="n">y</span> <span class="o">+</span> <span class="n">img</span><span class="o">.</span><span class="na">height</span><span class="o">)</span>
+      <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="k">else</span>
+      <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span> <span class="c1">// class Sprite</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="text_screens.html" title="Multiple Screens"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="grass.html" title="Case Study: Watching Grass Grow"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Toby Donaldson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

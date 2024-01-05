@@ -1,0 +1,572 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Hit Detection and Functions &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
+    <link rel="next" title="Special Effect: Dragging and Dropping" href="drag_and_drop.html" />
+    <link rel="prev" title="Functions" href="functions.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="drag_and_drop.html" title="Special Effect: Dragging and Dropping"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="functions.html" title="Functions"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Hit Detection and Functions</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#boolean-functions">Boolean Functions</a></li>
+<li><a class="reference internal" href="#testing-if-a-point-is-in-a-circle">Testing if a Point is in a Circle</a><ul>
+<li><a class="reference internal" href="#clicking-the-ball">Clicking the Ball</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#testing-if-a-point-is-in-a-rectangle">Testing if a Point is in a Rectangle</a></li>
+<li><a class="reference internal" href="#questions">Questions</a></li>
+<li><a class="reference internal" href="#programming-questions">Programming Questions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="functions.html"
+                        title="previous chapter">Functions</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="drag_and_drop.html"
+                        title="next chapter">Special Effect: Dragging and Dropping</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="hit-detection-and-functions">
+<h1>Hit Detection and Functions<a class="headerlink" href="#hit-detection-and-functions" title="Permalink to this headline">¶</a></h1>
+<p>In these notes you will learn:</p>
+<ul class="simple">
+<li>What boolean functions are.</li>
+<li>How to test if a point is in a circle.</li>
+<li>How to test if a point is in a rectangle.</li>
+</ul>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>In this note we will see how to do basic <strong>hit detection</strong>. The general
+problem is to determine when two shapes touch, or intersect, each other. For
+example, in a graphical user interface you need to know which window the mouse
+pointer is in when it is clicked. Or in a first-person shooter video game you
+want to know when a bullet has hit another player.</p>
+<p>Hit detection turns out to be a surprisingly complex topic if you are dealing
+with arbitrary shapes. Thus, we will restrict ourselves to a couple of the
+most important cases involving circles and rectangles.</p>
+</div>
+<div class="section" id="boolean-functions">
+<h2>Boolean Functions<a class="headerlink" href="#boolean-functions" title="Permalink to this headline">¶</a></h2>
+<p>Suppose you want to test if a number, <code class="docutils literal"><span class="pre">x</span></code>, is negative. You could do that
+with this function:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">boolean</span> <span class="nf">isNegative</span><span class="o">(</span><span class="kt">float</span> <span class="n">x</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">isNegative</span></code> returns either the value <code class="docutils literal"><span class="pre">true</span></code>, or the value <code class="docutils literal"><span class="pre">false</span></code>.
+These two values are the <strong>boolean values</strong>, and so we call a function that
+returns booleans <code class="docutils literal"><span class="pre">boolean</span></code> a <strong>boolean function</strong>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Sometimes boolean functions are called <strong>predicates</strong>, or <strong>test
+functions</strong>. In this course, we will stick with the term <strong>boolean
+function</strong>.</p>
+</div>
+<p>You can use it like this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="k">if</span> <span class="o">(</span><span class="n">isNegative</span><span class="o">(</span><span class="n">x</span><span class="o">))</span> <span class="o">{</span>
+    <span class="n">println</span><span class="o">(</span><span class="s">&quot;Can&#39;t take the square root of a negative number.&quot;</span><span class="o">);</span>
+<span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+    <span class="n">println</span><span class="o">(</span><span class="n">sqrt</span><span class="o">(</span><span class="n">x</span><span class="o">));</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>The body of the <code class="docutils literal"><span class="pre">isNegative</span></code> function consists of an if/else structure.
+However, some programmers prefer writing it is this way:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">boolean</span> <span class="nf">isNegative</span><span class="o">(</span><span class="kt">float</span> <span class="n">x</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>This is much shorter! The expression <code class="docutils literal"><span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">0</span></code> is a <code class="docutils literal"><span class="pre">boolean</span></code> expression
+that evaluates to either <code class="docutils literal"><span class="pre">true</span></code> or <code class="docutils literal"><span class="pre">false</span></code>, depending upon the value of
+<code class="docutils literal"><span class="pre">x</span></code>. If <code class="docutils literal"><span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">0</span></code> is <code class="docutils literal"><span class="pre">true</span></code>, then <code class="docutils literal"><span class="pre">x</span></code> must be negative. If <code class="docutils literal"><span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">0</span></code> is
+<code class="docutils literal"><span class="pre">false</span></code>, then <code class="docutils literal"><span class="pre">x</span></code> is either 0 or positive.</p>
+</div>
+<div class="section" id="testing-if-a-point-is-in-a-circle">
+<h2>Testing if a Point is in a Circle<a class="headerlink" href="#testing-if-a-point-is-in-a-circle" title="Permalink to this headline">¶</a></h2>
+<a class="reference internal image-reference" href="_images/pointInCircle.png"><img alt="Testing if a point is in a circle." class="align-right" src="_images/pointInCircle.png" style="width: 228.0px; height: 186.75px;" /></a>
+<p>Suppose you are given a point (a, b), and a circle with center (x, y) and
+radius r. How can you tell if (a, b) is inside the circle, or outside the
+circle?</p>
+<p>As shown in the diagram on the right, the trick is to measure the distance
+between (x, y) and (a, b). If it&#8217;s r, or less, then (a, b) is in the circle;
+otherwise it&#8217;s outside the circle.</p>
+<p>The <a class="reference external" href="http://processing.org/">Processing</a> function <code class="docutils literal"><span class="pre">dist(x,</span> <span class="pre">y,</span> <span class="pre">a,</span> <span class="pre">b)</span></code> returns the distance between (x,
+y) and (a, b). We can use it like this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="k">if</span> <span class="o">(</span><span class="n">dist</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="o">&lt;=</span> <span class="n">r</span><span class="o">)</span> <span class="o">{</span>
+   <span class="c1">// (a, b) is in the circle</span>
+   <span class="c1">// do something!</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><code class="docutils literal"><span class="pre">dist(x,</span> <span class="pre">y,</span> <span class="pre">a,</span> <span class="pre">b)</span></code> calculates the distance using this formula:</p>
+<div class="math">
+\[\sqrt{(x-a)^2 + (x-b)^2}\]</div>
+<p>If <code class="docutils literal"><span class="pre">dist</span></code> didn&#8217;t already exist, you could could calculate the distance
+between (x, y) and (a, b) like this:</p>
+<div class="last highlight-java"><div class="highlight"><pre><span class="n">sqrt</span><span class="o">((</span><span class="n">x</span> <span class="o">-</span> <span class="n">a</span><span class="o">)</span> <span class="o">*</span> <span class="o">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">a</span><span class="o">)</span> <span class="o">+</span> <span class="o">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">b</span><span class="o">)</span> <span class="o">*</span> <span class="o">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">b</span><span class="o">))</span>
+</pre></div>
+</div>
+</div>
+<p>Let&#8217;s write it as a boolean function to make it easy to re-use:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">//</span>
+<span class="c1">// Returns true if (a, b) is in the circle with center (x, y) and with</span>
+<span class="c1">// radius r; otherwise it returns false</span>
+<span class="c1">//</span>
+<span class="kt">boolean</span> <span class="nf">pointInCircle</span><span class="o">(</span><span class="kt">float</span> <span class="n">a</span><span class="o">,</span> <span class="kt">float</span> <span class="n">b</span><span class="o">,</span>  <span class="c1">// (a, b) is any point</span>
+                      <span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="kt">float</span> <span class="n">y</span><span class="o">,</span>  <span class="c1">// (x, y) is the circle&#39;s center</span>
+                      <span class="kt">float</span> <span class="n">r</span>            <span class="c1">// r is the circle&#39;s radius</span>
+                     <span class="o">)</span>
+<span class="o">{</span>
+   <span class="k">if</span> <span class="o">(</span><span class="n">dist</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="o">&lt;=</span> <span class="n">r</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+   <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>For example, here&#8217;s a program that changes a bouncing ball&#8217;s color to red when
+the mouse pointer hovers over it:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dy</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">//</span>
+<span class="c1">// Returns true if (a, b) is in the circle with center (x, y) and with</span>
+<span class="c1">// radius r; otherwise it returns false</span>
+<span class="c1">//</span>
+<span class="kt">boolean</span> <span class="nf">pointInCircle</span><span class="o">(</span><span class="kt">float</span> <span class="n">a</span><span class="o">,</span> <span class="kt">float</span> <span class="n">b</span><span class="o">,</span>  <span class="c1">// (a, b) is any point</span>
+                      <span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="kt">float</span> <span class="n">y</span><span class="o">,</span>  <span class="c1">// (x, y) is the circle&#39;s center</span>
+                      <span class="kt">float</span> <span class="n">r</span>            <span class="c1">// r is the circle&#39;s radius</span>
+                     <span class="o">)</span>
+<span class="o">{</span>
+   <span class="k">if</span> <span class="o">(</span><span class="n">dist</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="o">&lt;=</span> <span class="n">r</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+   <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">color</span> <span class="n">ball_color</span><span class="o">;</span>
+
+<span class="n">Sprite</span> <span class="n">ball</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Sprite</span><span class="o">();</span>
+<span class="kt">float</span> <span class="n">diam</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">smooth</span><span class="o">();</span>
+
+  <span class="c1">// set the ball&#39;s initial position and velocity</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="mf">1.3</span><span class="o">;</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.77</span><span class="o">;</span>
+  <span class="n">diam</span> <span class="o">=</span> <span class="mi">50</span><span class="o">;</span>
+  <span class="n">ball_color</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="c1">// re-draw the background</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="c1">// draw the ball</span>
+  <span class="n">noStroke</span><span class="o">();</span>
+  <span class="n">fill</span><span class="o">(</span><span class="n">ball_color</span><span class="o">);</span>
+  <span class="n">ellipse</span><span class="o">(</span><span class="n">ball</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">ball</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="n">diam</span><span class="o">,</span> <span class="n">diam</span><span class="o">);</span>
+
+  <span class="c1">// move the ball to its next position</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">+=</span> <span class="n">ball</span><span class="o">.</span><span class="na">dx</span><span class="o">;</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">+=</span> <span class="n">ball</span><span class="o">.</span><span class="na">dy</span><span class="o">;</span>
+
+  <span class="c1">// hit the top edge?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">ball</span><span class="o">.</span><span class="na">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// hit the bottom edge?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">&gt;</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">499</span><span class="o">;</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">ball</span><span class="o">.</span><span class="na">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// hit the left edge?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">ball</span><span class="o">.</span><span class="na">dx</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// hit the right edge?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">&gt;</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">499</span><span class="o">;</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">ball</span><span class="o">.</span><span class="na">dx</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// set the ball&#39;s color to red if the mouse</span>
+  <span class="c1">// pointer is over the ball, and green otherwise</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">pointInCircle</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">,</span> <span class="n">ball</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">ball</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">))</span> <span class="o">{</span>
+    <span class="n">ball_color</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+    <span class="n">ball_color</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Notice that we don&#8217;t need to <em>click</em> the mouse pointer for the ball to change
+color. All that matters in this program is that the pointer &#8220;hover&#8221; over the
+ball.</p>
+<div class="section" id="clicking-the-ball">
+<h3>Clicking the Ball<a class="headerlink" href="#clicking-the-ball" title="Permalink to this headline">¶</a></h3>
+<p>Lets modify our program so that the ball changes color just when we <em>click</em>
+it.</p>
+<p>To do this we need some way to recognize mouse-clicks. One way is to use the
+special <code class="docutils literal"><span class="pre">mousePressed()</span></code> function:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// comment-out the if-statement at the end of draw() before adding</span>
+<span class="c1">// this function</span>
+<span class="kt">void</span> <span class="nf">mousePressed</span><span class="o">()</span> <span class="o">{</span>
+   <span class="n">ball_color</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>As the comment says, when you add this to the program above you should
+comment-out the if-statement at the end of <code class="docutils literal"><span class="pre">draw()</span></code>.</p>
+<p>Every time you click a mouse button, <a class="reference external" href="http://processing.org/">Processing</a> automatically calls
+<code class="docutils literal"><span class="pre">mousePressed()</span></code> and runs whatever code is in its body. In this case the
+ball will become red whenever you click the mouse button.</p>
+<p>It doesn&#8217;t (yet) matter <em>where</em> the mouse pointer is when you click it:
+<code class="docutils literal"><span class="pre">mousePressed()</span></code> only takes mouse-clicks into account, and does not care
+about the location of the pointer.</p>
+<p>What if we want the color to change <em>just</em> when we click <em>inside</em> the ball?
+The solution is to move the if-statement that we commented-out in <code class="docutils literal"><span class="pre">draw()</span></code>
+into <code class="docutils literal"><span class="pre">mousePressed()</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">mousePressed</span><span class="o">()</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">pointInCircle</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">,</span> <span class="n">ball</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">ball</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">))</span> <span class="o">{</span>
+    <span class="n">ball_color</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Now, when the user clicks a mouse button, <code class="docutils literal"><span class="pre">mousePressed()</span></code> first checks if
+the mouse pointer is inside the ball. If it is, the ball&#8217;s color is set to
+red. Otherwise, it does nothing.</p>
+</div>
+</div>
+<div class="section" id="testing-if-a-point-is-in-a-rectangle">
+<h2>Testing if a Point is in a Rectangle<a class="headerlink" href="#testing-if-a-point-is-in-a-rectangle" title="Permalink to this headline">¶</a></h2>
+<a class="reference internal image-reference" href="_images/pointInRectangle.png"><img alt="Testing if a point is in a rectangle." class="align-right" src="_images/pointInRectangle.png" style="width: 284.4px; height: 190.8px;" /></a>
+<p>Suppose you want to test if a point (a, b) is inside a <em>rectangle</em> of width
+Width, height Height, and with upper-left corner (x, y).</p>
+<p>In the diagram, (x, y) is the upper-left corner of a rectangle with dimensions
+<em>Width</em>-by-<em>Height</em>. The green point (a, b), it <em>is</em> inside the rectangle
+because it is both <em>between</em> the two vertical edges, <em>and</em> it is also between
+the two horizontal edges. In contrast, the point (c, d) is <em>not</em> inside the
+rectangle because it is not between the vertical edges (although it is between
+the horizontal edges).</p>
+<p>The trick for testing if (a, b) is inside the rectangle is to do two separate
+&#8220;between&#8221; tests: first, test if (a, b) is <em>between</em> the left/right edges, and
+then test if it is <em>between</em> the top/bottom edges.</p>
+<p>Suppose we&#8217;ve drawn a rectangle on the screen with this statement:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">rect</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">Width</span><span class="o">,</span> <span class="n">Height</span><span class="o">);</span>
+</pre></div>
+</div>
+<p>How can we tell if the point (<code class="docutils literal"><span class="pre">a</span></code>, <code class="docutils literal"><span class="pre">b</span></code>), is inside this rectangle? From
+the discussion above we need to check that:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">a</span></code> is between the left and right edges</li>
+<li><code class="docutils literal"><span class="pre">b</span></code> is between the top and bottom edges</li>
+</ul>
+<p>To test if <code class="docutils literal"><span class="pre">a</span></code> is between the left and right edges, we can use this
+expression:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">x</span> <span class="o">&lt;=</span> <span class="n">a</span> <span class="o">&amp;&amp;</span> <span class="n">a</span> <span class="o">&lt;=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">Width</span>
+</pre></div>
+</div>
+<p>Recall that <code class="docutils literal"><span class="pre">&amp;&amp;</span></code> means &#8220;and&#8221; in <a class="reference external" href="http://processing.org/">Processing</a>, and so this expression is true
+just when both <code class="docutils literal"><span class="pre">x</span> <span class="pre">&lt;=</span> <span class="pre">a</span></code> and <code class="docutils literal"><span class="pre">a</span> <span class="pre">&lt;=</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">Width</span></code> are true.</p>
+<p>Similarly, to test if <code class="docutils literal"><span class="pre">b</span></code> is between the top and bottom edges of the
+rectangle, we can do this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">y</span> <span class="o">&lt;=</span> <span class="n">b</span> <span class="o">&amp;&amp;</span> <span class="n">b</span> <span class="o">&lt;=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">Height</span>
+</pre></div>
+</div>
+<p>Now if the (a, b) is inside the rectangle, then <em>both</em> expressions must be
+<code class="docutils literal"><span class="pre">true</span></code>, i.e. this big <a class="reference internal" href="glossary.html#term-boolean-expression"><span class="xref std std-term">boolean expression</span></a> must be <code class="docutils literal"><span class="pre">true</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="o">(</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="n">mouseX</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">mouseX</span> <span class="o">&lt;=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">Width</span><span class="o">)</span>
+<span class="o">&amp;&amp;</span>
+<span class="o">(</span><span class="n">y</span> <span class="o">&lt;=</span> <span class="n">mouseY</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">mouseY</span> <span class="o">&lt;=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">Height</span><span class="o">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">We&#8217;ve written the <code class="docutils literal"><span class="pre">&amp;&amp;</span></code> on its own line to emphasize it. In <a class="reference external" href="http://processing.org/">Processing</a>
+extra spaces, or blank lines, around symbols usually don&#8217;t matter. This
+helps us format the code in whatever is easiest for humans to read.</p>
+</div>
+<p>Now lets put this test into a boolean function to make it easier to re-use:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">//</span>
+<span class="c1">// returns true if point (a, b) is the rectangle with upper-left</span>
+<span class="c1">// corner (x, y), and width w and height h</span>
+<span class="c1">//</span>
+<span class="kt">boolean</span> <span class="nf">pointInRect</span><span class="o">(</span><span class="kt">float</span> <span class="n">a</span><span class="o">,</span> <span class="kt">float</span> <span class="n">b</span><span class="o">,</span>   <span class="c1">// any point</span>
+                    <span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="kt">float</span> <span class="n">y</span><span class="o">,</span>   <span class="c1">// rectangle&#39;s upper-left corner</span>
+                    <span class="kt">float</span> <span class="n">w</span><span class="o">,</span> <span class="kt">float</span> <span class="n">h</span><span class="o">)</span>   <span class="c1">// width and height</span>
+<span class="o">{</span>
+   <span class="k">if</span> <span class="o">((</span><span class="n">a</span> <span class="o">&gt;=</span> <span class="n">x</span> <span class="o">&amp;&amp;</span> <span class="n">a</span> <span class="o">&lt;=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">w</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">b</span> <span class="o">&gt;=</span> <span class="n">y</span> <span class="o">&amp;&amp;</span> <span class="n">b</span> <span class="o">&lt;=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">h</span><span class="o">))</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+   <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>This function requires 6 input values, which is a lot! We&#8217;ve grouped the
+related variables on lines an added comments to help clarify what they are
+for.</p>
+<p>Many experienced programmers would write <code class="docutils literal"><span class="pre">pointInRect</span></code> like this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">boolean</span> <span class="nf">pointInRect</span><span class="o">(</span><span class="kt">float</span> <span class="n">a</span><span class="o">,</span> <span class="kt">float</span> <span class="n">b</span><span class="o">,</span> <span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="kt">float</span> <span class="n">y</span><span class="o">,</span> <span class="kt">float</span> <span class="n">w</span><span class="o">,</span> <span class="kt">float</span> <span class="n">h</span><span class="o">)</span>
+<span class="o">{</span>
+    <span class="k">return</span> <span class="o">(</span><span class="n">a</span> <span class="o">&gt;=</span> <span class="n">x</span> <span class="o">&amp;&amp;</span> <span class="n">a</span> <span class="o">&lt;=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">w</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">b</span> <span class="o">&gt;=</span> <span class="n">y</span> <span class="o">&amp;&amp;</span> <span class="n">b</span> <span class="o">&lt;=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">h</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>You can write it whichever way you prefer, but you should be able to read and
+understand both.</p>
+<p id="bouncing-rect-prog-label">Lets write a demonstration program that makes a rectangle change color when we
+click on it. This program is very similar to the one with the ball:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dy</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="n">Sprite</span> <span class="n">ball</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Sprite</span><span class="o">();</span>
+<span class="kt">float</span> <span class="n">Width</span><span class="o">,</span> <span class="n">Height</span><span class="o">;</span>
+
+<span class="n">color</span> <span class="n">rect_color</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">smooth</span><span class="o">();</span>
+
+  <span class="c1">// set the rectangle&#39;s initial position and velocity</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="mf">1.3</span><span class="o">;</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.77</span><span class="o">;</span>
+  <span class="n">Width</span> <span class="o">=</span> <span class="mi">75</span><span class="o">;</span>
+  <span class="n">Height</span> <span class="o">=</span> <span class="mi">50</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="c1">// re-draw the background</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="c1">// draw the rectangle</span>
+  <span class="n">noStroke</span><span class="o">();</span>
+  <span class="n">fill</span><span class="o">(</span><span class="n">rect_color</span><span class="o">);</span>
+  <span class="n">rect</span><span class="o">(</span><span class="n">ball</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">ball</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="n">Width</span><span class="o">,</span> <span class="n">Height</span><span class="o">);</span>
+
+  <span class="c1">// move the rectangle to its next position</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">+=</span> <span class="n">ball</span><span class="o">.</span><span class="na">dx</span><span class="o">;</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">+=</span> <span class="n">ball</span><span class="o">.</span><span class="na">dy</span><span class="o">;</span>
+
+  <span class="c1">// hit the top edge?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">ball</span><span class="o">.</span><span class="na">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// hit the bottom edge?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">&gt;</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">499</span><span class="o">;</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">ball</span><span class="o">.</span><span class="na">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// hit the left edge?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">ball</span><span class="o">.</span><span class="na">dx</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// hit the right edge?</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">&gt;</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">499</span><span class="o">;</span>
+    <span class="n">ball</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">ball</span><span class="o">.</span><span class="na">dx</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">mousePressed</span><span class="o">()</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">pointInRect</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">,</span> <span class="n">ball</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">ball</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="n">Width</span><span class="o">,</span> <span class="n">Height</span><span class="o">))</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">rect_color</span> <span class="o">==</span> <span class="n">color</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">))</span> <span class="o">{</span>
+      <span class="n">rect_color</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="k">else</span> <span class="o">{</span>
+      <span class="n">rect_color</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">What is a <code class="docutils literal"><span class="pre">boolean</span></code> function?</p>
+</li>
+<li><p class="first">For each of the following English descriptions, write an equivalent boolean
+expression in <a class="reference external" href="http://processing.org/">Processing</a>. You don&#8217;t need to write a function, just an
+expression.</p>
+<ol class="arabic">
+<li><p class="first">Test if a number <code class="docutils literal"><span class="pre">x</span></code> is positive:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">boolean</span> <span class="nf">isPositive</span><span class="o">(</span><span class="kt">float</span> <span class="n">x</span><span class="o">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Test if a number <code class="docutils literal"><span class="pre">x</span></code> is 0:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">boolean</span> <span class="nf">isZero</span><span class="o">(</span><span class="kt">float</span> <span class="n">x</span><span class="o">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Test if a number <code class="docutils literal"><span class="pre">x</span></code> is both greater than, or equal to, 0, and less
+than, or equal to, 100:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">boolean</span> <span class="nf">inRange</span><span class="o">(</span><span class="kt">float</span> <span class="n">x</span><span class="o">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Test if a number <code class="docutils literal"><span class="pre">xx</span></code> is the square of another number <code class="docutils literal"><span class="pre">x</span></code>. For
+example, if <code class="docutils literal"><span class="pre">xx</span></code> is 25 and <code class="docutils literal"><span class="pre">x</span></code> is 5, then your function should
+return <code class="docutils literal"><span class="pre">true</span></code>.</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">boolean</span> <span class="nf">isSquareOf</span><span class="o">(</span><span class="kt">float</span> <span class="n">xx</span><span class="o">,</span> <span class="kt">float</span> <span class="n">x</span><span class="o">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</li>
+<li><p class="first">Explain the <code class="docutils literal"><span class="pre">dist</span></code> function. Give an example of how to call it.</p>
+</li>
+<li><p class="first">Consider the following statement:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">a</span> <span class="o">=</span> <span class="o">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">1</span><span class="o">);</span>
+</pre></div>
+</div>
+<p>Assuming <code class="docutils literal"><span class="pre">a</span></code> has been defined, is this a legal statement in <a class="reference external" href="http://processing.org/">Processing</a>?
+If so, what type of variable is <code class="docutils literal"><span class="pre">a</span></code>, and what is it&#8217;s value?</p>
+</li>
+<li><p class="first">Consider a rectangle that is 180 pixels wide and 265 pixels high with
+upper-left corner at (100, 205). Write a boolean expression that is true
+just when the mouse pointer is inside this rectangle.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="programming-questions">
+<h2>Programming Questions<a class="headerlink" href="#programming-questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Modify the <a class="reference internal" href="#bouncing-rect-prog-label"><span>bouncing rectangle program</span></a> so
+that it draws <em>two</em> rectangles that touch just at one corner, e.g.:</p>
+<a class="reference internal image-reference" href="_images/cornerRects.png"><img alt="Two rectangles touch at a corner." class="align-center" src="_images/cornerRects.png" style="width: 180.75px; height: 176.25px;" /></a>
+<p>Further, change the program so that when the user clicks inside <em>either</em>
+rectangle, then <em>both</em> rectangles change color.</p>
+</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="drag_and_drop.html" title="Special Effect: Dragging and Dropping"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="functions.html" title="Functions"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Toby Donaldson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

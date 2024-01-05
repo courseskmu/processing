@@ -1,0 +1,571 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>While Loops &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
+    <link rel="next" title="Particle Systems" href="particle_systems.html" />
+    <link rel="prev" title="Using ArrayLists" href="arraylist_intro.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="particle_systems.html" title="Particle Systems"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="arraylist_intro.html" title="Using ArrayLists"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">While Loops</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#infinite-loops">Infinite Loops</a></li>
+<li><a class="reference internal" href="#loops-that-stop">Loops that Stop</a></li>
+<li><a class="reference internal" href="#tracing-a-while-loop">Tracing a while-loop</a></li>
+<li><a class="reference internal" href="#adding-objects-to-an-arraylist">Adding Objects to an ArrayList</a></li>
+<li><a class="reference internal" href="#questions">Questions</a></li>
+<li><a class="reference internal" href="#code">Code</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="arraylist_intro.html"
+                        title="previous chapter">Using ArrayLists</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="particle_systems.html"
+                        title="next chapter">Particle Systems</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="while-loops">
+<h1>While Loops<a class="headerlink" href="#while-loops" title="Permalink to this headline">¶</a></h1>
+<p>In these notes you will learn:</p>
+<ul class="simple">
+<li>How to create an infinite loop using a while-loop.</li>
+<li>How to write and trace while-loops that perform simple task such as
+incrementing variables.</li>
+</ul>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Suppose you want to print the numbers from 1 to 1000 on the screen. You could
+do it like this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">println</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+<span class="n">println</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span>
+<span class="n">println</span><span class="o">(</span><span class="mi">3</span><span class="o">);</span>
+
+<span class="c1">// ...</span>
+
+<span class="n">println</span><span class="o">(</span><span class="mi">1000</span><span class="o">);</span>
+</pre></div>
+</div>
+<p>Writing 1000 lines of code is pretty tedious. It&#8217;s easy to make a mistake, and
+it&#8217;s also inflexible &#8212; what if you wanted to print the numbers from 500 to
+5000 instead?</p>
+<p>A much better solution is to use a <strong>while-loop</strong>. A while-loop repeats a
+block of code zero or more times.</p>
+</div>
+<div class="section" id="infinite-loops">
+<h2>Infinite Loops<a class="headerlink" href="#infinite-loops" title="Permalink to this headline">¶</a></h2>
+<p>The simplest kind of loop is a loop that never stops, i.e. an <a class="reference internal" href="glossary.html#term-infinite-loop"><span class="xref std std-term">infinite
+loop</span></a>. We can use a while-loop to create an infinite loop like this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>             <span class="c1">// infinite loop</span>
+   <span class="n">println</span><span class="o">(</span><span class="s">&quot;Hello!&quot;</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>It prints <code class="docutils literal"><span class="pre">Hello!</span></code> forever:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Hello</span><span class="o">!</span>
+<span class="n">Hello</span><span class="o">!</span>
+<span class="n">Hello</span><span class="o">!</span>
+<span class="n">Hello</span><span class="o">!</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="loops-that-stop">
+<h2>Loops that Stop<a class="headerlink" href="#loops-that-stop" title="Permalink to this headline">¶</a></h2>
+<p>Suppose we want to print the numbers 1 to 10 on the screen using a while-
+loop. The standard technique for doing this is to use a variable, say <code class="docutils literal"><span class="pre">i</span></code>,
+to keep track of how many times the block of code in the while-loop has been
+executed. For example:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+
+<span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>  <span class="c1">// infinite loop</span>
+   <span class="n">println</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+   <span class="o">++</span><span class="n">i</span><span class="o">;</span>  <span class="c1">// adds 1 to i (same as i += 1)</span>
+<span class="o">}</span>
+
+<span class="n">println</span><span class="o">(</span><span class="s">&quot;done&quot;</span><span class="o">);</span>
+</pre></div>
+</div>
+<p>This loop prints this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="mi">1</span>
+<span class="mi">2</span>
+<span class="mi">3</span>
+<span class="mi">4</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>This illustrates the important idea of incrementing a variable inside a loop,
+but it is still an infinite loop that never stops.</p>
+<p>How do we get the loop to stop? The condition at the top of the loop decides
+if the code block underneath it is executed or skipped. So far our while-loop
+condition has always been <code class="docutils literal"><span class="pre">true</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>  <span class="c1">// condition for this loop is &quot;true&quot;: always executes</span>
+   <span class="c1">// ...                                             the code block underneath</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>We can use <em>any</em> <a class="reference internal" href="glossary.html#term-boolean-expression"><span class="xref std std-term">boolean expression</span></a> (i.e. an expression that evaluates
+to either <code class="docutils literal"><span class="pre">true</span></code> or <code class="docutils literal"><span class="pre">false</span></code>) as the condition for a while-loop. For
+example:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+
+<span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="o">)</span> <span class="o">{</span>
+   <span class="n">println</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+   <span class="o">++</span><span class="n">i</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="n">println</span><span class="o">(</span><span class="s">&quot;done&quot;</span><span class="o">);</span>
+</pre></div>
+</div>
+<p>Now the while-loop condition is <code class="docutils literal"><span class="pre">i</span> <span class="pre">&lt;=</span> <span class="pre">10</span></code>, which means that the block of
+code under the while-loop will only be executed when <code class="docutils literal"><span class="pre">i</span> <span class="pre">&lt;=</span> <span class="pre">10</span></code> is <code class="docutils literal"><span class="pre">true</span></code>.
+If <code class="docutils literal"><span class="pre">i</span> <span class="pre">&lt;=</span> <span class="pre">10</span></code> is <code class="docutils literal"><span class="pre">false</span></code>, then the loop stops and jumps down to the first
+statement after the loop (i.e. <code class="docutils literal"><span class="pre">println(&quot;done&quot;)</span></code>).</p>
+<p>And that&#8217;s really all there is to while-loops: the condition at the top
+decides whether or not to execute the block of code underneath. When the
+condition is <code class="docutils literal"><span class="pre">false</span></code> the loop is over, i.e. it is terminated.</p>
+</div>
+<div class="section" id="tracing-a-while-loop">
+<h2>Tracing a while-loop<a class="headerlink" href="#tracing-a-while-loop" title="Permalink to this headline">¶</a></h2>
+<p>Look again at this loop:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+
+<span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="o">)</span> <span class="o">{</span>
+   <span class="n">println</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+   <span class="o">++</span><span class="n">i</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="n">println</span><span class="o">(</span><span class="s">&quot;done&quot;</span><span class="o">);</span>
+</pre></div>
+</div>
+<p>The best way to understand loops is to &#8220;play computer&#8221; and trace the code by
+hand, keeping track of the value of <code class="docutils literal"><span class="pre">i</span></code> as you go. Tracing it by hand, you
+do something like this:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">i</span></code> is initially set to 1.</li>
+<li>The first time the loop condition is checked, <code class="docutils literal"><span class="pre">i</span></code> is 1, and so <code class="docutils literal"><span class="pre">i</span> <span class="pre">&lt;=</span> <span class="pre">10</span></code>
+is <code class="docutils literal"><span class="pre">true</span></code>. Thus <code class="docutils literal"><span class="pre">println(i)</span></code> is called, causing 1 to be printed. Then 1
+is added to <code class="docutils literal"><span class="pre">i</span></code>, making it equal to 2.</li>
+<li>After the code block is executed, the loop condition is checked again. Since
+<code class="docutils literal"><span class="pre">i</span></code> is 2, <code class="docutils literal"><span class="pre">i</span> <span class="pre">&lt;=</span> <span class="pre">10</span></code> is <code class="docutils literal"><span class="pre">true</span></code>, and so 2 is printed and <code class="docutils literal"><span class="pre">i</span></code> is
+incremented to 3.</li>
+<li>After the code block is executed, the loop condition is checked again. Since
+<code class="docutils literal"><span class="pre">i</span></code> is 3, <code class="docutils literal"><span class="pre">i</span> <span class="pre">&lt;=</span> <span class="pre">10</span></code> is <code class="docutils literal"><span class="pre">true</span></code>, and so 3 is printed and <code class="docutils literal"><span class="pre">i</span></code> is
+incremented to 3.</li>
+</ul>
+<p>You can see how the pattern continues. Eventually, <code class="docutils literal"><span class="pre">i</span></code> becomes 10. The loop
+condition <code class="docutils literal"><span class="pre">i</span> <span class="pre">&lt;=</span> <span class="pre">10</span></code> is <code class="docutils literal"><span class="pre">true</span></code>, and so 10 is printed and <code class="docutils literal"><span class="pre">i</span></code> is
+incremented to 11.</p>
+<p>The next time the loop condition is checked, <code class="docutils literal"><span class="pre">i</span> <span class="pre">&lt;=</span> <span class="pre">10</span></code> is <code class="docutils literal"><span class="pre">false</span></code> because
+<code class="docutils literal"><span class="pre">i</span></code> is 11. A <code class="docutils literal"><span class="pre">false</span></code> loop condition makes the loop skip its body block and
+jump directly whatever statements follow the loop.</p>
+<p>Tracing loops is a valuable skill that you should practice. Loops in real
+programs can get tricky, and tracing them by hand is often the best way to
+understand what it does.</p>
+</div>
+<div class="section" id="adding-objects-to-an-arraylist">
+<h2>Adding Objects to an ArrayList<a class="headerlink" href="#adding-objects-to-an-arraylist" title="Permalink to this headline">¶</a></h2>
+<p>In <a class="reference internal" href="oop_bouncing_ball.html"><em>previous notes</em></a> we saw code like this for adding
+a lot of bouncing ball objects to an <code class="docutils literal"><span class="pre">ArrayList</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// ...</span>
+
+<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">BouncingBall</span><span class="o">&gt;</span> <span class="n">ballList</span><span class="o">;</span>  <span class="c1">// initially null</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+
+  <span class="c1">// create the initially empty ArrayList of BouncingBall objects</span>
+  <span class="n">ballList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">BouncingBall</span><span class="o">&gt;();</span>
+
+  <span class="c1">// add 10 bouncing ball&#39;s</span>
+  <span class="n">ballList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">randomBouncingBall</span><span class="o">());</span>
+  <span class="n">ballList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">randomBouncingBall</span><span class="o">());</span>
+  <span class="n">ballList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">randomBouncingBall</span><span class="o">());</span>
+  <span class="n">ballList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">randomBouncingBall</span><span class="o">());</span>
+  <span class="n">ballList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">randomBouncingBall</span><span class="o">());</span>
+  <span class="n">ballList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">randomBouncingBall</span><span class="o">());</span>
+  <span class="n">ballList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">randomBouncingBall</span><span class="o">());</span>
+  <span class="n">ballList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">randomBouncingBall</span><span class="o">());</span>
+  <span class="n">ballList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">randomBouncingBall</span><span class="o">());</span>
+  <span class="n">ballList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">randomBouncingBall</span><span class="o">());</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="c1">// render and update all the balls</span>
+  <span class="k">for</span><span class="o">(</span><span class="n">BouncingBall</span> <span class="n">b</span> <span class="o">:</span> <span class="n">ballList</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>A better approach is to use a while-loop:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// ...</span>
+
+<span class="kt">int</span> <span class="n">NUM_BALLS</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+
+   <span class="c1">// ...</span>
+
+   <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+   <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">NUM_BALLS</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">ballList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">randomBouncingBall</span><span class="o">());</span>
+      <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">;</span>
+   <span class="o">}</span>
+
+<span class="o">}</span>
+
+<span class="c1">// ...</span>
+</pre></div>
+</div>
+<p>The while-loop not only greatly shortens the code, but also makes it trivial
+to change the number of balls by setting <code class="docutils literal"><span class="pre">NUM_BALLS</span></code>.</p>
+</div>
+<div class="section" id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">What does each of the following code fragments print?</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">5</span><span class="o">;</span>                <span class="c1">// fragment 1</span>
+<span class="k">while</span> <span class="o">(</span><span class="n">a</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="o">)</span> <span class="o">{</span>
+   <span class="n">println</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+   <span class="o">++</span><span class="n">a</span><span class="o">;</span>
+<span class="o">}</span>
+
+
+<span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">5</span><span class="o">;</span>                <span class="c1">// fragment 2</span>
+<span class="k">while</span> <span class="o">(</span><span class="n">a</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="o">)</span> <span class="o">{</span>
+   <span class="n">println</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+   <span class="o">++</span><span class="n">a</span><span class="o">;</span>
+
+
+<span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">5</span><span class="o">;</span>                <span class="c1">// fragment 3</span>
+<span class="k">while</span> <span class="o">(</span><span class="n">a</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="o">)</span> <span class="o">{</span>
+   <span class="o">++</span><span class="n">a</span><span class="o">;</span>
+   <span class="n">println</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+<span class="o">}</span>
+
+
+<span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">5</span><span class="o">;</span>                <span class="c1">// fragment 4</span>
+<span class="k">while</span> <span class="o">(</span><span class="n">a</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="o">)</span> <span class="o">{</span>
+   <span class="o">++</span><span class="n">a</span><span class="o">;</span>
+   <span class="n">println</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+<span class="o">}</span>
+
+
+<span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">5</span><span class="o">;</span>                <span class="c1">// fragment 5</span>
+<span class="k">while</span> <span class="o">(</span><span class="n">a</span> <span class="o">!=</span> <span class="mi">10</span><span class="o">)</span> <span class="o">{</span>
+   <span class="n">println</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+   <span class="o">++</span><span class="n">a</span><span class="o">;</span>
+<span class="o">}</span>
+
+
+<span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">5</span><span class="o">;</span>                <span class="c1">// fragment 6</span>
+<span class="k">while</span> <span class="o">(</span><span class="n">a</span> <span class="o">!=</span> <span class="mi">10</span><span class="o">)</span> <span class="o">{</span>
+   <span class="o">++</span><span class="n">a</span><span class="o">;</span>
+   <span class="n">println</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+   <span class="o">++</span><span class="n">a</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">What does each of the following code fragments print?</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">5</span><span class="o">;</span>                <span class="c1">// fragment 1</span>
+<span class="k">while</span> <span class="o">(</span><span class="n">k</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+   <span class="n">println</span><span class="o">(</span><span class="n">k</span><span class="o">);</span>
+   <span class="o">--</span><span class="n">k</span><span class="o">;</span>
+<span class="o">}</span>
+
+
+<span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>               <span class="c1">// fragment 2</span>
+<span class="k">while</span> <span class="o">(</span><span class="n">k</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">5</span><span class="o">)</span> <span class="o">{</span>
+   <span class="n">println</span><span class="o">(</span><span class="n">k</span><span class="o">);</span>
+   <span class="o">--</span><span class="n">k</span><span class="o">;</span>
+<span class="o">}</span>
+
+
+<span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>               <span class="c1">// fragment 3</span>
+<span class="k">while</span> <span class="o">(</span><span class="n">k</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">5</span><span class="o">)</span> <span class="o">{</span>
+   <span class="o">--</span><span class="n">k</span><span class="o">;</span>
+   <span class="n">println</span><span class="o">(</span><span class="n">k</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">What does each of the following code fragments print?</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>                <span class="c1">// fragment 1</span>
+<span class="k">while</span> <span class="o">(</span><span class="n">b</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="o">)</span> <span class="o">{</span>
+   <span class="n">println</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+   <span class="n">b</span> <span class="o">+=</span> <span class="mi">2</span><span class="o">;</span>
+<span class="o">}</span>
+
+
+<span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>                <span class="c1">// fragment 2</span>
+<span class="k">while</span> <span class="o">(</span><span class="n">b</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="o">)</span> <span class="o">{</span>
+   <span class="n">println</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+   <span class="n">b</span> <span class="o">+=</span> <span class="mi">2</span><span class="o">;</span>
+<span class="o">}</span>
+
+
+<span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10</span><span class="o">;</span>              <span class="c1">// fragment 3</span>
+<span class="k">while</span> <span class="o">(</span><span class="n">b</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+   <span class="n">println</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+   <span class="n">b</span> <span class="o">+=</span> <span class="mi">3</span><span class="o">;</span>
+<span class="o">}</span>
+
+
+<span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>               <span class="c1">// fragment 4</span>
+<span class="k">while</span> <span class="o">(</span><span class="n">b</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+   <span class="n">println</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+   <span class="n">b</span> <span class="o">-=</span> <span class="mi">2</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>                <span class="c1">// fragment 5</span>
+<span class="k">while</span> <span class="o">(</span><span class="n">b</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="o">)</span> <span class="o">{</span>
+   <span class="n">println</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+   <span class="n">b</span> <span class="o">*=</span> <span class="mi">2</span><span class="o">;</span>
+<span class="o">}</span>
+
+
+<span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>                <span class="c1">// fragment 6</span>
+<span class="k">while</span> <span class="o">(</span><span class="n">b</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="o">)</span> <span class="o">{</span>
+   <span class="n">println</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+   <span class="n">b</span> <span class="o">*=</span> <span class="mi">2</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Write a file loop that prints the following sequences of numbers. There
+should be exactly <em>one</em> <code class="docutils literal"><span class="pre">println</span></code> statement in the body of your while
+loop that prints <em>one</em> number of the sequence on each iteration.</p>
+<ol class="loweralpha simple">
+<li>1, 2, 3, 4, 5</li>
+<li>5, 4, 3, 2, 1</li>
+<li>-1, -2, -3, -4, -5</li>
+<li>-5, -4, -2, -1</li>
+<li>1, 3, 5, 7, 9</li>
+<li>9, 7, 5, 3, 1</li>
+<li>-5, 0, 5, 10, 15</li>
+<li>1, 1, 2, 2, 3, 3, 4, 4 (remember that there should be exactly <em>one</em>
+<code class="docutils literal"><span class="pre">println</span></code> statement in the body of your while-loop that prints exactly
+<em>one</em> number of the sequence)</li>
+<li>1, -1, 2, -2, 3, -3, 4, -4 (remember that there should be exactly <em>one</em>
+<code class="docutils literal"><span class="pre">println</span></code> statement in the body of your while-loop that prints exactly
+<em>one</em> number of the sequence)</li>
+<li>-1, 1, -2, 2, -3, 3, -4, 4 (remember that there should be exactly <em>one</em>
+<code class="docutils literal"><span class="pre">println</span></code> statement in the body of your while-loop that prints exactly
+<em>one</em> number of the sequence)</li>
+</ol>
+</li>
+<li><p class="first">Explain why the following is <em>not</em> an infinite loop:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+<span class="k">while</span> <span class="o">(</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+   <span class="n">println</span><span class="o">(</span><span class="s">&quot;loop&quot;</span><span class="o">);</span>
+   <span class="o">++</span><span class="n">n</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="code">
+<h2>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dy</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">BouncingBall</span> <span class="kd">extends</span> <span class="n">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">diam</span><span class="o">;</span>
+  <span class="n">color</span> <span class="n">fillColor</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">pushMatrix</span><span class="o">();</span>
+
+    <span class="n">noStroke</span><span class="o">();</span>
+    <span class="n">fill</span><span class="o">(</span><span class="n">fillColor</span><span class="o">);</span>
+
+    <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">diam</span><span class="o">,</span> <span class="n">diam</span><span class="o">);</span>
+
+    <span class="n">popMatrix</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+
+    <span class="c1">// hit top?</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">y</span> <span class="o">=</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+      <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// hit bottom?</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="n">height</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">y</span> <span class="o">=</span> <span class="n">height</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+      <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// hit left?</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+      <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// hit right?</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="n">width</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="n">width</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+      <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">BouncingBall</span> <span class="nf">randomBouncingBall</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">BouncingBall</span> <span class="n">ball</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BouncingBall</span><span class="o">();</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mi">3</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mi">3</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">diam</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mi">50</span><span class="o">,</span> <span class="mi">150</span><span class="o">);</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">fillColor</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="mi">255</span><span class="o">),</span>
+  <span class="n">random</span><span class="o">(</span><span class="mi">255</span><span class="o">),</span>
+  <span class="n">random</span><span class="o">(</span><span class="mi">255</span><span class="o">));</span>
+  <span class="k">return</span> <span class="n">ball</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kt">int</span> <span class="n">NUM_BALLS</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+
+<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">BouncingBall</span><span class="o">&gt;</span> <span class="n">ballList</span><span class="o">;</span>  <span class="c1">// initially null</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+
+  <span class="c1">// create the initially empty ArrayList of BouncingBall objects</span>
+  <span class="n">ballList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">BouncingBall</span><span class="o">&gt;();</span>
+
+  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">NUM_BALLS</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">ballList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">randomBouncingBall</span><span class="o">());</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="c1">// render and update all the balls</span>
+  <span class="k">for</span> <span class="o">(</span><span class="n">BouncingBall</span> <span class="n">b</span> <span class="o">:</span> <span class="n">ballList</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">mousePressed</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">BouncingBall</span> <span class="n">b</span> <span class="o">=</span> <span class="n">randomBouncingBall</span><span class="o">();</span>
+  <span class="n">b</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">mouseX</span><span class="o">;</span>
+  <span class="n">b</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">mouseY</span><span class="o">;</span>
+  <span class="n">ballList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="particle_systems.html" title="Particle Systems"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="arraylist_intro.html" title="Using ArrayLists"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Toby Donaldson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

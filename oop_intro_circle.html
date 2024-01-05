@@ -1,0 +1,431 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>OOP: Classes for Geometric Shapes &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
+    <link rel="next" title="OOP: Bouncing Balls Revisited" href="oop_bouncing_ball_intro.html" />
+    <link rel="prev" title="OOP: Objected-oriented Programming" href="oop_intro_point.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="oop_bouncing_ball_intro.html" title="OOP: Bouncing Balls Revisited"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="oop_intro_point.html" title="OOP: Objected-oriented Programming"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">OOP: Classes for Geometric Shapes</a><ul>
+<li><a class="reference internal" href="#a-circle-class">A Circle Class</a></li>
+<li><a class="reference internal" href="#a-line-segment">A Line Segment</a></li>
+<li><a class="reference internal" href="#a-triangle">A Triangle</a></li>
+<li><a class="reference internal" href="#questions">Questions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="oop_intro_point.html"
+                        title="previous chapter">OOP: Objected-oriented Programming</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="oop_bouncing_ball_intro.html"
+                        title="next chapter">OOP: Bouncing Balls Revisited</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="oop-classes-for-geometric-shapes">
+<h1>OOP: Classes for Geometric Shapes<a class="headerlink" href="#oop-classes-for-geometric-shapes" title="Permalink to this headline">¶</a></h1>
+<p>In these notes you will learn:</p>
+<ul class="simple">
+<li>How to write classes for a circle, line segment, and triangle.</li>
+</ul>
+<div class="section" id="a-circle-class">
+<h2>A Circle Class<a class="headerlink" href="#a-circle-class" title="Permalink to this headline">¶</a></h2>
+<p>In the previous notes we created a class called <code class="docutils literal"><span class="pre">Point</span></code> that represents 2D
+positions:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Point</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+
+  <span class="n">Point</span><span class="o">(</span><span class="kt">float</span> <span class="n">x_init</span><span class="o">,</span> <span class="kt">float</span> <span class="n">y_init</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x_init</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">y_init</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">display</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">println</span><span class="o">(</span><span class="s">&quot;(&quot;</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="s">&quot;)&quot;</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Lets use this to create some other classes. First, lets create a <code class="docutils literal"><span class="pre">Circle</span></code>
+class that represents a circle:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Circle</span> <span class="o">{</span>
+  <span class="n">Point</span> <span class="n">center</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">radius</span><span class="o">;</span>
+
+  <span class="c1">// constructor</span>
+  <span class="n">Circle</span><span class="o">(</span><span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="kt">float</span> <span class="n">y</span><span class="o">,</span> <span class="kt">float</span> <span class="n">r</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">center</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+    <span class="n">radius</span> <span class="o">=</span> <span class="n">r</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>A <code class="docutils literal"><span class="pre">Circle</span></code> is an object with a center <code class="docutils literal"><span class="pre">Point</span></code> and a radius. It has a
+constructor that requires all the information needed to create the circle.
+We can use it like this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Circle</span> <span class="n">pan</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Circle</span><span class="o">(</span><span class="mi">15</span><span class="o">,</span> <span class="mi">20</span><span class="o">,</span> <span class="mf">50.4</span><span class="o">);</span>
+<span class="n">println</span><span class="o">(</span><span class="n">pan</span><span class="o">.</span><span class="na">center</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="n">pan</span><span class="o">.</span><span class="na">center</span><span class="o">.</span><span class="na">y</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="n">pan</span><span class="o">.</span><span class="na">radius</span><span class="o">);</span>
+</pre></div>
+</div>
+<p>Again, we use dot-notation to access things inside the object. The expression
+<code class="docutils literal"><span class="pre">pan.center.x</span></code> is interesting: it refers to the value of <code class="docutils literal"><span class="pre">x</span></code> inside the
+<code class="docutils literal"><span class="pre">center</span></code> object inside the <code class="docutils literal"><span class="pre">pan</span></code> object.</p>
+<p>As with <code class="docutils literal"><span class="pre">Point</span></code>, it is convenient to create a <code class="docutils literal"><span class="pre">display()</span></code> function for
+<code class="docutils literal"><span class="pre">Circle</span></code> that prints the contents of its variables in a readable way:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Circle</span> <span class="o">{</span>
+  <span class="n">Point</span> <span class="n">center</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">radius</span><span class="o">;</span>
+
+  <span class="n">Circle</span><span class="o">(</span><span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="kt">float</span> <span class="n">y</span><span class="o">,</span> <span class="kt">float</span> <span class="n">r</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">center</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+    <span class="n">radius</span> <span class="o">=</span> <span class="n">r</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">display</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">println</span><span class="o">(</span><span class="s">&quot;Circle((&quot;</span> <span class="o">+</span> <span class="n">center</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="n">center</span><span class="o">.</span><span class="na">y</span>
+            <span class="o">+</span> <span class="s">&quot;), &quot;</span> <span class="o">+</span> <span class="n">radius</span> <span class="o">+</span> <span class="s">&quot;)&quot;</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Another useful function to add to <code class="docutils literal"><span class="pre">Circle</span></code> is <code class="docutils literal"><span class="pre">area()</span></code>, which calculates
+the area of the circle:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Circle</span> <span class="o">{</span>
+  <span class="n">Point</span> <span class="n">center</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">radius</span><span class="o">;</span>
+
+  <span class="n">Circle</span><span class="o">(</span><span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="kt">float</span> <span class="n">y</span><span class="o">,</span> <span class="kt">float</span> <span class="n">r</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">center</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+    <span class="n">radius</span> <span class="o">=</span> <span class="n">r</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">display</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">println</span><span class="o">(</span><span class="s">&quot;Circle((&quot;</span> <span class="o">+</span> <span class="n">center</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="n">center</span><span class="o">.</span><span class="na">y</span>
+            <span class="o">+</span> <span class="s">&quot;), &quot;</span> <span class="o">+</span> <span class="n">radius</span> <span class="o">+</span> <span class="s">&quot;)&quot;</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="kt">float</span> <span class="nf">area</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="mf">3.14</span> <span class="o">*</span> <span class="n">radius</span> <span class="o">*</span> <span class="n">radius</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>For example:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Circle</span> <span class="n">c</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Circle</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">5</span><span class="o">);</span>
+<span class="n">println</span><span class="o">(</span><span class="n">c</span><span class="o">.</span><span class="na">area</span><span class="o">());</span> <span class="c1">// 78.5</span>
+</pre></div>
+</div>
+<p>Finally, lets add a rendering function to draw the circle:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Circle</span> <span class="o">{</span>
+  <span class="n">Point</span> <span class="n">center</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">radius</span><span class="o">;</span>
+
+  <span class="n">Circle</span><span class="o">(</span><span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="kt">float</span> <span class="n">y</span><span class="o">,</span> <span class="kt">float</span> <span class="n">r</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">center</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+    <span class="n">radius</span> <span class="o">=</span> <span class="n">r</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">display</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">println</span><span class="o">(</span><span class="s">&quot;Circle((&quot;</span> <span class="o">+</span> <span class="n">center</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="n">center</span><span class="o">.</span><span class="na">y</span>
+      <span class="o">+</span> <span class="s">&quot;), &quot;</span> <span class="o">+</span> <span class="n">radius</span> <span class="o">+</span> <span class="s">&quot;)&quot;</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="kt">float</span> <span class="nf">area</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="mf">3.14</span> <span class="o">*</span> <span class="n">radius</span> <span class="o">*</span> <span class="n">radius</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">center</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>  <span class="c1">// draw point at center</span>
+    <span class="n">noFill</span><span class="o">();</span>
+    <span class="n">stroke</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+    <span class="n">ellipse</span><span class="o">(</span><span class="n">center</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">center</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">radius</span><span class="o">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">radius</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Here&#8217;s a simple example program that draws a circle centered at the mouse
+pointer:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Circle</span> <span class="n">pointer</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">smooth</span><span class="o">();</span>
+  <span class="n">noCursor</span><span class="o">();</span> <span class="c1">// turn off regular pointer</span>
+  <span class="n">pointer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Circle</span><span class="o">(-</span><span class="mi">100</span><span class="o">,</span> <span class="o">-</span><span class="mi">100</span><span class="o">,</span> <span class="mi">80</span><span class="o">);</span>  <span class="c1">// start off screen</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+  <span class="n">pointer</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+  <span class="n">pointer</span><span class="o">.</span><span class="na">center</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">mouseX</span><span class="o">;</span>
+  <span class="n">pointer</span><span class="o">.</span><span class="na">center</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">mouseY</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="a-line-segment">
+<h2>A Line Segment<a class="headerlink" href="#a-line-segment" title="Permalink to this headline">¶</a></h2>
+<p>Lets move on from circles and make a class called <code class="docutils literal"><span class="pre">Segment</span></code> that lets us
+make objects representing line segments:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Segment</span> <span class="o">{</span>
+  <span class="n">Point</span> <span class="n">begin</span><span class="o">;</span>
+  <span class="n">Point</span> <span class="n">end</span><span class="o">;</span>
+
+  <span class="n">Segment</span><span class="o">(</span><span class="kt">float</span> <span class="n">begin_x</span><span class="o">,</span> <span class="kt">float</span> <span class="n">begin_y</span><span class="o">,</span> <span class="kt">float</span> <span class="n">end_x</span><span class="o">,</span> <span class="kt">float</span> <span class="n">end_y</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">begin</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="o">(</span><span class="n">begin_x</span><span class="o">,</span> <span class="n">begin_y</span><span class="o">);</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="o">(</span><span class="n">end_x</span><span class="o">,</span> <span class="n">end_y</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="kt">float</span> <span class="nf">length</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">dist</span><span class="o">(</span><span class="n">begin</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">begin</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="n">end</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">end</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">display</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">println</span><span class="o">(</span><span class="s">&quot;Segment(begin=(&quot;</span> <span class="o">+</span> <span class="n">begin</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="n">begin</span><span class="o">.</span><span class="na">y</span>
+            <span class="o">+</span> <span class="s">&quot;), end=(&quot;</span> <span class="o">+</span> <span class="n">end</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="n">end</span><span class="o">.</span><span class="na">y</span> <span class="o">+</span> <span class="s">&quot;))&quot;</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>A <code class="docutils literal"><span class="pre">Segment</span></code> object consists of a begin point and end point. The <code class="docutils literal"><span class="pre">length()</span></code>
+function returns the distance between <code class="docutils literal"><span class="pre">begin</span></code> and <code class="docutils literal"><span class="pre">end</span></code>, and <code class="docutils literal"><span class="pre">display()</span></code>
+prints the segment to the console.</p>
+<p>You can use it like this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Segment</span> <span class="n">line</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Segment</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">51</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+<span class="n">println</span><span class="o">(</span><span class="n">line</span><span class="o">.</span><span class="na">length</span><span class="o">());</span>  <span class="c1">// 51.088158</span>
+<span class="n">line</span><span class="o">.</span><span class="na">display</span><span class="o">();</span> <span class="c1">// Segment(begin=(0.0, 0.0), end=(51.0, 3.0))</span>
+</pre></div>
+</div>
+<p>As with we&#8217;ve done for the other classes, lets add a render function to draw a
+segment:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Segment</span> <span class="o">{</span>
+  <span class="n">Point</span> <span class="n">begin</span><span class="o">;</span>
+  <span class="n">Point</span> <span class="n">end</span><span class="o">;</span>
+
+  <span class="n">Segment</span><span class="o">(</span><span class="kt">float</span> <span class="n">begin_x</span><span class="o">,</span> <span class="kt">float</span> <span class="n">begin_y</span><span class="o">,</span> <span class="kt">float</span> <span class="n">end_x</span><span class="o">,</span> <span class="kt">float</span> <span class="n">end_y</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">begin</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="o">(</span><span class="n">begin_x</span><span class="o">,</span> <span class="n">begin_y</span><span class="o">);</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="o">(</span><span class="n">end_x</span><span class="o">,</span> <span class="n">end_y</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="kt">float</span> <span class="nf">length</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">dist</span><span class="o">(</span><span class="n">begin</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">begin</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="n">end</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">end</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">display</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">println</span><span class="o">(</span><span class="s">&quot;Segment(begin=(&quot;</span> <span class="o">+</span> <span class="n">begin</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="n">begin</span><span class="o">.</span><span class="na">y</span>
+      <span class="o">+</span> <span class="s">&quot;), end=(&quot;</span> <span class="o">+</span> <span class="n">end</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="n">end</span><span class="o">.</span><span class="na">y</span> <span class="o">+</span> <span class="s">&quot;))&quot;</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">stroke</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+    <span class="n">line</span><span class="o">(</span><span class="n">begin</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">begin</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="n">end</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">end</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+    <span class="n">noStroke</span><span class="o">();</span>
+    <span class="n">begin</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="n">end</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>This sample program draws a segment from the mouse location to the center of
+the screen:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Segment</span> <span class="n">seg</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">smooth</span><span class="o">();</span>
+  <span class="n">noCursor</span><span class="o">();</span> <span class="c1">// turn off regular pointer</span>
+  <span class="n">seg</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Segment</span><span class="o">(-</span><span class="mi">100</span><span class="o">,</span> <span class="o">-</span><span class="mi">100</span><span class="o">,</span> <span class="mi">250</span><span class="o">,</span> <span class="mi">250</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+  <span class="n">seg</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+  <span class="n">seg</span><span class="o">.</span><span class="na">begin</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">mouseX</span><span class="o">;</span>
+  <span class="n">seg</span><span class="o">.</span><span class="na">begin</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">mouseY</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="a-triangle">
+<h2>A Triangle<a class="headerlink" href="#a-triangle" title="Permalink to this headline">¶</a></h2>
+<p>A natural way to represent a triangle is as its three corner points:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Triangle</span> <span class="o">{</span>
+  <span class="n">Point</span> <span class="n">a</span><span class="o">;</span>
+  <span class="n">Point</span> <span class="n">b</span><span class="o">;</span>
+  <span class="n">Point</span> <span class="n">c</span><span class="o">;</span>
+
+  <span class="n">Triangle</span><span class="o">(</span><span class="kt">float</span> <span class="n">ax</span><span class="o">,</span> <span class="kt">float</span> <span class="n">ay</span><span class="o">,</span> <span class="kt">float</span> <span class="n">bx</span><span class="o">,</span> <span class="kt">float</span> <span class="n">by</span><span class="o">,</span>
+           <span class="kt">float</span> <span class="n">cx</span><span class="o">,</span> <span class="kt">float</span> <span class="n">cy</span><span class="o">)</span>
+  <span class="o">{</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="o">(</span><span class="n">ax</span><span class="o">,</span> <span class="n">ay</span><span class="o">);</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="o">(</span><span class="n">bx</span><span class="o">,</span> <span class="n">by</span><span class="o">);</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="o">(</span><span class="n">cx</span><span class="o">,</span> <span class="n">cy</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">display</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">println</span><span class="o">(</span><span class="s">&quot;Triangle((&quot;</span> <span class="o">+</span> <span class="n">a</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="n">a</span><span class="o">.</span><span class="na">y</span> <span class="o">+</span> <span class="s">&quot;), (&quot;</span>
+           <span class="o">+</span> <span class="n">b</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="n">b</span><span class="o">.</span><span class="na">y</span> <span class="o">+</span> <span class="s">&quot;), (&quot;</span> <span class="o">+</span> <span class="n">c</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="n">c</span><span class="o">.</span><span class="na">y</span> <span class="o">+</span> <span class="s">&quot;))&quot;</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">stroke</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+    <span class="n">line</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">a</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="n">b</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">b</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+    <span class="n">line</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">a</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="n">c</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">c</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+    <span class="n">line</span><span class="o">(</span><span class="n">b</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">b</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="n">c</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">c</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+    <span class="n">noStroke</span><span class="o">();</span>
+    <span class="n">a</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+    <span class="n">c</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="c1">// Heron&#39;s formula for the area of a triangle</span>
+  <span class="kt">float</span> <span class="nf">area</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kt">float</span> <span class="n">ab</span> <span class="o">=</span> <span class="n">dist</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">a</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="n">b</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">b</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+    <span class="kt">float</span> <span class="n">ac</span> <span class="o">=</span> <span class="n">dist</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">a</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="n">c</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">c</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+    <span class="kt">float</span> <span class="n">bc</span> <span class="o">=</span> <span class="n">dist</span><span class="o">(</span><span class="n">b</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">b</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="n">c</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">c</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+    <span class="kt">float</span> <span class="n">s</span> <span class="o">=</span> <span class="o">(</span><span class="n">ab</span> <span class="o">+</span> <span class="n">ac</span> <span class="o">+</span> <span class="n">bc</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>  <span class="c1">// semi-perimeter</span>
+    <span class="k">return</span> <span class="n">sqrt</span><span class="o">(</span><span class="n">s</span> <span class="o">*</span> <span class="o">(</span><span class="n">s</span> <span class="o">-</span> <span class="n">ab</span><span class="o">)</span> <span class="o">*</span> <span class="o">(</span><span class="n">s</span> <span class="o">-</span> <span class="n">ac</span><span class="o">)</span> <span class="o">*</span> <span class="o">(</span><span class="n">s</span> <span class="o">-</span> <span class="n">bc</span><span class="o">));</span>
+  <span class="o">}</span>
+
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Notice the <code class="docutils literal"><span class="pre">area()</span></code> function uses <a class="reference external" href="http://en.wikipedia.org/wiki/Heron's_formula">Heron&#8217;s formula</a> to calculate the triangle&#8217;s
+area. This is a convenient way to calculate the area because all it requires
+is the length of the triangle&#8217;s sides.</p>
+<p>Here&#8217;s a sample program that shows how you can use a <code class="docutils literal"><span class="pre">Triangle</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Triangle</span> <span class="n">t</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+
+  <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Triangle</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">100</span><span class="o">,</span> <span class="mi">100</span><span class="o">,</span> <span class="mi">200</span><span class="o">,</span> <span class="mi">150</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+  <span class="n">t</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+  <span class="n">println</span><span class="o">(</span><span class="n">t</span><span class="o">.</span><span class="na">area</span><span class="o">());</span>
+  <span class="n">t</span><span class="o">.</span><span class="na">a</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">mouseX</span><span class="o">;</span>
+  <span class="n">t</span><span class="o">.</span><span class="na">a</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">mouseY</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Modify the <code class="docutils literal"><span class="pre">display()</span></code> function in the <code class="docutils literal"><span class="pre">Circle</span></code> class so that it prints
+the circle in the format below:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Circle</span> <span class="n">c</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Circle</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">5</span><span class="o">);</span>
+<span class="n">c</span><span class="o">.</span><span class="na">display</span><span class="o">();</span>
+<span class="c1">// prints: Circle(center=(3, 2), radius=5)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Add a function called <code class="docutils literal"><span class="pre">circumference()</span></code> to the <code class="docutils literal"><span class="pre">Circle</span></code> class the
+calculates and returns the circumference of the circle. The circumference
+of a circle of radius <span class="math">\(r\)</span> is <span class="math">\(2\pi r\)</span>.</p>
+</li>
+<li><p class="first">Add a function called <code class="docutils literal"><span class="pre">getDiameter()</span></code> to the <code class="docutils literal"><span class="pre">Circle</span></code> class that
+calculates and returns the diameter of the circle.</p>
+</li>
+<li><p class="first">Write and test a class called <code class="docutils literal"><span class="pre">Square</span></code> that creates objects that
+represent squares. Store the squares as their upper-left corner and side
+length. Include a display function, a render function, and an area
+function.</p>
+</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="oop_bouncing_ball_intro.html" title="OOP: Bouncing Balls Revisited"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="oop_intro_point.html" title="OOP: Objected-oriented Programming"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Toby Donaldson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

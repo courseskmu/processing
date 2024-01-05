@@ -1,0 +1,513 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>A Bouncing Ball Sprite &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
+    <link rel="next" title="Using ArrayLists" href="arraylist_intro.html" />
+    <link rel="prev" title="A Spinning Box" href="oop_animation_box.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="arraylist_intro.html" title="Using ArrayLists"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="oop_animation_box.html" title="A Spinning Box"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">A Bouncing Ball Sprite</a><ul>
+<li><a class="reference internal" href="#a-bouncing-ball">A Bouncing Ball</a></li>
+<li><a class="reference internal" href="#multiple-bouncing-balls">Multiple Bouncing Balls</a></li>
+<li><a class="reference internal" href="#random-bouncing-balls">Random Bouncing Balls</a></li>
+<li><a class="reference internal" href="#bouncing-balls">100 Bouncing Balls?</a></li>
+<li><a class="reference internal" href="#questions">Questions</a></li>
+<li><a class="reference internal" href="#programming-questions">Programming Questions</a></li>
+<li><a class="reference internal" href="#code">Code</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="oop_animation_box.html"
+                        title="previous chapter">A Spinning Box</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="arraylist_intro.html"
+                        title="next chapter">Using ArrayLists</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="a-bouncing-ball-sprite">
+<h1>A Bouncing Ball Sprite<a class="headerlink" href="#a-bouncing-ball-sprite" title="Permalink to this headline">¶</a></h1>
+<p>In these notes you will learn:</p>
+<ul class="simple">
+<li>How to create a class that animates a bouncing ball based on the <code class="docutils literal"><span class="pre">Sprite</span></code>
+class.</li>
+<li>How to create randomly initialized bouncing balls.</li>
+</ul>
+<div class="section" id="a-bouncing-ball">
+<h2>A Bouncing Ball<a class="headerlink" href="#a-bouncing-ball" title="Permalink to this headline">¶</a></h2>
+<p>A ball that bounces around the screen has been one of our key examples in this
+course. So here we re-write it use the <code class="docutils literal"><span class="pre">Sprite</span></code> class:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dy</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">BouncingBall</span> <span class="kd">extends</span> <span class="n">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">diam</span><span class="o">;</span>
+  <span class="n">color</span> <span class="n">fillColor</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">pushMatrix</span><span class="o">();</span>
+
+    <span class="n">noStroke</span><span class="o">();</span>
+    <span class="n">fill</span><span class="o">(</span><span class="n">fillColor</span><span class="o">);</span>
+
+    <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">diam</span><span class="o">,</span> <span class="n">diam</span><span class="o">);</span>
+
+    <span class="n">popMatrix</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+
+    <span class="c1">// hit top?</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">y</span> <span class="o">=</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+      <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// hit bottom?</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="n">height</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">y</span> <span class="o">=</span> <span class="n">height</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+      <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// hit left?</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+      <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// hit right?</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="n">width</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="n">width</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+      <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">BouncingBall</span> <span class="n">ball</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BouncingBall</span><span class="o">();</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+
+  <span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.2</span><span class="o">;</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="mf">2.5</span><span class="o">;</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">diam</span> <span class="o">=</span> <span class="mi">50</span><span class="o">;</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">fillColor</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">255</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="n">ball</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>An important detail to notice here is that the <code class="docutils literal"><span class="pre">BouncingBall</span></code> class
+<strong>overrides</strong> the <code class="docutils literal"><span class="pre">update()</span></code> function from <code class="docutils literal"><span class="pre">Sprite</span></code>. That means that
+<code class="docutils literal"><span class="pre">BouncingBall</span></code> provides its own implementation of <code class="docutils literal"><span class="pre">update()</span></code> and ignores
+the one in <code class="docutils literal"><span class="pre">Sprite</span></code>.</p>
+</div>
+<div class="section" id="multiple-bouncing-balls">
+<h2>Multiple Bouncing Balls<a class="headerlink" href="#multiple-bouncing-balls" title="Permalink to this headline">¶</a></h2>
+<p>With the BouncingBall class written, it is now relatively easy to create
+multiple bouncing balls. For example:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">BouncingBall</span> <span class="n">b1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BouncingBall</span><span class="o">();</span>
+<span class="n">BouncingBall</span> <span class="n">b2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BouncingBall</span><span class="o">();</span>
+<span class="n">BouncingBall</span> <span class="n">b3</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BouncingBall</span><span class="o">();</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+
+  <span class="n">b1</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">b1</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">b1</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.2</span><span class="o">;</span>
+  <span class="n">b1</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="mf">2.5</span><span class="o">;</span>
+  <span class="n">b1</span><span class="o">.</span><span class="na">diam</span> <span class="o">=</span> <span class="mi">50</span><span class="o">;</span>
+  <span class="n">b1</span><span class="o">.</span><span class="na">fillColor</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">255</span><span class="o">);</span>
+
+  <span class="n">b2</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">150</span><span class="o">;</span>
+  <span class="n">b2</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">b2</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="mf">1.2</span><span class="o">;</span>
+  <span class="n">b2</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="mf">3.5</span><span class="o">;</span>
+  <span class="n">b2</span><span class="o">.</span><span class="na">diam</span> <span class="o">=</span> <span class="mi">75</span><span class="o">;</span>
+  <span class="n">b2</span><span class="o">.</span><span class="na">fillColor</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+
+  <span class="n">b3</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">b3</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">b3</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="mf">1.2</span><span class="o">;</span>
+  <span class="n">b3</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="mf">1.5</span><span class="o">;</span>
+  <span class="n">b3</span><span class="o">.</span><span class="na">diam</span> <span class="o">=</span> <span class="mi">150</span><span class="o">;</span>
+  <span class="n">b3</span><span class="o">.</span><span class="na">fillColor</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="n">b1</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+  <span class="n">b1</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+
+  <span class="n">b2</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+  <span class="n">b2</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+
+  <span class="n">b3</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+  <span class="n">b3</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>As you can see, initializing all the variables of the <code class="docutils literal"><span class="pre">BouncingBall</span></code> object
+takes a lot of code. Lets see one way to simplify that.</p>
+</div>
+<div class="section" id="random-bouncing-balls">
+<h2>Random Bouncing Balls<a class="headerlink" href="#random-bouncing-balls" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://processing.org/">Processing</a> has a built-in function called <a class="reference external" href="http://processing.org/reference/random_.html">random</a> that generates random
+numbers. For example, <code class="docutils literal"><span class="pre">random(65)</span></code> returns a random number that is greater
+than, or requal to 0, and less than (but never equal to!)  65:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">println</span><span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="mi">65</span><span class="o">));</span>  <span class="c1">// prints 33.455647</span>
+<span class="n">println</span><span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="mi">65</span><span class="o">));</span>  <span class="c1">// prints 45.825603</span>
+<span class="n">println</span><span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="mi">65</span><span class="o">));</span>  <span class="c1">// prints 49.4932</span>
+</pre></div>
+</div>
+<p>You can also call <code class="docutils literal"><span class="pre">random</span></code> with a low value and a high value like this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">println</span><span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="mi">20</span><span class="o">));</span> <span class="c1">// 13.474632</span>
+<span class="n">println</span><span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="mi">20</span><span class="o">));</span> <span class="c1">// 18.421371</span>
+<span class="n">println</span><span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="mi">20</span><span class="o">));</span> <span class="c1">// 11.419113</span>
+</pre></div>
+</div>
+<p>Lets use <code class="docutils literal"><span class="pre">random</span></code> to create a ball with randomly chosen initial values:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">BouncingBall</span> <span class="n">ball</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BouncingBall</span><span class="o">();</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+
+  <span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mi">3</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mi">3</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">diam</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mi">50</span><span class="o">,</span> <span class="mi">150</span><span class="o">);</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">fillColor</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="mi">255</span><span class="o">),</span>
+                         <span class="n">random</span><span class="o">(</span><span class="mi">255</span><span class="o">),</span>
+                         <span class="n">random</span><span class="o">(</span><span class="mi">255</span><span class="o">));</span>
+
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="n">ball</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Every time you run this program you get a different ball.</p>
+<p>To create more than one random ball, we need to call the initialization code
+for each <code class="docutils literal"><span class="pre">BouncingBall</span></code> object. That&#8217;s a lot of code and soon gets tedious,
+so a better idea is to create a function that creates a random
+<code class="docutils literal"><span class="pre">BouncingBall</span></code> for us:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">BouncingBall</span> <span class="nf">randomBouncingBall</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">BouncingBall</span> <span class="n">ball</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BouncingBall</span><span class="o">();</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mi">3</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mi">3</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">diam</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mi">50</span><span class="o">,</span> <span class="mi">150</span><span class="o">);</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">fillColor</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="mi">255</span><span class="o">),</span>
+                         <span class="n">random</span><span class="o">(</span><span class="mi">255</span><span class="o">),</span>
+                         <span class="n">random</span><span class="o">(</span><span class="mi">255</span><span class="o">));</span>
+  <span class="k">return</span> <span class="n">ball</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="n">BouncingBall</span> <span class="n">b1</span><span class="o">;</span>  <span class="c1">// no need to call new BouncingBall() here</span>
+<span class="n">BouncingBall</span> <span class="n">b2</span><span class="o">;</span>  <span class="c1">// because that&#39;s done for us in the</span>
+<span class="n">BouncingBall</span> <span class="n">b3</span><span class="o">;</span>  <span class="c1">// randomBouncingBall() function</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+
+  <span class="n">b1</span> <span class="o">=</span> <span class="n">randomBouncingBall</span><span class="o">();</span>
+  <span class="n">b2</span> <span class="o">=</span> <span class="n">randomBouncingBall</span><span class="o">();</span>
+  <span class="n">b3</span> <span class="o">=</span> <span class="n">randomBouncingBall</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="n">b1</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+  <span class="n">b1</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+
+  <span class="n">b2</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+  <span class="n">b2</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+
+  <span class="n">b3</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+  <span class="n">b3</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Every time you run this program, you get three different bouncing balls. Plus
+creating and initializing the balls is much less work.</p>
+</div>
+<div class="section" id="bouncing-balls">
+<h2>100 Bouncing Balls?<a class="headerlink" href="#bouncing-balls" title="Permalink to this headline">¶</a></h2>
+<p>Three bouncing balls are nice, but how could we make 100 balls bounce around
+the screen? If you think about this for a moment, you will realize that if we
+have 100 balls, we&#8217;ll need 100 variables, e.g.:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">BouncingBall</span> <span class="n">ball1</span><span class="o">;</span>
+<span class="n">BouncingBall</span> <span class="n">ball2</span><span class="o">;</span>
+<span class="n">BouncingBall</span> <span class="n">ball3</span><span class="o">;</span>
+<span class="c1">// ...</span>
+<span class="n">BouncingBall</span> <span class="n">ball100</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+   <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+   <span class="n">smooth</span><span class="o">();</span>
+   <span class="n">ball1</span> <span class="o">=</span> <span class="n">randomBouncingBall</span><span class="o">();</span>
+   <span class="n">ball2</span> <span class="o">=</span> <span class="n">randomBouncingBall</span><span class="o">();</span>
+   <span class="n">ball3</span> <span class="o">=</span> <span class="n">randomBouncingBall</span><span class="o">();</span>
+   <span class="c1">// ...</span>
+   <span class="n">ball100</span> <span class="o">=</span> <span class="n">randomBouncingBall</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="n">ball1</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+  <span class="n">ball1</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+
+  <span class="n">ball2</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+  <span class="n">ball2</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+
+  <span class="n">ball3</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+  <span class="n">ball3</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+
+  <span class="c1">// ...</span>
+
+  <span class="n">ball100</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+  <span class="n">ball100</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>This program will work, but it is far too much typing. Plus, if we wanted,
+say, 200 or 300 balls, then even more typing is needed.</p>
+<p>This is clearly impractical. In the next set of notes we&#8217;ll see a solution to
+this problem.</p>
+</div>
+<div class="section" id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>What&#8217;s the smallest integer value that <code class="docutils literal"><span class="pre">random(1,</span> <span class="pre">10)</span></code> can return? The
+biggest?</li>
+</ol>
+</div>
+<div class="section" id="programming-questions">
+<h2>Programming Questions<a class="headerlink" href="#programming-questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Modify the <code class="docutils literal"><span class="pre">randomBouncingBall</span></code> function so that the <a class="reference internal" href="glossary.html#term-alpha-value"><span class="xref std std-term">alpha value</span></a>
+of the color is also set randomly. Test it in the bouncing balls program
+from the notes.</li>
+<li>Create a new class called <code class="docutils literal"><span class="pre">WraparoundBall</span></code> that is similar to
+<code class="docutils literal"><span class="pre">BouncingBall</span></code>, except when it hits and edge it immediately &#8220;jumps&#8221; to
+the other edge.</li>
+</ol>
+</div>
+<div class="section" id="code">
+<h2>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">dy</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">BouncingBall</span> <span class="kd">extends</span> <span class="n">Sprite</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">diam</span><span class="o">;</span>
+  <span class="n">color</span> <span class="n">fillColor</span><span class="o">;</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">pushMatrix</span><span class="o">();</span>
+
+    <span class="n">noStroke</span><span class="o">();</span>
+    <span class="n">fill</span><span class="o">(</span><span class="n">fillColor</span><span class="o">);</span>
+
+    <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">diam</span><span class="o">,</span> <span class="n">diam</span><span class="o">);</span>
+
+    <span class="n">popMatrix</span><span class="o">();</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+
+    <span class="c1">// hit top?</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">y</span> <span class="o">=</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+      <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// hit bottom?</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="n">height</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">y</span> <span class="o">=</span> <span class="n">height</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+      <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// hit left?</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+      <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// hit right?</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="n">width</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="n">width</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+      <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">BouncingBall</span> <span class="nf">randomBouncingBall</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">BouncingBall</span> <span class="n">ball</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BouncingBall</span><span class="o">();</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">dx</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mi">3</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">dy</span> <span class="o">=</span> <span class="n">random</span><span class="o">(-</span><span class="mi">3</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">diam</span> <span class="o">=</span> <span class="n">random</span><span class="o">(</span><span class="mi">50</span><span class="o">,</span> <span class="mi">150</span><span class="o">);</span>
+  <span class="n">ball</span><span class="o">.</span><span class="na">fillColor</span> <span class="o">=</span> <span class="n">color</span><span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="mi">255</span><span class="o">),</span>
+  <span class="n">random</span><span class="o">(</span><span class="mi">255</span><span class="o">),</span>
+  <span class="n">random</span><span class="o">(</span><span class="mi">255</span><span class="o">));</span>
+  <span class="k">return</span> <span class="n">ball</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="n">BouncingBall</span> <span class="n">b1</span><span class="o">;</span>  <span class="c1">// no need to call new BouncingBall() here</span>
+<span class="n">BouncingBall</span> <span class="n">b2</span><span class="o">;</span>  <span class="c1">// because that&#39;s done for us in the</span>
+<span class="n">BouncingBall</span> <span class="n">b3</span><span class="o">;</span>  <span class="c1">// randomBouncingBall() function</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+
+  <span class="n">b1</span> <span class="o">=</span> <span class="n">randomBouncingBall</span><span class="o">();</span>
+  <span class="n">b2</span> <span class="o">=</span> <span class="n">randomBouncingBall</span><span class="o">();</span>
+  <span class="n">b3</span> <span class="o">=</span> <span class="n">randomBouncingBall</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="n">b1</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+  <span class="n">b1</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+
+  <span class="n">b2</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+  <span class="n">b2</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+
+  <span class="n">b3</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+  <span class="n">b3</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="arraylist_intro.html" title="Using ArrayLists"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="oop_animation_box.html" title="A Spinning Box"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Toby Donaldson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

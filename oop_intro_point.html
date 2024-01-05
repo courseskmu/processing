@@ -1,0 +1,344 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>OOP: Objected-oriented Programming &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
+    <link rel="next" title="OOP: Classes for Geometric Shapes" href="oop_intro_circle.html" />
+    <link rel="prev" title="OOP: Objected-oriented Programming" href="oop_intro.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="oop_intro_circle.html" title="OOP: Classes for Geometric Shapes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="oop_intro.html" title="OOP: Objected-oriented Programming"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">OOP: Objected-oriented Programming</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#point-objects">Point Objects</a></li>
+<li><a class="reference internal" href="#constructors">Constructors</a></li>
+<li><a class="reference internal" href="#printing-a-point">Printing a Point</a></li>
+<li><a class="reference internal" href="#adding-a-render-function">Adding a Render Function</a></li>
+<li><a class="reference internal" href="#questions">Questions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="oop_intro.html"
+                        title="previous chapter">OOP: Objected-oriented Programming</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="oop_intro_circle.html"
+                        title="next chapter">OOP: Classes for Geometric Shapes</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="oop-objected-oriented-programming">
+<h1>OOP: Objected-oriented Programming<a class="headerlink" href="#oop-objected-oriented-programming" title="Permalink to this headline">¶</a></h1>
+<p>In these notes you will learn:</p>
+<ul class="simple">
+<li>How to write a simple class.</li>
+<li>How to write and use a constructor.</li>
+<li>How to add functions to a class.</li>
+</ul>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="glossary.html#term-object-oriented-programming"><span class="xref std std-term">Object-oriented programming</span></a> (<a class="reference internal" href="glossary.html#term-oop"><span class="xref std std-term">OOP</span></a>) is a
+popular style of programming supported by most modern programming
+languages.</p>
+<p>OOP works well in graphics and animation. The idea is that every animated
+thing on the screen has a corresponding <em>object</em> in the program. This approach
+makes many programs simpler and more flexible.</p>
+<p>What we will do here is design a number of simple but useful classes that help
+us write programs for graphics and animation.</p>
+</div>
+<div class="section" id="point-objects">
+<h2>Point Objects<a class="headerlink" href="#point-objects" title="Permalink to this headline">¶</a></h2>
+<p>The best way to understand OOP is through an example. Suppose we want to (x,
+y) points as objects. Here&#8217;s how we&#8217;ve been doing it <em>without</em> OOP:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">float</span> <span class="n">cat_x</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">cat_y</span><span class="o">;</span>
+
+<span class="kt">float</span> <span class="n">dog_x</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">dog_y</span><span class="o">;</span>
+</pre></div>
+</div>
+<p>These are two sets of points (<code class="docutils literal"><span class="pre">cat_x</span></code>, <code class="docutils literal"><span class="pre">cat_y</span></code>) and (<code class="docutils literal"><span class="pre">dog_x</span></code>,
+<code class="docutils literal"><span class="pre">dog_y</span></code>).</p>
+<p>The OOP approach is different. The idea is to think about points as being
+their own individual objects. To create an object, we must create a class that
+describes the object. Here is a class called <code class="docutils literal"><span class="pre">Point</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Point</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>As you can see, the <code class="docutils literal"><span class="pre">Point</span></code> groups that <code class="docutils literal"><span class="pre">x</span></code> and <code class="docutils literal"><span class="pre">y</span></code> values for the
+<code class="docutils literal"><span class="pre">Point</span></code> together. We can now create points like this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Point</span> <span class="n">cat</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="o">();</span>
+<span class="n">Point</span> <span class="n">dog</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="o">();</span>
+</pre></div>
+</div>
+<p>These two lines of code show one of the big advantages of OOP: readability. It
+is easy to see that <code class="docutils literal"><span class="pre">cat</span></code> and <code class="docutils literal"><span class="pre">dog</span></code> describe points because we explicitly
+say that they are of type <code class="docutils literal"><span class="pre">Point</span></code>.</p>
+<p>Each <code class="docutils literal"><span class="pre">Point</span></code> object contains its own copy of <code class="docutils literal"><span class="pre">x</span></code> and <code class="docutils literal"><span class="pre">y</span></code>, and we access
+them using <strong>dot notation</strong>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">println</span><span class="o">(</span><span class="n">cat</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="n">cat</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+<span class="n">println</span><span class="o">(</span><span class="n">dog</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="n">dog</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+</pre></div>
+</div>
+<p>Clearly, <code class="docutils literal"><span class="pre">cat.x</span></code> refers to the <code class="docutils literal"><span class="pre">x</span></code> value of the <code class="docutils literal"><span class="pre">cat</span></code> object, while
+<code class="docutils literal"><span class="pre">dog.x</span></code> refers to the <code class="docutils literal"><span class="pre">x</span></code> value of the <code class="docutils literal"><span class="pre">dog</span></code> object.</p>
+<p>We can also assign values to variables inside a <code class="docutils literal"><span class="pre">Point</span></code> object, e.g.:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Point</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="o">();</span>  <span class="c1">// (0, 0) by default</span>
+<span class="n">p</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">4</span><span class="o">;</span>
+<span class="n">p</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;</span>
+<span class="n">println</span><span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>  <span class="c1">// 4, 3</span>
+</pre></div>
+</div>
+<p>Whenever you create an object, you use the <code class="docutils literal"><span class="pre">new</span></code> operator:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Point</span> <span class="n">bird</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="o">();</span>
+</pre></div>
+</div>
+<p>Every time the expression <code class="docutils literal"><span class="pre">new</span> <span class="pre">Point()</span></code> is called, a brand new <code class="docutils literal"><span class="pre">Point</span></code>
+object &#8212; with its own personal <code class="docutils literal"><span class="pre">x</span></code> and <code class="docutils literal"><span class="pre">y</span></code> is created.</p>
+</div>
+<div class="section" id="constructors">
+<h2>Constructors<a class="headerlink" href="#constructors" title="Permalink to this headline">¶</a></h2>
+<p>To create an object, you must call one of its constructors. If you don&#8217;t
+create a constructor in the class then <a class="reference external" href="http://processing.org/">Processing</a> automatically creates a
+<strong>default constructor</strong> that that does not take any input:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Point</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+
+  <span class="c1">// no constructor, so Processing automatically</span>
+  <span class="c1">// creates a default constructor called Point()</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>The only way we can create a <code class="docutils literal"><span class="pre">Point</span></code> with this class is by calling its
+default constructor, e.g.:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Point</span> <span class="n">origin</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="o">();</span>
+</pre></div>
+</div>
+<p>It&#8217;s often convenient to initialize a <code class="docutils literal"><span class="pre">Point</span></code> to some value other than (0,
+0), and so we can add our constructor:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Point</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+
+  <span class="c1">// constructor</span>
+  <span class="n">Point</span><span class="o">(</span><span class="kt">float</span> <span class="n">x_init</span><span class="o">,</span> <span class="kt">float</span> <span class="n">y_init</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x_init</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">y_init</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Now we can write code like this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Point</span> <span class="n">middle</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="o">(</span><span class="mi">250</span><span class="o">,</span> <span class="mi">250</span><span class="o">);</span>
+<span class="n">println</span><span class="o">(</span><span class="n">middle</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="n">middle</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>  <span class="c1">// 250, 250</span>
+</pre></div>
+</div>
+<p>There are a couple of important things to note about constructors:</p>
+<ul>
+<li><p class="first">The job of a constructor is to assign initialize the object, which usually
+means assigning initial values to <strong>all</strong> the variables in the object.</p>
+</li>
+<li><p class="first">A constructor must always have the same name as the class it is within, e.g.
+a constructor for the <code class="docutils literal"><span class="pre">Point</span></code> class must be called <code class="docutils literal"><span class="pre">Point</span></code>.</p>
+</li>
+<li><p class="first">A constructor does <strong>not</strong> have a return type, not even <code class="docutils literal"><span class="pre">void</span></code>.</p>
+</li>
+<li><p class="first">We named the inputs to the constructor <code class="docutils literal"><span class="pre">x_init</span></code> and <code class="docutils literal"><span class="pre">y_init</span></code> to avoid
+confusion with the <code class="docutils literal"><span class="pre">x</span></code> and <code class="docutils literal"><span class="pre">y</span></code> variables defined within the <code class="docutils literal"><span class="pre">Point</span></code>
+class. Imagine if we had done this instead:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Point</span><span class="o">(</span><span class="kt">float</span> <span class="n">x</span><span class="o">,</span> <span class="kt">float</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
+   <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">;</span>
+   <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>In the statement <code class="docutils literal"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">x</span></code>, <a class="reference external" href="http://processing.org/">Processing</a> has no way of knowing if an <code class="docutils literal"><span class="pre">x</span></code>
+refers to the one declared on the constructor&#8217;s input list, or the one
+declared earlier in the class. So it assumes that <code class="docutils literal"><span class="pre">x</span></code> refers to the <code class="docutils literal"><span class="pre">x</span></code>
+from the constructor&#8217;s input list, and so the <code class="docutils literal"><span class="pre">x</span></code> in the object never gets
+changed.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="printing-a-point">
+<h2>Printing a Point<a class="headerlink" href="#printing-a-point" title="Permalink to this headline">¶</a></h2>
+<p>In the previous examples we often printed the value of a <code class="docutils literal"><span class="pre">Point</span></code> to the
+screen, e.g.:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Point</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="o">-</span><span class="mi">8</span><span class="o">);</span>
+<span class="n">println</span><span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>  <span class="c1">// 7, -8</span>
+</pre></div>
+</div>
+<p>This is useful, but tedious to type out each time. So lets add a <code class="docutils literal"><span class="pre">display()</span></code>
+function inside the <code class="docutils literal"><span class="pre">Point</span></code> class that does this for us:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Point</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+
+  <span class="n">Point</span><span class="o">(</span><span class="kt">float</span> <span class="n">x_init</span><span class="o">,</span> <span class="kt">float</span> <span class="n">y_init</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x_init</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">y_init</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">display</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">println</span><span class="o">(</span><span class="s">&quot;(&quot;</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="s">&quot;)&quot;</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Now we can write code like this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Point</span> <span class="n">cat</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="mi">7</span><span class="o">);</span>
+<span class="n">Point</span> <span class="n">dog</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
+
+<span class="n">cat</span><span class="o">.</span><span class="na">display</span><span class="o">();</span>  <span class="c1">// (4, 7)</span>
+<span class="n">dog</span><span class="o">.</span><span class="na">display</span><span class="o">();</span>  <span class="c1">// (2, 1)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="adding-a-render-function">
+<h2>Adding a Render Function<a class="headerlink" href="#adding-a-render-function" title="Permalink to this headline">¶</a></h2>
+<p>Finally, lets add simple rendering function that will draw a small red circle
+centered at the point:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">Point</span> <span class="o">{</span>
+  <span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+  <span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+
+  <span class="n">Point</span><span class="o">(</span><span class="kt">float</span> <span class="n">x_init</span><span class="o">,</span> <span class="kt">float</span> <span class="n">y_init</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x_init</span><span class="o">;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">y_init</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">display</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">println</span><span class="o">(</span><span class="s">&quot;(&quot;</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="s">&quot;)&quot;</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="kt">void</span> <span class="nf">render</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">fill</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+    <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="mi">10</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Here&#8217;s a sample program that draws a point wherever the mouse pointer is:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">Point</span> <span class="n">pointer</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+  <span class="n">smooth</span><span class="o">();</span>
+  <span class="n">noCursor</span><span class="o">();</span> <span class="c1">// turn off regular pointer</span>
+  <span class="n">pointer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Point</span><span class="o">(-</span><span class="mi">100</span><span class="o">,</span> <span class="o">-</span><span class="mi">100</span><span class="o">);</span>  <span class="c1">// start off screen</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+  <span class="n">pointer</span><span class="o">.</span><span class="na">render</span><span class="o">();</span>
+  <span class="n">pointer</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">mouseX</span><span class="o">;</span>
+  <span class="n">pointer</span><span class="o">.</span><span class="na">y</span> <span class="o">=</span> <span class="n">mouseY</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>What does OOP stand for?</li>
+<li>Describe, in English, the difference between a class and an object.</li>
+<li>Describe, in English, the purpose of a constructor.</li>
+<li>What is a default constructor?</li>
+<li>What is the return type of a constructor?</li>
+<li>Using the last definition of <code class="docutils literal"><span class="pre">Point</span></code> from the notes, write a line of
+<a class="reference external" href="http://processing.org/">Processing</a> code that creates new <code class="docutils literal"><span class="pre">Point</span></code> variable named <code class="docutils literal"><span class="pre">city</span></code> that is
+initialized to (55, 33), and then print it to the console.</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="oop_intro_circle.html" title="OOP: Classes for Geometric Shapes"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="oop_intro.html" title="OOP: Objected-oriented Programming"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Toby Donaldson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

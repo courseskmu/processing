@@ -1,0 +1,539 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Example: A Ball that Bounces and Pulses &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
+    <link rel="next" title="Variations on Dots and Lines" href="dots_variations.html" />
+    <link rel="prev" title="Scrolling Text" href="text_scroll.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="dots_variations.html" title="Variations on Dots and Lines"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="text_scroll.html" title="Scrolling Text"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Example: A Ball that Bounces and Pulses</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#adding-a-diameter-variable">Adding a Diameter Variable</a></li>
+<li><a class="reference internal" href="#adding-a-diameter-speed-change">Adding a Diameter Speed Change</a></li>
+<li><a class="reference internal" href="#fixing-the-edge-bug">Fixing the Edge Bug</a></li>
+<li><a class="reference internal" href="#questions">Questions</a></li>
+<li><a class="reference internal" href="#code-the-bouncing-ball-program">Code: The Bouncing Ball Program</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="text_scroll.html"
+                        title="previous chapter">Scrolling Text</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="dots_variations.html"
+                        title="next chapter">Variations on Dots and Lines</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="example-a-ball-that-bounces-and-pulses">
+<h1>Example: A Ball that Bounces and Pulses<a class="headerlink" href="#example-a-ball-that-bounces-and-pulses" title="Permalink to this headline">¶</a></h1>
+<p>In these notes you will learn:</p>
+<ul class="simple">
+<li>How to make a bouncing ball become bigger and smaller as it moves.</li>
+<li>How to prevent the ball from getting &#8220;stuck&#8221; in an edge.</li>
+</ul>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>In these notes we are going to being with the following program that makes a
+ball bounce around the screen:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">float</span> <span class="n">x</span><span class="o">;</span> <span class="c1">// (x, y) is the center of the ball</span>
+<span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">dx</span><span class="o">;</span> <span class="c1">// speed along x-axis</span>
+<span class="kt">float</span> <span class="n">dy</span><span class="o">;</span> <span class="c1">// speed along y-axis</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+
+  <span class="n">x</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">dx</span> <span class="o">=</span> <span class="mf">1.5</span><span class="o">;</span>
+  <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="mf">3.5</span><span class="o">;</span>
+
+  <span class="n">smooth</span><span class="o">();</span>
+  <span class="n">fill</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="n">noStroke</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="mi">100</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span>
+
+  <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+
+  <span class="c1">// check if hit top edge</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">-</span> <span class="mi">50</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// check if hit bottom edge</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">+</span> <span class="mi">50</span> <span class="o">&gt;</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// check if hit right edge</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">50</span> <span class="o">&gt;</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// check if hit the left edge</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">50</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Our goal here is to add a neat new effect to this program: we want the ball to
+pulse, i.e. continuously get smaller and bigger as it bounces around the
+screen.</p>
+</div>
+<div class="section" id="adding-a-diameter-variable">
+<h2>Adding a Diameter Variable<a class="headerlink" href="#adding-a-diameter-variable" title="Permalink to this headline">¶</a></h2>
+<p>The first thing we&#8217;ll do is add a <code class="docutils literal"><span class="pre">float</span></code> variable called <code class="docutils literal"><span class="pre">diam</span></code> that
+represents the diameter of the ball:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">float</span> <span class="n">x</span><span class="o">;</span> <span class="c1">// (x, y) is the center of the ball</span>
+<span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">dx</span><span class="o">;</span> <span class="c1">// speed along x-axis</span>
+<span class="kt">float</span> <span class="n">dy</span><span class="o">;</span> <span class="c1">// speed along y-axis</span>
+
+<span class="kt">float</span> <span class="n">diam</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+
+  <span class="n">x</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">dx</span> <span class="o">=</span> <span class="mf">1.5</span><span class="o">;</span>
+  <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="mf">3.5</span><span class="o">;</span>
+
+  <span class="n">diam</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>
+
+  <span class="n">smooth</span><span class="o">();</span>
+  <span class="n">fill</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="n">noStroke</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">diam</span><span class="o">,</span> <span class="n">diam</span><span class="o">);</span>
+
+  <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+
+  <span class="c1">// check if hit top edge</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// check if hit bottom edge</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// check if hit right edge</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// check if hit the left edge</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Notice that we:</p>
+<ul class="simple">
+<li>initialized <code class="docutils literal"><span class="pre">diam</span></code> too 100 in <code class="docutils literal"><span class="pre">setup()</span></code></li>
+<li>changed the circle-drawing statement to <code class="docutils literal"><span class="pre">ellipse(x,</span> <span class="pre">y,</span> <span class="pre">diam,</span> <span class="pre">diam)</span></code></li>
+<li>changed the condition of all the if-statements to use <code class="docutils literal"><span class="pre">diam</span> <span class="pre">/</span> <span class="pre">2</span></code> instead
+of 50</li>
+</ul>
+<p>Be sure to test your program after making this change to make sure it worked
+correctly. The behaviour should be exactly the same as before.</p>
+</div>
+<div class="section" id="adding-a-diameter-speed-change">
+<h2>Adding a Diameter Speed Change<a class="headerlink" href="#adding-a-diameter-speed-change" title="Permalink to this headline">¶</a></h2>
+<p>We want the ball&#8217;s diameter to grow smalle and bigger at some constant rate,
+and so we will add another variable, called <code class="docutils literal"><span class="pre">ddiam</span></code>, that represents by how
+many pixels the diameter of the ball will change on each call to <code class="docutils literal"><span class="pre">draw()</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">float</span> <span class="n">x</span><span class="o">;</span> <span class="c1">// (x, y) is the center of the ball</span>
+<span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">dx</span><span class="o">;</span> <span class="c1">// speed along x-axis</span>
+<span class="kt">float</span> <span class="n">dy</span><span class="o">;</span> <span class="c1">// speed along y-axis</span>
+
+<span class="kt">float</span> <span class="n">diam</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">ddiam</span><span class="o">;</span>  <span class="c1">// speed at which diameter changes</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+
+  <span class="n">x</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">dx</span> <span class="o">=</span> <span class="mf">1.5</span><span class="o">;</span>
+  <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="mf">3.5</span><span class="o">;</span>
+
+  <span class="n">diam</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>
+  <span class="n">ddiam</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>  <span class="c1">// diameter starts getting smaller</span>
+
+  <span class="n">smooth</span><span class="o">();</span>
+  <span class="n">fill</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="n">noStroke</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">diam</span><span class="o">,</span> <span class="n">diam</span><span class="o">);</span>
+
+  <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+  <span class="n">diam</span> <span class="o">+=</span> <span class="n">ddiam</span><span class="o">;</span>
+
+  <span class="k">if</span> <span class="o">(</span><span class="n">diam</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="o">)</span> <span class="o">{</span>   <span class="c1">// if the diameter is too small,</span>
+    <span class="n">ddiam</span> <span class="o">=</span> <span class="o">-</span><span class="n">ddiam</span><span class="o">;</span>  <span class="c1">// flip ddiam&#39;s sign so the diam gets bigger</span>
+  <span class="o">}</span>
+
+  <span class="k">if</span> <span class="o">(</span><span class="n">diam</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="o">)</span> <span class="o">{</span>  <span class="c1">// if the diameter is too big,</span>
+    <span class="n">ddiam</span> <span class="o">=</span> <span class="o">-</span><span class="n">ddiam</span><span class="o">;</span>  <span class="c1">// flip ddiam&#39;s sign the diam gets smaller</span>
+  <span class="o">}</span>
+
+  <span class="c1">// check if hit top edge</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// check if hit bottom edge</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// check if hit right edge</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// check if hit the left edge</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Here&#8217;s the changes from the previous program:</p>
+<ul class="simple">
+<li>the <code class="docutils literal"><span class="pre">float</span></code> <code class="docutils literal"><span class="pre">ddiam</span></code> has been added to represent the rate at which the
+ball&#8217;s diameter changes</li>
+<li>in <code class="docutils literal"><span class="pre">setup()</span></code>, <code class="docutils literal"><span class="pre">ddiam</span></code> is initialized to -1 so that the ball is initially
+shrinking</li>
+<li>in <code class="docutils literal"><span class="pre">draw()</span></code>, we added the statement <code class="docutils literal"><span class="pre">diam</span> <span class="pre">+=</span> <span class="pre">ddiam</span></code> to update the size
+of the ball&#8217;s diameter after ew draw it</li>
+<li>again in <code class="docutils literal"><span class="pre">draw()</span></code>, we added two if-statements to check to flip the sign of
+<code class="docutils literal"><span class="pre">ddiam</span></code> when the ball gets either too small or too big</li>
+</ul>
+<p>When you run this program it may appear, initially, that it works correctly.
+However, you should soon see an obvious bug: the ball sometimes gets in the
+edges.</p>
+</div>
+<div class="section" id="fixing-the-edge-bug">
+<h2>Fixing the Edge Bug<a class="headerlink" href="#fixing-the-edge-bug" title="Permalink to this headline">¶</a></h2>
+<p>The previous program doesn&#8217;t always work correctly. The problem is that,
+sometimes, the ball goes past an edge and gets stuck. For example, if the top-
+most point of the ball goes past the top edge, then even though the direction
+of the ball changes, the top-most point of the ball is still off the edge.</p>
+<p>This is a tricky and subtle problem. We&#8217;ll deal with by cheating a little:
+whenever we detected that the ball has hit an edge, we&#8217;ll move back onto the
+screen to make sure that it doesn&#8217;t get caught in an edge.</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">float</span> <span class="n">x</span><span class="o">;</span> <span class="c1">// (x, y) is the center of the ball</span>
+<span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">dx</span><span class="o">;</span> <span class="c1">// speed along x-axis</span>
+<span class="kt">float</span> <span class="n">dy</span><span class="o">;</span> <span class="c1">// speed along y-axis</span>
+
+<span class="kt">float</span> <span class="n">diam</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">ddiam</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+
+  <span class="n">x</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">dx</span> <span class="o">=</span> <span class="mf">1.5</span><span class="o">;</span>
+  <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="mf">3.5</span><span class="o">;</span>
+
+  <span class="n">diam</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>
+  <span class="n">ddiam</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+
+  <span class="n">smooth</span><span class="o">();</span>
+  <span class="n">fill</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="n">noStroke</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">diam</span><span class="o">,</span> <span class="n">diam</span><span class="o">);</span>
+
+  <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+  <span class="n">diam</span> <span class="o">+=</span> <span class="n">ddiam</span><span class="o">;</span>
+
+  <span class="k">if</span> <span class="o">(</span><span class="n">diam</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">ddiam</span> <span class="o">=</span> <span class="o">-</span><span class="n">ddiam</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="k">if</span> <span class="o">(</span><span class="n">diam</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">ddiam</span> <span class="o">=</span> <span class="o">-</span><span class="n">ddiam</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// check if hit top edge</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// check if hit bottom edge</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">499</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// check if hit right edge</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">499</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// check if hit the left edge</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>The edge-detection if-statements now all have this form:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>if the ball has hit the edge then</dt>
+<dd>reset the position of the ball so it is entirely on the screen
+flip the sign of the appropriate d-variable</dd>
+</dl>
+</div></blockquote>
+<p>This is important! Just changing the d-variable is not enough because it
+doesn&#8217;t stop the ball from getting stuck in an edge.</p>
+</div>
+<div class="section" id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Modify <a class="reference internal" href="#ball-bounce-prog-label"><span>the bouncing ball program</span></a> so that a
+small ellipse is drawn under the ball as a shadow to give the illusion of
+3-dimensions. For example:</p>
+<a class="reference internal image-reference" href="_images/ballShadow.png"><img alt="A ball with an elliptical shadow under it." class="align-center" src="_images/ballShadow.png" style="width: 102.0px; height: 115.0px;" /></a>
+<p>Make sure the shadow gets bigger as the ball&#8217;s size increases.</p>
+</li>
+<li><p class="first">Modify <a class="reference internal" href="#ball-bounce-prog-label"><span>the bouncing ball program</span></a> so that
+when the ball hits the <em>left</em> edge of the screen, its speed increases by a
+factor of 1.5.</p>
+<p>Also, keep the ball&#8217;s size fixed: do <em>not</em> have it change size when
+it hits an edge.</p>
+</li>
+<li><p class="first">Write a program that makes a <em>square</em> bounce around the screen. When the
+squares hits an edge it should hit the edge exactly, without any part of it
+going off the screen.</p>
+</li>
+<li><p class="first">Write a program that makes a <code class="docutils literal"><span class="pre">PImage</span></code> bounce around the screen. When the
+image hits an edge it should hit the edge exactly, without any part of it
+going off the screen.</p>
+</li>
+<li><p class="first">Modify <a class="reference internal" href="#ball-bounce-prog-label"><span>the bouncing ball program</span></a> so that
+the ball changes to red when it hits the top edge; to green when it hits
+the right edge; to blue when it hits the bottom edge; and to orange when it
+hits the left edge.</p>
+</li>
+<li><p class="first">Draw a 200-by-200 square centered in the middle of a 500-by-500 screen.
+Write a program that makes a ball bounce <em>inside</em> this square.</p>
+</li>
+<li><p class="first">Make <em>two</em> different colored balls bounce around the screen. You&#8217;ll need to
+keep track of the position and velocity of each ball, so your program will
+need at least 8 different variables.</p>
+</li>
+<li><p class="first">Modify <a class="reference internal" href="#ball-bounce-prog-label"><span>the bouncing ball program</span></a> so that
+the ball&#8217;s diameter does <em>not</em> change when it hits an edge. Instead, use
+the <code class="docutils literal"><span class="pre">map</span></code> function to make the balls diameter go from 25 to 150 as the
+mouse pointer moves horizontally across the screen.</p>
+<p>For example, when the mouse pointer is halfway across the screen, the ball
+should have a diameter of about 87 (i.e. halfway between 25 and 150). When
+the mouse pointer is at the very left of the screen, the ball&#8217;s diameter
+should be 25.</p>
+</li>
+<li><p class="first">Modify <a class="reference internal" href="#ball-bounce-prog-label"><span>the bouncing ball program</span></a> so that
+every <em>fifth</em> time the ball hits any edge it changes color. For example, it
+can start out orange, and the after 5 edge hits it turns red. Then after 5
+more edge hits it turns red, and so on.</p>
+<p>Also, keep the ball&#8217;s size fixed: do <em>not</em> have it change size when
+it hits an edge.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="code-the-bouncing-ball-program">
+<h2>Code: The Bouncing Ball Program<a class="headerlink" href="#code-the-bouncing-ball-program" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-java" id="ball-bounce-prog-label"><div class="highlight"><pre><span class="kt">float</span> <span class="n">x</span><span class="o">;</span> <span class="c1">// (x, y) is the center of the ball</span>
+<span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">dx</span><span class="o">;</span> <span class="c1">// speed along x-axis</span>
+<span class="kt">float</span> <span class="n">dy</span><span class="o">;</span> <span class="c1">// speed along y-axis</span>
+
+<span class="kt">float</span> <span class="n">diam</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">ddiam</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+
+  <span class="n">x</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span>
+  <span class="n">dx</span> <span class="o">=</span> <span class="mf">1.5</span><span class="o">;</span>
+  <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="mf">3.5</span><span class="o">;</span>
+
+  <span class="n">diam</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>
+  <span class="n">ddiam</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+
+  <span class="n">smooth</span><span class="o">();</span>
+  <span class="n">fill</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="n">noStroke</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">diam</span><span class="o">,</span> <span class="n">diam</span><span class="o">);</span>
+
+  <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span><span class="o">;</span>
+  <span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span><span class="o">;</span>
+  <span class="n">diam</span> <span class="o">+=</span> <span class="n">ddiam</span><span class="o">;</span>
+
+  <span class="k">if</span> <span class="o">(</span><span class="n">diam</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">ddiam</span> <span class="o">=</span> <span class="o">-</span><span class="n">ddiam</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="k">if</span> <span class="o">(</span><span class="n">diam</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">ddiam</span> <span class="o">=</span> <span class="o">-</span><span class="n">ddiam</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// check if hit top edge</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// check if hit bottom edge</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">499</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// check if hit right edge</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="mi">499</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">499</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">// check if hit the left edge</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">diam</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="n">dx</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="dots_variations.html" title="Variations on Dots and Lines"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="text_scroll.html" title="Scrolling Text"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Toby Donaldson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

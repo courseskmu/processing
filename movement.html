@@ -1,0 +1,505 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Making Things Move &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
+    <link rel="next" title="Detecting the Edges of the Screen" href="screen_edges.html" />
+    <link rel="prev" title="Basic Numeric Literals and Variables" href="variables_and_assignments.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="screen_edges.html" title="Detecting the Edges of the Screen"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="variables_and_assignments.html" title="Basic Numeric Literals and Variables"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Making Things Move</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#a-ball-that-falls-down">A Ball that Falls Down</a></li>
+<li><a class="reference internal" href="#a-small-change">A Small Change</a></li>
+<li><a class="reference internal" href="#global-variables-and-local-variables">Global Variables and Local Variables</a></li>
+<li><a class="reference internal" href="#incrementing-variables">Incrementing Variables</a></li>
+<li><a class="reference internal" href="#moving-images">Moving Images</a></li>
+<li><a class="reference internal" href="#adding-a-fish">Adding a Fish</a></li>
+<li><a class="reference internal" href="#questions">Questions</a></li>
+<li><a class="reference internal" href="#programming-questions">Programming Questions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="variables_and_assignments.html"
+                        title="previous chapter">Basic Numeric Literals and Variables</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="screen_edges.html"
+                        title="next chapter">Detecting the Edges of the Screen</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="making-things-move">
+<h1>Making Things Move<a class="headerlink" href="#making-things-move" title="Permalink to this headline">¶</a></h1>
+<p>In these notes you will learn:</p>
+<ul class="simple">
+<li>How to make an object move by itself in a straight line at different speeds.</li>
+<li>How to increment numeric variables.</li>
+<li>The distinction between local variables and global variables.</li>
+</ul>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>We&#8217;ve seen how to make things follow the mouse using the <code class="docutils literal"><span class="pre">mouseX</span></code> and
+<code class="docutils literal"><span class="pre">mouseY</span></code> variables, and so now lets turn to the topic of making things move
+on their own.</p>
+<p>The basic trick for making a 2-dimensional animated object move is to change
+it&#8217;s (x, y) location on each call to <code class="docutils literal"><span class="pre">draw()</span></code>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In this course we are not concerned with the actual physical
+equations that govern the movement of objects. As long as the movement
+<em>looks</em> good enough, then we will leave it at that. This is a pretty common
+approach when you are making animations for simple video games, where <em>how</em>
+things look is often more important than accurately simulating the real
+world.</p>
+</div>
+</div>
+<div class="section" id="a-ball-that-falls-down">
+<h2>A Ball that Falls Down<a class="headerlink" href="#a-ball-that-falls-down" title="Permalink to this headline">¶</a></h2>
+<p id="falling-ball-prog-label">Lets write a program that makes a ball fall from the top of the screen to the
+bottom. We&#8217;ll represent the position of its center with the variables <code class="docutils literal"><span class="pre">x</span></code>
+and <code class="docutils literal"><span class="pre">y</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">float</span> <span class="n">x</span><span class="o">;</span>  <span class="c1">// (x, y) is the center</span>
+<span class="kt">float</span> <span class="n">y</span><span class="o">;</span>  <span class="c1">// of the ball</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+
+  <span class="n">x</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span> <span class="c1">// start near the top middle</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="mi">50</span><span class="o">;</span>  <span class="c1">// of the screen</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>  <span class="c1">// draw the background</span>
+
+  <span class="c1">// draw the ball</span>
+  <span class="n">noStroke</span><span class="o">();</span>
+  <span class="n">fill</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="mi">50</span><span class="o">,</span> <span class="mi">50</span><span class="o">);</span>
+
+  <span class="n">x</span> <span class="o">+=</span> <span class="mi">0</span><span class="o">;</span>  <span class="c1">// add 0 to x</span>
+  <span class="n">y</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">;</span>  <span class="c1">// add 1 to y</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>When you run it, you should see a red ball slowly moving down the screen.</p>
+<p>Why does the ball move? It moves because after every <code class="docutils literal"><span class="pre">draw()</span></code> is called, we
+add 1 to it (using the statement <code class="docutils literal"><span class="pre">y</span> <span class="pre">+=</span> <span class="pre">1</span></code>) so that the next time it&#8217;s drawn
+it will be 1 pixel further down the screen.</p>
+<p>What happens when the ball hits the bottom of the screen? For this program,
+<em>nothing</em>: it keeps going, never to be seen again. We&#8217;ll learn a little later
+<a class="reference internal" href="screen_edges.html"><em>how to make things &#8220;bounce&#8221; when they hit an edge</em></a>.</p>
+</div>
+<div class="section" id="a-small-change">
+<h2>A Small Change<a class="headerlink" href="#a-small-change" title="Permalink to this headline">¶</a></h2>
+<p id="first-movement-prog-label">Lets modify the program so that the ball moves in the opposite direction, i.e.
+rising from the bottom to the top of the screen. Only two changes are needed:
+we make the initial value of <code class="docutils literal"><span class="pre">y</span></code> somewhere close to the bottom of the screen
+(e.g. 450), and then we <em>subtract</em> 1 from <code class="docutils literal"><span class="pre">y</span></code> every time <code class="docutils literal"><span class="pre">draw()</span></code> is
+called:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">float</span> <span class="n">x</span><span class="o">;</span>  <span class="c1">// (x, y) is the center</span>
+<span class="kt">float</span> <span class="n">y</span><span class="o">;</span>  <span class="c1">// of the ball</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+
+  <span class="n">x</span> <span class="o">=</span> <span class="mi">250</span><span class="o">;</span> <span class="c1">// start near the bottom middle</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="mi">450</span><span class="o">;</span> <span class="c1">// of the screen</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>  <span class="c1">// draw the background</span>
+
+  <span class="c1">// draw the ball</span>
+  <span class="n">noStroke</span><span class="o">();</span>
+  <span class="n">fill</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="mi">50</span><span class="o">,</span> <span class="mi">50</span><span class="o">);</span>
+
+  <span class="n">x</span> <span class="o">+=</span> <span class="mi">0</span><span class="o">;</span>   <span class="c1">// add 0 to x so it doesn&#39;t move left/right</span>
+  <span class="n">y</span> <span class="o">+=</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>  <span class="c1">// add -1 to y to make the ball move upwards</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>You can change the speed of the ball by changing the -1 in the statement to
+<code class="docutils literal"><span class="pre">y</span> <span class="pre">+=</span> <span class="pre">-1</span></code> to, say, -2, or -3.5.</p>
+</div>
+<div class="section" id="global-variables-and-local-variables">
+<h2>Global Variables and Local Variables<a class="headerlink" href="#global-variables-and-local-variables" title="Permalink to this headline">¶</a></h2>
+<p>An important detail of this program are the lines that define <code class="docutils literal"><span class="pre">x</span></code> and
+<code class="docutils literal"><span class="pre">y</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+<span class="kt">float</span> <span class="n">y</span><span class="o">;</span>
+</pre></div>
+</div>
+<p>These statement define <code class="docutils literal"><span class="pre">x</span></code> and <code class="docutils literal"><span class="pre">y</span></code> to be variables of <a class="reference internal" href="glossary.html#term-type"><span class="xref std std-term">type</span></a>
+<code class="docutils literal"><span class="pre">float</span></code> and assign them an initial value of 0.0. However, if you read
+<a class="reference internal" href="variables_and_assignments.html"><em>the previous notes</em></a>, we say that such
+statements don&#8217;t compile. But they are fine here! What&#8217;s going on?</p>
+<p>The difference here is that <code class="docutils literal"><span class="pre">x</span></code> and <code class="docutils literal"><span class="pre">y</span></code> are <strong>global variables</strong>, i.e.
+they are variables that are not defined inside any function. All the variables
+we saw in <a class="reference internal" href="variables_and_assignments.html"><em>the previous notes</em></a> were <strong>local
+variables</strong>, i.e. they were variables that were defined inside a function
+(such as <code class="docutils literal"><span class="pre">setup()</span></code> or <code class="docutils literal"><span class="pre">draw()</span></code>).</p>
+<p><a class="reference external" href="http://processing.org/">Processing</a> uses different rules for initializing global variables than local
+variables. In particular, as this code shows, if you don&#8217;t give a global
+variable an initial value, <a class="reference external" href="http://processing.org/">Processing</a> assigns it a sensible default value
+(0.0 in this case).</p>
+<p>Another important distinction between local variables and global variables is
+that global variables are accessible anywhere in a program. For example:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">println</span><span class="o">(</span><span class="n">x</span><span class="o">);</span>    <span class="c1">// prints 0.0</span>
+<span class="o">}</span>
+
+<span class="kt">float</span> <span class="n">x</span><span class="o">;</span>  <span class="c1">// global variable</span>
+</pre></div>
+</div>
+<p>Even though <code class="docutils literal"><span class="pre">x</span></code> is defined after the <code class="docutils literal"><span class="pre">println</span></code> statement occurs, it still
+works as if we had written this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">float</span> <span class="n">x</span><span class="o">;</span>  <span class="c1">// global variable</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">println</span><span class="o">(</span><span class="n">x</span><span class="o">);</span>    <span class="c1">// prints 0.0</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>But in contrast, local variables are only accessible within the function they
+are defined, and then only after the line they are defined. So, for example,
+this program doesn&#8217;t compile:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">println</span><span class="o">(</span><span class="n">x</span><span class="o">);</span>     <span class="c1">// compiler error: x undefined</span>
+  <span class="kt">float</span> <span class="n">x</span> <span class="o">=</span> <span class="mf">0.0</span><span class="o">;</span>  <span class="c1">// local variable</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>These examples show that global variables and local variables have different
+<strong>scopes</strong>. The <strong>scope of a variable</strong> is the region of a program where it is
+accessible. The <strong>scope of global variable</strong> in <a class="reference external" href="http://processing.org/">Processing</a> is the <em>entire
+program</em>, while the <strong>scope of a local variable</strong> is the from the line where
+it is defined up to the end of the function it is defined (i.e. the inner-most
+<code class="docutils literal"><span class="pre">}</span></code>).</p>
+<p>Here&#8217;s one final example that shows the difference between local and global
+variables:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">5</span><span class="o">;</span>  <span class="c1">// this n is global</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>  <span class="c1">// this n is local</span>
+
+  <span class="n">println</span><span class="o">(</span><span class="n">n</span><span class="o">);</span>  <span class="c1">// prints 10</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>The variable <code class="docutils literal"><span class="pre">n</span></code> is defined twice here, once globally and once locally. The
+<code class="docutils literal"><span class="pre">println</span></code> statement prints the value of the <em>local</em> <code class="docutils literal"><span class="pre">n</span></code>. <a class="reference external" href="http://processing.org/">Processing</a> uses
+the rule that when there is both a local variable and a global variable with
+the same name in the same scope, then the local variable is the one that will
+be used.</p>
+</div>
+<div class="section" id="incrementing-variables">
+<h2>Incrementing Variables<a class="headerlink" href="#incrementing-variables" title="Permalink to this headline">¶</a></h2>
+<p>Our program uses <code class="docutils literal"><span class="pre">+=</span></code> like this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="c1">// ...</span>
+
+  <span class="n">x</span> <span class="o">+=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="n">y</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">+=</span></code> is the <strong>increment operator</strong>, and the statement <code class="docutils literal"><span class="pre">y</span> <span class="pre">+=</span> <span class="pre">1</span></code> increments
+<code class="docutils literal"><span class="pre">y</span></code> by 1, i.e. it adds 1 to <code class="docutils literal"><span class="pre">y</span></code>.</p>
+<p>Incrementing variables is so common that Processing provides a couple of ways
+of doing it:</p>
+<ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">++y</span></code> and <code class="docutils literal"><span class="pre">y++</span></code> both increment <code class="docutils literal"><span class="pre">y</span></code> by 1. You can only use <code class="docutils literal"><span class="pre">++</span></code> to
+increment a variable by 1, and as long as you write it as a statement on its
+own line, it doesn&#8217;t matter if you write <code class="docutils literal"><span class="pre">++y</span></code> or <code class="docutils literal"><span class="pre">y++</span></code>. However, if you
+use <code class="docutils literal"><span class="pre">++</span></code> inside an expression, then it <em>does</em> matter. For example, both
+uses of <code class="docutils literal"><span class="pre">++</span></code> in this program are as expressions:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
+  <span class="n">println</span><span class="o">(</span><span class="n">a</span><span class="o">++);</span> <span class="c1">// prints 2</span>
+  <span class="n">println</span><span class="o">(++</span><span class="n">a</span><span class="o">);</span> <span class="c1">// prints 4</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>When <code class="docutils literal"><span class="pre">a</span></code> is defined, it is initially set to 2. The expression <code class="docutils literal"><span class="pre">a++</span></code> adds
+one to <code class="docutils literal"><span class="pre">a</span></code>, thus making it equal to 3. <em>But</em>, <code class="docutils literal"><span class="pre">a++</span></code> evaluates to 2, the
+value <em>before</em> it was incremented.</p>
+<p>After the first <code class="docutils literal"><span class="pre">println</span></code> finishes, <code class="docutils literal"><span class="pre">a</span></code> has the value 3. The expression
+<code class="docutils literal"><span class="pre">++a</span></code> adds 1 <code class="docutils literal"><span class="pre">a</span></code> making it equal to 4. Because the <code class="docutils literal"><span class="pre">++</span></code> is in front of
+the <code class="docutils literal"><span class="pre">a</span></code>, the value 4 is returned, i.e. the value <em>after</em> it is
+incremented.</p>
+<p>Using <code class="docutils literal"><span class="pre">++</span></code> in expressions like this can lead to very tricky behaviour,
+e.g.:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
+  <span class="n">a</span> <span class="o">+=</span> <span class="n">a</span><span class="o">++</span> <span class="o">+</span> <span class="o">++</span><span class="n">a</span><span class="o">;</span>
+  <span class="n">println</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>  <span class="c1">// prints 8</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>To avoid this sort of needless complexity we will never use <code class="docutils literal"><span class="pre">++</span></code> in an
+expression.</p>
+<p><a class="reference external" href="http://processing.org/">Processing</a> also has a <code class="docutils literal"><span class="pre">--</span></code> operator for decrementing a variable by 1. For
+example:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+<span class="o">--</span><span class="n">i</span><span class="o">;</span>
+<span class="n">println</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>  <span class="c1">// prints 9</span>
+</pre></div>
+</div>
+<p>Just as with <code class="docutils literal"><span class="pre">++</span></code>, you can write <code class="docutils literal"><span class="pre">--i</span></code> or <code class="docutils literal"><span class="pre">i--</span></code> when you write it as a
+statement on its own line. But if you use <code class="docutils literal"><span class="pre">--</span></code> in an expression, the
+difference between <code class="docutils literal"><span class="pre">--i</span></code> and <code class="docutils literal"><span class="pre">i++</span></code> matters.</p>
+<p>The <code class="docutils literal"><span class="pre">++</span></code> and <code class="docutils literal"><span class="pre">--</span></code> operators comes the C programming language, and help
+explain the name of the language C++, i.e. &#8220;C + 1&#8221;.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">y</span> <span class="pre">+</span> <span class="pre">1</span></code> adds 1 to <code class="docutils literal"><span class="pre">y</span></code>. For example, suppose <code class="docutils literal"><span class="pre">y</span></code> has the value 5
+and then the statement <code class="docutils literal"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">y</span> <span class="pre">+</span> <span class="pre">1</span></code> is run. First, <code class="docutils literal"><span class="pre">y</span> <span class="pre">+</span> <span class="pre">1</span></code> is evaluated,
+and it is 5 + 1 = 6. Then 6 is assigned to <code class="docutils literal"><span class="pre">y</span></code>.</p>
+<p>This way of incrementing a variable shows that you cannot treat the
+<a class="reference external" href="http://processing.org/">Processing</a> <code class="docutils literal"><span class="pre">=</span></code> operator as equality. Instead, in Processing, <code class="docutils literal"><span class="pre">=</span></code> means
+<em>assignment</em>. If it meant equality as in math, then a statement like <code class="docutils literal"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">y</span>
+<span class="pre">+</span> <span class="pre">1</span></code> would imply that 0 = 1 (subtract <code class="docutils literal"><span class="pre">y</span></code> from both sides)!</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">y</span> <span class="pre">-=</span> <span class="pre">-1</span></code> adds 1 to <code class="docutils literal"><span class="pre">y</span></code> in a roundabout way. <code class="docutils literal"><span class="pre">-=</span></code> is the <strong>decrement
+operator</strong>, i.e. it subtracts a value from <code class="docutils literal"><span class="pre">y</span></code>. So if you subtract -1 from
+<code class="docutils literal"><span class="pre">y</span></code>, that&#8217;s the same as adding 1.</p>
+<p>This is just an example of the <code class="docutils literal"><span class="pre">-=</span></code> operator &#8212; don&#8217;t actually increment
+a variable in this way your programs. It is needlessly complicated.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="moving-images">
+<h2>Moving Images<a class="headerlink" href="#moving-images" title="Permalink to this headline">¶</a></h2>
+<p>Now lets re-write our first program (where the ball moves down the screen)
+using an image in place of the ball. The code has the same structure, except
+now we use the commands for loading and placing images:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">PImage</span> <span class="n">foot</span><span class="o">;</span>
+
+<span class="kt">float</span> <span class="n">x</span><span class="o">;</span>  <span class="c1">// (x, y) is the location of the</span>
+<span class="kt">float</span> <span class="n">y</span><span class="o">;</span>  <span class="c1">// upper left corner of the image</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">400</span><span class="o">);</span>
+
+  <span class="n">foot</span> <span class="o">=</span> <span class="n">loadImage</span><span class="o">(</span><span class="s">&quot;foot.png&quot;</span><span class="o">);</span>
+
+  <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="mi">250</span><span class="o">;</span>  <span class="c1">// the foot starts off the top of the screen</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>  <span class="c1">// draw the background</span>
+
+  <span class="n">image</span><span class="o">(</span><span class="n">foot</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>  <span class="c1">// draw the foot</span>
+
+  <span class="n">x</span> <span class="o">+=</span> <span class="mi">0</span><span class="o">;</span>  <span class="c1">// add 0 to x</span>
+  <span class="n">y</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">;</span>  <span class="c1">// add 1 to y</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/foot.png"><img alt="A foot." class="align-right" src="_images/foot.png" style="width: 128.1px; height: 115.5px;" /></a>
+<p>This code draws <a class="reference download internal" href="_downloads/foot.png" download=""><code class="xref download docutils literal"><span class="pre">a</span> <span class="pre">foot</span></code></a> (<a class="reference external" href="http://en.wikipedia.org/wiki/Monty_Python">that you may
+recognize</a>) moving slowly down
+the screen. The file <code class="docutils literal"><span class="pre">foot.png</span></code> stores the picture of a foot, and in
+<code class="docutils literal"><span class="pre">setup</span></code> we use <code class="docutils literal"><span class="pre">loadImage</span></code> to store it in the computer&#8217;s memory as a
+<code class="docutils literal"><span class="pre">PImage</span></code> variable named <code class="docutils literal"><span class="pre">foot</span></code>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">For this program to work as-is, it&#8217;s the
+file <code class="docutils literal"><span class="pre">foot.png</span></code> must be in your program&#8217;s <code class="docutils literal"><span class="pre">data</span></code> folder. Recall that
+<code class="docutils literal"><span class="pre">loadImage</span></code> looks for the image files in the folder that contains the
+<a class="reference external" href="http://processing.org/">Processing</a> <code class="docutils literal"><span class="pre">.pde</span></code> source file, or in a folder called <code class="docutils literal"><span class="pre">data</span></code> stored in
+the same folder as the <code class="docutils literal"><span class="pre">.pde</span></code> file.</p>
+</div>
+<p>Notice that <code class="docutils literal"><span class="pre">y</span></code> is set to -250 in <code class="docutils literal"><span class="pre">setup</span></code>. Since -250 is not on the screen
+the foot is revealed as it moves. Remember this: placing objects at points off
+the visible part of the screen is a useful trick.</p>
+</div>
+<div class="section" id="adding-a-fish">
+<h2>Adding a Fish<a class="headerlink" href="#adding-a-fish" title="Permalink to this headline">¶</a></h2>
+<p id="foot-fish-prog-label">Now lets modify the program so that there&#8217;s <a class="reference download internal" href="_downloads/fish.png" download=""><code class="xref download docutils literal"><span class="pre">a</span> <span class="pre">fish</span></code></a> at the bottom of the screen:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">PImage</span> <span class="n">foot</span><span class="o">;</span>
+<span class="n">PImage</span> <span class="n">fish</span><span class="o">;</span>
+
+<span class="kt">float</span> <span class="n">x</span><span class="o">;</span>  <span class="c1">// (x, y) is the location of the</span>
+<span class="kt">float</span> <span class="n">y</span><span class="o">;</span>  <span class="c1">// upper left corner of the image</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">400</span><span class="o">);</span>
+
+  <span class="n">foot</span> <span class="o">=</span> <span class="n">loadImage</span><span class="o">(</span><span class="s">&quot;foot.png&quot;</span><span class="o">);</span>
+  <span class="n">fish</span> <span class="o">=</span> <span class="n">loadImage</span><span class="o">(</span><span class="s">&quot;fish.png&quot;</span><span class="o">);</span>
+
+  <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="mi">250</span><span class="o">;</span>  <span class="c1">// the foot starts off the top of the screen</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>  <span class="c1">// draw the background</span>
+
+  <span class="n">image</span><span class="o">(</span><span class="n">fish</span><span class="o">,</span> <span class="n">mouseX</span><span class="o">,</span> <span class="mi">295</span><span class="o">);</span>  <span class="c1">// draw the fish</span>
+  <span class="n">image</span><span class="o">(</span><span class="n">foot</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>         <span class="c1">// draw the foot</span>
+
+  <span class="n">x</span> <span class="o">+=</span> <span class="mi">0</span><span class="o">;</span>  <span class="c1">// add 0 to x</span>
+  <span class="n">y</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">;</span>  <span class="c1">// add 1 to y</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/footFish.png"><img alt="A foot and a fish." class="align-right" src="_images/footFish.png" style="width: 220.0px; height: 198.0px;" /></a>
+<p>In this program, the fish can move left/right along the bottom of the screen.
+Eventually the foot comes down far enough to cover the fish.</p>
+<p>An important detail in this program is that the fish is drawn <em>before</em> the
+foot, and so the foot covers the fish. If you draw the foot first, then the
+fish will appear on top of the fish.</p>
+<p>In programs with many graphical objects the order in which they get drawn is
+quite important, and we will eventually need a better way of dealing with it.
+For now, we will just be careful to draw things in the right order.</p>
+</div>
+<div class="section" id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Why are <code class="docutils literal"><span class="pre">x</span></code> and <code class="docutils literal"><span class="pre">y</span></code> defined <em>outside</em> of the <code class="docutils literal"><span class="pre">setup()</span></code> and <code class="docutils literal"><span class="pre">draw()</span></code>
+functions? Why could they not have been defined inside, say, the <code class="docutils literal"><span class="pre">draw()</span></code>
+function?</li>
+<li>What is a local variable? What is a global variable?</li>
+<li>What is the scope of variable? What, specifically, are the scopes of local
+and global variables in <a class="reference external" href="http://processing.org/">Processing</a>.</li>
+<li>Explain when the difference between <code class="docutils literal"><span class="pre">++n</span></code> and <code class="docutils literal"><span class="pre">n++</span></code> matters, and when
+it doesn&#8217;t matter.</li>
+<li>Write three different statements, each of which shows a different way to
+add 5 to <code class="docutils literal"><span class="pre">x</span></code>.</li>
+<li>Suppose that <code class="docutils literal"><span class="pre">n</span></code> is a variable of type <code class="docutils literal"><span class="pre">int</span></code> that has already been
+defined, although we don&#8217;t know its value. Which of the following
+statements are  true, and which are false?<ul>
+<li><code class="docutils literal"><span class="pre">n</span> <span class="pre">+=</span> <span class="pre">n;</span></code> always doubles the value of <code class="docutils literal"><span class="pre">n</span></code></li>
+<li><code class="docutils literal"><span class="pre">n</span> <span class="pre">-=</span> <span class="pre">n;</span></code> always sets the value of of <code class="docutils literal"><span class="pre">n</span></code> to 0</li>
+<li><code class="docutils literal"><span class="pre">++n;</span> <span class="pre">--n;</span></code> causes the value of <code class="docutils literal"><span class="pre">n</span></code> to be unchanged</li>
+<li><code class="docutils literal"><span class="pre">n++;</span> <span class="pre">n--;</span></code> causes the value of <code class="docutils literal"><span class="pre">n</span></code> to be unchanged</li>
+</ul>
+</li>
+<li>Suppose you swap the order in which the foot and fish are drawn on the
+screen in the <code class="docutils literal"><span class="pre">draw()</span></code> function of the <a class="reference internal" href="#foot-fish-prog-label"><span>foot/fish program</span></a>. Describe what you see when the program runs.</li>
+</ol>
+</div>
+<div class="section" id="programming-questions">
+<h2>Programming Questions<a class="headerlink" href="#programming-questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Modify the <a class="reference internal" href="#first-movement-prog-label"><span>first program</span></a> so that
+the ball moves left-to-right across the screen.</p>
+</li>
+<li><p class="first">Modify the <a class="reference internal" href="#first-movement-prog-label"><span>first program</span></a> so that
+the ball moves right-to-left across the screen.</p>
+</li>
+<li><p class="first">Modify the <a class="reference internal" href="#first-movement-prog-label"><span>first program</span></a> so that
+the ball moves <em>diagonally</em> across the screen, e.g. top-to-bottom
+and right-to-left across the screen.</p>
+</li>
+<li><p class="first">Modify the <a class="reference internal" href="#falling-ball-prog-label"><span>rising ball program</span></a> to
+make it look like a balloon floating up and off the screen. Do this
+by drawing a line from the bottom of the balloon to look like a
+string:</p>
+<a class="reference internal image-reference" href="_images/balloonUp.png"><img alt="A balloon with a string." class="align-center" src="_images/balloonUp.png" style="width: 91.0px; height: 144.0px;" /></a>
+</li>
+<li><p class="first">Write a program that makes <em>two</em> balls move at the same time on the screen:
+a red ball going down, and a green ball going up. Each ball will need its
+own <code class="docutils literal"><span class="pre">x</span></code> and <code class="docutils literal"><span class="pre">y</span></code> variables, e.g. <code class="docutils literal"><span class="pre">x1</span></code>, <code class="docutils literal"><span class="pre">y1</span></code> and <code class="docutils literal"><span class="pre">x2</span></code>, <code class="docutils literal"><span class="pre">y2</span></code>.</p>
+</li>
+<li><p class="first">Re-do the previous question, but this time have the two balls move
+in different diagonal directions.</p>
+</li>
+<li><p class="first">Modify the <a class="reference internal" href="#foot-fish-prog-label"><span>foot/fish program</span></a>, but also allow
+the fish to move vertically (i.e. up and down) up to, at most, the bottom
+of the foot.</p>
+</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="screen_edges.html" title="Detecting the Edges of the Screen"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="variables_and_assignments.html" title="Basic Numeric Literals and Variables"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Toby Donaldson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

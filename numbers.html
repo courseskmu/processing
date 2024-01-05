@@ -1,0 +1,538 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Floats and Ints &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
+    <link rel="next" title="The Keyboard, the Mouse, and Gravity" href="simple_gravity.html" />
+    <link rel="prev" title="Logical Expressions" href="logical_expressions.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="simple_gravity.html" title="The Keyboard, the Mouse, and Gravity"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="logical_expressions.html" title="Logical Expressions"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Floats and Ints</a><ul>
+<li><a class="reference internal" href="#integers">Integers</a></li>
+<li><a class="reference internal" href="#integer-arithmetic">Integer Arithmetic</a></li>
+<li><a class="reference internal" href="#integer-division">Integer Division</a></li>
+<li><a class="reference internal" href="#min-and-max-integers">Min and Max Integers</a></li>
+<li><a class="reference internal" href="#the-mod-operator">The Mod Operator</a></li>
+<li><a class="reference internal" href="#floating-point-numbers">Floating Point Numbers</a></li>
+<li><a class="reference internal" href="#floating-point-arithmetic">Floating Point Arithmetic</a></li>
+<li><a class="reference internal" href="#division-by-0-0">Division by 0.0</a></li>
+<li><a class="reference internal" href="#min-and-max-floats">Min and Max floats</a></li>
+<li><a class="reference internal" href="#rounding-errors">Rounding Errors</a></li>
+<li><a class="reference internal" href="#mixing-ints-and-floats">Mixing ints and floats</a></li>
+<li><a class="reference internal" href="#summary-table">Summary Table</a></li>
+<li><a class="reference internal" href="#questions">Questions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="logical_expressions.html"
+                        title="previous chapter">Logical Expressions</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="simple_gravity.html"
+                        title="next chapter">The Keyboard, the Mouse, and Gravity</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="floats-and-ints">
+<h1>Floats and Ints<a class="headerlink" href="#floats-and-ints" title="Permalink to this headline">¶</a></h1>
+<p>Manipulating numbers is one of the most important and useful things a computer
+can do. We&#8217;ll look at two number types in this course: <code class="docutils literal"><span class="pre">int</span></code> for integers
+(i.e. whole numbers), and <code class="docutils literal"><span class="pre">float</span></code> for floating point numbers, i.e. numbers a
+decimal point in them.</p>
+<div class="section" id="integers">
+<h2>Integers<a class="headerlink" href="#integers" title="Permalink to this headline">¶</a></h2>
+<p>In <a class="reference external" href="http://processing.org/">Processing</a>, an <code class="docutils literal"><span class="pre">int</span></code> is a whole number (i.e. an integer), such as:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="mi">4</span>
+<span class="o">-</span><span class="mi">61</span>
+<span class="mi">0</span>
+<span class="mi">183993</span>
+</pre></div>
+</div>
+<p>These are called <a class="reference internal" href="glossary.html#term-int-literal"><span class="xref std std-term">int literal</span></a>s to distinguish them from variables of
+type <code class="docutils literal"><span class="pre">int</span></code>. For example:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">age</span> <span class="o">=</span> <span class="mi">18</span><span class="o">;</span>
+</pre></div>
+</div>
+<p>This statement does two things:</p>
+<ul class="simple">
+<li>It declares <code class="docutils literal"><span class="pre">age</span></code> to be a variable of type <code class="docutils literal"><span class="pre">int</span></code>.</li>
+<li>It assigns the value <code class="docutils literal"><span class="pre">18</span></code> to <code class="docutils literal"><span class="pre">age</span></code>. Since this is the first value
+assigned to <code class="docutils literal"><span class="pre">age</span></code>, we say it initializes <code class="docutils literal"><span class="pre">age</span></code>.</li>
+</ul>
+<p>Keep in mind that <code class="docutils literal"><span class="pre">age</span></code> is a variable of type <code class="docutils literal"><span class="pre">int</span></code>, while <code class="docutils literal"><span class="pre">18</span></code> is an
+<code class="docutils literal"><span class="pre">int</span></code> literal. We usually refer to both as <code class="docutils literal"><span class="pre">int</span></code>s, but sometimes the
+distinction matters.</p>
+</div>
+<div class="section" id="integer-arithmetic">
+<h2>Integer Arithmetic<a class="headerlink" href="#integer-arithmetic" title="Permalink to this headline">¶</a></h2>
+<p>You can perform arithmetic on <code class="docutils literal"><span class="pre">int</span></code>s using the basic arithmetic operators.
+For example:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">averageLifespan</span> <span class="o">=</span> <span class="mi">82</span><span class="o">;</span>  <span class="c1">// for Canadians</span>
+
+<span class="n">println</span><span class="o">(</span><span class="mi">2014</span> <span class="o">+</span> <span class="n">averageLifespan</span> <span class="o">-</span> <span class="mi">18</span><span class="o">);</span>  <span class="c1">// 2078</span>
+</pre></div>
+</div>
+<p>Or:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">minsInOneHour</span> <span class="o">=</span> <span class="mi">60</span><span class="o">;</span>
+<span class="kt">int</span> <span class="n">hoursInOneDay</span> <span class="o">=</span> <span class="mi">24</span><span class="o">;</span>
+<span class="kt">int</span> <span class="n">daysInOneYear</span> <span class="o">=</span> <span class="mi">365</span><span class="o">;</span>
+<span class="kt">int</span> <span class="n">minsInOneYear</span> <span class="o">=</span> <span class="n">minsInOneHour</span> <span class="o">*</span> <span class="n">hoursInOneDay</span> <span class="o">*</span> <span class="n">daysInOneYear</span><span class="o">;</span>
+
+<span class="n">println</span><span class="o">(</span><span class="n">minsInOneYear</span><span class="o">);</span> <span class="c1">// 525600 --- about half a million minutes in a year</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="integer-division">
+<h2>Integer Division<a class="headerlink" href="#integer-division" title="Permalink to this headline">¶</a></h2>
+<p>Dividing two <code class="docutils literal"><span class="pre">int</span></code>s <em>always</em> returns an <code class="docutils literal"><span class="pre">int</span></code> in <a class="reference external" href="http://processing.org/">Processing</a>. For
+example:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">println</span><span class="o">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span><span class="o">);</span>  <span class="c1">// 0</span>
+<span class="n">println</span><span class="o">(</span><span class="mi">3</span> <span class="o">/</span> <span class="mi">2</span><span class="o">);</span>  <span class="c1">// 1</span>
+<span class="n">println</span><span class="o">(</span><span class="mi">4</span> <span class="o">/</span> <span class="mi">2</span><span class="o">);</span>  <span class="c1">// 2</span>
+</pre></div>
+</div>
+<p>It might come as a surprise that <code class="docutils literal"><span class="pre">1</span> <span class="pre">/</span> <span class="pre">2</span></code> evaluates to 0. The &#8220;correct&#8221;
+answer is 0.5, but the problem is that 0.5 is not an <code class="docutils literal"><span class="pre">int</span></code> (it&#8217;s a
+<code class="docutils literal"><span class="pre">float</span></code>). So, after <a class="reference external" href="http://processing.org/">Processing</a> divides two <code class="docutils literal"><span class="pre">int</span></code>s,  if the result has
+any non-zero digits to the right of the decimal point they get truncated (i.e.
+chopped off). This is called <strong>integer division</strong>: dividing two <code class="docutils literal"><span class="pre">int</span></code>s
+always returns an <code class="docutils literal"><span class="pre">int</span></code>.</p>
+<p>There is one exception, though. Dividing by <code class="docutils literal"><span class="pre">0</span></code> is an undefined operation in
+mathematics, and in <a class="reference external" href="http://processing.org/">Processing</a> it causes an error, e.g.:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">println</span><span class="o">(</span><span class="mi">5</span> <span class="o">/</span> <span class="mi">0</span><span class="o">);</span>  <span class="c1">// ArithmeticException: / by zero</span>
+</pre></div>
+</div>
+<p>This statement crashes the program and issues the error message
+&#8220;ArithmeticException: / by zero&#8221;.</p>
+</div>
+<div class="section" id="min-and-max-integers">
+<h2>Min and Max Integers<a class="headerlink" href="#min-and-max-integers" title="Permalink to this headline">¶</a></h2>
+<p>It is important to know that there is a min <code class="docutils literal"><span class="pre">int</span></code> and a max <code class="docutils literal"><span class="pre">int</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">println</span><span class="o">(</span><span class="n">Integer</span><span class="o">.</span><span class="na">MIN_VALUE</span><span class="o">);</span>  <span class="c1">// -2147483648</span>
+<span class="n">println</span><span class="o">(</span><span class="n">Integer</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">);</span>  <span class="c1">// 2147483647</span>
+</pre></div>
+</div>
+<p>As this shows, the maximum value for an <code class="docutils literal"><span class="pre">int</span></code> in <a class="reference external" href="http://processing.org/">Processing</a> is, exactly,
+the number <code class="docutils literal"><span class="pre">2147483647</span></code>, which is a little over 2.1 billion. Similarly, the
+smallest <code class="docutils literal"><span class="pre">int</span></code> is a little less than -2.1 billion.</p>
+<p>This means is that you cannot represent, say, the number 2.5 billion using an
+<code class="docutils literal"><span class="pre">int</span></code>. It can also result in some weird calculations, e.g. here&#8217;s what
+happens if you add 1 to the maximum <code class="docutils literal"><span class="pre">int</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">println</span><span class="o">(</span><span class="mi">2147483647</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>  <span class="c1">// -2147483648</span>
+</pre></div>
+</div>
+<p>This is pretty disturbing when you think about it: by adding two positive
+numbers together we got a negative number!</p>
+<p>Here&#8217;s another strange behaviour:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">println</span><span class="o">(</span><span class="mi">2147483648</span><span class="o">);</span>  <span class="c1">// literal out of range</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">2147483648</span></code> is one more than the max <code class="docutils literal"><span class="pre">int</span></code>, so it is not an <code class="docutils literal"><span class="pre">int</span></code>. This
+program doesn&#8217;t even run: You get a &#8220;literal out of range error&#8221; when you
+compile this statement.</p>
+<p>Another fact about <code class="docutils literal"><span class="pre">int</span></code>s is that there is one more negative <code class="docutils literal"><span class="pre">int</span></code> than
+positive <code class="docutils literal"><span class="pre">int</span></code>. The smallest <code class="docutils literal"><span class="pre">int</span></code> is <span class="math">\(-2^{31} = -2147483648\)</span>, but
+the biggest <code class="docutils literal"><span class="pre">int</span></code> is only <span class="math">\(2^{32}-1\)</span>. One place were this might be a
+small problem is the <code class="docutils literal"><span class="pre">abs(x)</span></code> function, that <em>should</em> return <code class="docutils literal"><span class="pre">x</span></code> if <code class="docutils literal"><span class="pre">x</span> <span class="pre">&gt;=</span>
+<span class="pre">0</span></code>, and <code class="docutils literal"><span class="pre">-x</span></code> if <code class="docutils literal"><span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">0</span></code>. But the problem is what is <code class="docutils literal"><span class="pre">abs(-2147483648)</span></code>?
+The correct answer is 2147483648, but <code class="docutils literal"><span class="pre">2147483648</span></code> is not an <code class="docutils literal"><span class="pre">int</span></code>: it&#8217;s
+too big! In this one case, the <code class="docutils literal"><span class="pre">abs</span></code> function cannot possible return the
+right answer, and so it does this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">println</span><span class="o">(</span><span class="n">abs</span><span class="o">(-</span><span class="mi">2147483648</span><span class="o">));</span>
+<span class="c1">// -2147483648</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><a class="reference external" href="http://processing.org/">Processing</a> has a bigger integer type called <code class="docutils literal"><span class="pre">long</span></code>, which can
+represent any integer in the range -9,223,372,036,854,775,808 to
+9,223,372,036,854,775,807. That&#8217;s about -9.2 quintillion to 9.2
+quintillion.</p>
+<p>You may be interested to know that <a class="reference external" href="http://en.wikipedia.org/wiki/9223372036854775807">9223372036854775807 has its own
+Wikipedia page</a>, but
+-9,223,372,036,854,775,808 doesn&#8217;t.</p>
+<p class="last">If you need integers bigger than <code class="docutils literal"><span class="pre">long</span></code>, then Java (on which <a class="reference external" href="http://processing.org/">Processing</a>
+is based) has a special type called <a class="reference external" href="http://docs.oracle.com/javase/6/docs/api/java/math/BigInteger.html">BigInteger</a> that
+can represent arbitrarily long integers that are limited only by the amount
+of memory in your computer.</p>
+</div>
+</div>
+<div class="section" id="the-mod-operator">
+<h2>The Mod Operator<a class="headerlink" href="#the-mod-operator" title="Permalink to this headline">¶</a></h2>
+<p>There&#8217;s one other useful <code class="docutils literal"><span class="pre">int</span></code> operator you should know about: the <code class="docutils literal"><span class="pre">%</span></code>
+operator, which is called the <strong>mod operator</strong>, or the <strong>remainder operator</strong>.
+For instance:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">println</span><span class="o">(</span><span class="mi">5</span> <span class="o">%</span> <span class="mi">2</span><span class="o">);</span>  <span class="c1">// 1</span>
+<span class="n">println</span><span class="o">(</span><span class="mi">6</span> <span class="o">%</span> <span class="mi">2</span><span class="o">);</span>  <span class="c1">// 0</span>
+<span class="n">println</span><span class="o">(</span><span class="mi">14</span> <span class="o">%</span> <span class="mi">8</span><span class="o">);</span> <span class="c1">// 6</span>
+</pre></div>
+</div>
+<p>The expression <code class="docutils literal"><span class="pre">5</span> <span class="pre">%</span> <span class="pre">2</span></code> is read &#8220;5 mod 2&#8221;, and it calculates the remainder
+when 5 is divided 2: since 2 goes into 5 two times with 1 left over, <code class="docutils literal"><span class="pre">5</span> <span class="pre">%</span> <span class="pre">2</span></code>
+equals 1.</p>
+<p>One application of <code class="docutils literal"><span class="pre">%</span></code> is to test if a number is even or odd. For example,
+<code class="docutils literal"><span class="pre">178</span> <span class="pre">%</span> <span class="pre">2</span></code> is 0, which means <code class="docutils literal"><span class="pre">178</span></code> is even (because 2 goes into 178 exactly
+89 times with 0 left over). In general, if <code class="docutils literal"><span class="pre">n</span></code> is a positive <code class="docutils literal"><span class="pre">int</span></code> and <code class="docutils literal"><span class="pre">n</span>
+<span class="pre">%</span> <span class="pre">2</span></code> is 0, then <code class="docutils literal"><span class="pre">n</span></code> must be even. The only other possibility is that <code class="docutils literal"><span class="pre">n</span> <span class="pre">%</span>
+<span class="pre">2</span></code> is 1, which means <code class="docutils literal"><span class="pre">n</span></code> is odd.</p>
+<p>Here&#8217;s an example of you might use <code class="docutils literal"><span class="pre">%</span></code> in animation. This program makes a
+ball wrap-around the screen without using an if-statement:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">float</span> <span class="n">x</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+
+  <span class="n">ellipse</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="mi">250</span><span class="o">,</span> <span class="mi">100</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span>
+
+  <span class="n">x</span> <span class="o">+=</span> <span class="mi">2</span><span class="o">;</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">500</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="floating-point-numbers">
+<h2>Floating Point Numbers<a class="headerlink" href="#floating-point-numbers" title="Permalink to this headline">¶</a></h2>
+<p>In <a class="reference external" href="http://processing.org/">Processing</a>, a <code class="docutils literal"><span class="pre">float</span></code> is a number with a decimal point in it, such as:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="mf">4.5</span>
+<span class="o">-</span><span class="mf">61.2</span>
+<span class="mf">0.0</span>
+<span class="o">-</span><span class="mf">3.0</span>
+<span class="mf">183.993</span>
+</pre></div>
+</div>
+<p>These are examples of <a class="reference internal" href="glossary.html#term-float-literal"><span class="xref std std-term">float literal</span></a>s, which are so-named to
+distinguish them from variables of type <code class="docutils literal"><span class="pre">float</span></code>. For example:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">float</span> <span class="n">speed</span> <span class="o">=</span> <span class="mf">1.8</span><span class="o">;</span>
+</pre></div>
+</div>
+<p>Here, <code class="docutils literal"><span class="pre">speed</span></code> is a variable of type <code class="docutils literal"><span class="pre">float</span></code>, while <code class="docutils literal"><span class="pre">1.8</span></code> is a <code class="docutils literal"><span class="pre">float</span></code>
+literal. Just as for <code class="docutils literal"><span class="pre">int</span></code>s, this statement does two things:</p>
+<ul class="simple">
+<li>It declares <code class="docutils literal"><span class="pre">speed</span></code> to be a variable of type <code class="docutils literal"><span class="pre">float</span></code>.</li>
+<li>It assigns <code class="docutils literal"><span class="pre">speed</span></code> the initial value of <code class="docutils literal"><span class="pre">1.8</span></code>.</li>
+</ul>
+</div>
+<div class="section" id="floating-point-arithmetic">
+<h2>Floating Point Arithmetic<a class="headerlink" href="#floating-point-arithmetic" title="Permalink to this headline">¶</a></h2>
+<p>In most cases, floating point arithmetic works like regular arithmetic. For
+example:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">println</span><span class="o">(</span><span class="mf">1.2</span> <span class="o">+</span> <span class="mf">3.2</span><span class="o">);</span>     <span class="c1">// 4.4</span>
+<span class="n">println</span><span class="o">(</span><span class="mf">6.0</span> <span class="o">-</span> <span class="mf">3.344</span><span class="o">);</span>   <span class="c1">// 2.7</span>
+<span class="n">println</span><span class="o">(</span><span class="mf">2.1</span> <span class="o">*</span> <span class="mf">3.14</span><span class="o">);</span>    <span class="c1">// 6.594</span>
+<span class="n">println</span><span class="o">(-</span><span class="mf">18.6</span> <span class="o">/</span> <span class="mf">29.1</span><span class="o">);</span>  <span class="c1">// -0.63917524</span>
+<span class="n">println</span><span class="o">(</span><span class="mf">10.0</span> <span class="o">/</span> <span class="mf">2.0</span><span class="o">);</span>    <span class="c1">// 5.0</span>
+</pre></div>
+</div>
+<p>Notice that <code class="docutils literal"><span class="pre">10.0</span> <span class="pre">/</span> <span class="pre">2.0</span></code> evaluates to <code class="docutils literal"><span class="pre">5.0</span></code>, which is a <code class="docutils literal"><span class="pre">float</span></code>.
+Whenever you divide two <code class="docutils literal"><span class="pre">float</span></code>s, the result is always a <code class="docutils literal"><span class="pre">float</span></code>.</p>
+<p>However, there are a few important details you need to be aware of.</p>
+</div>
+<div class="section" id="division-by-0-0">
+<h2>Division by 0.0<a class="headerlink" href="#division-by-0-0" title="Permalink to this headline">¶</a></h2>
+<p>Dividing a number by 0.0 is undefined mathematically, but for a <code class="docutils literal"><span class="pre">float</span></code> we
+get a surprising result:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">println</span><span class="o">(</span><span class="mf">5.6</span> <span class="o">/</span> <span class="mf">0.0</span><span class="o">);</span>  <span class="c1">// Infinity</span>
+</pre></div>
+</div>
+<p>There is no error message here &#8212; the actual result is a special <code class="docutils literal"><span class="pre">float</span></code>
+value called <em>infinity</em>. Another special <code class="docutils literal"><span class="pre">float</span></code> value occurs in this case:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">println</span><span class="o">(</span><span class="mf">5.6</span> <span class="o">/</span> <span class="mf">0.0</span> <span class="o">-</span> <span class="mf">5.6</span> <span class="o">/</span> <span class="mf">0.0</span><span class="o">);</span>  <span class="c1">// NaN</span>
+</pre></div>
+</div>
+<p>Again, this does not cause an error, but instead prints the special <code class="docutils literal"><span class="pre">float</span></code>
+value <code class="docutils literal"><span class="pre">NaN</span></code>, which means &#8220;not a number&#8221;.</p>
+<p>If you think about this, it leads to a strange conclusion: if <code class="docutils literal"><span class="pre">x</span></code> is a
+<code class="docutils literal"><span class="pre">float</span></code>, then it is possible that <code class="docutils literal"><span class="pre">x</span> <span class="pre">-</span> <span class="pre">x</span></code> is <strong>not</strong> equal to <code class="docutils literal"><span class="pre">0.0</span></code>!</p>
+<p>The reasons when and how <code class="docutils literal"><span class="pre">float</span></code>s use these special values are quite
+technical and beyond the scope of the course. The important thing for us is to
+know that these values exist and can occur in ordinary calculations.</p>
+</div>
+<div class="section" id="min-and-max-floats">
+<h2>Min and Max floats<a class="headerlink" href="#min-and-max-floats" title="Permalink to this headline">¶</a></h2>
+<p>The smallest and largest <code class="docutils literal"><span class="pre">float</span></code> values are as follows:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">println</span><span class="o">(</span><span class="n">Float</span><span class="o">.</span><span class="na">MIN_VALUE</span><span class="o">);</span>  <span class="c1">// 1.4E-45</span>
+<span class="n">println</span><span class="o">(</span><span class="n">Float</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">);</span>  <span class="c1">// 3.4028235E38</span>
+</pre></div>
+</div>
+<p>Notice a few things here:</p>
+<ul class="simple">
+<li>The numbers <code class="docutils literal"><span class="pre">1.4E-45</span></code> and <code class="docutils literal"><span class="pre">3.4028235E38</span></code> are written in <strong>exponential
+notation</strong>, and are equivalent to <span class="math">\(1.4 \times 10^{-45}\)</span> and
+<span class="math">\(3.4028235 \times 10^{38}\)</span>.</li>
+<li>The min <code class="docutils literal"><span class="pre">float</span></code> is <code class="docutils literal"><span class="pre">1.4E-45</span></code>, and it is traditionally called <a class="reference external" href="http://en.wikipedia.org/wiki/Machine_epsilon">machine
+epsilon</a>. It is,
+approximately, the smallest possible number that we can represent as a
+<code class="docutils literal"><span class="pre">float</span></code>. Any positive number less than <code class="docutils literal"><span class="pre">1.4E-45</span></code> is treated as
+equivalent to 0.0.</li>
+<li>The max value, <code class="docutils literal"><span class="pre">3.4028235E38</span></code>, is a huge number with 39 digits in it.
+However, only the first 8 or so digits are significant, i.e. after 8 digits
+all the digits are 0.</li>
+<li>The smallest <code class="docutils literal"><span class="pre">float</span></code> is <code class="docutils literal"><span class="pre">-3.4028235E38</span></code>, which is just the negation of
+the max <code class="docutils literal"><span class="pre">float</span></code>.</li>
+</ul>
+</div>
+<div class="section" id="rounding-errors">
+<h2>Rounding Errors<a class="headerlink" href="#rounding-errors" title="Permalink to this headline">¶</a></h2>
+<p>A major problem with floating point numbers is that they are often unavoidably
+inaccurate. For example, in mathematics
+<span class="math">\(\frac{1}{3} = 0.3333 \dots\)</span>, where the <span class="math">\(\ldots\)</span> means there are
+an infinite number of 3s after the decimal point. But a <a class="reference external" href="http://processing.org/">Processing</a>
+<code class="docutils literal"><span class="pre">float</span></code> can&#8217;t have an infinite number of digits:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">println</span><span class="o">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mf">3.0</span><span class="o">);</span>  <span class="c1">// 0.33333334</span>
+</pre></div>
+</div>
+<p>As you can see, there are a finite number digits, plus the final digit has
+been rounded to 4. So it is not exactly equal to <span class="math">\(\frac{1}{3}\)</span>, but is
+instead a little bit bigger.</p>
+<p>For many programs, round-off errors don&#8217;t make any noticeable difference. But
+sometimes they can be the source of serious bugs that are very hard to fix.
+There is an entire sub-field of computer science called <a class="reference external" href="http://en.wikipedia.org/wiki/Numerical_analysis">numerical analysis</a> that studies how to do
+accurate and efficient floating point arithmetic on machines.</p>
+<p>In this course, we will usually just ignore round-off errors and hope that our
+floating point calculations are accurate enough.</p>
+</div>
+<div class="section" id="mixing-ints-and-floats">
+<h2>Mixing ints and floats<a class="headerlink" href="#mixing-ints-and-floats" title="Permalink to this headline">¶</a></h2>
+<p>You can often use <code class="docutils literal"><span class="pre">int</span></code>s and <code class="docutils literal"><span class="pre">float</span></code>s together without a problem. For
+example:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">println</span><span class="o">(</span><span class="mf">4.0</span> <span class="o">+</span> <span class="mi">5</span><span class="o">);</span> <span class="c1">// 9.0</span>
+</pre></div>
+</div>
+<p>In the expression <code class="docutils literal"><span class="pre">4.0</span> <span class="pre">+</span> <span class="pre">5</span></code>, 4.0 is of type <code class="docutils literal"><span class="pre">float</span></code>, and <code class="docutils literal"><span class="pre">5</span></code> is of type
+<code class="docutils literal"><span class="pre">int</span></code>. <a class="reference external" href="http://processing.org/">Processing</a> doesn&#8217;t actually know how to add <code class="docutils literal"><span class="pre">float</span></code> and <code class="docutils literal"><span class="pre">int</span></code>,
+so it <strong>automatically converts</strong> 5 into the <code class="docutils literal"><span class="pre">float</span></code> <code class="docutils literal"><span class="pre">5.0</span></code>. This makes the
+expression equivalent to <code class="docutils literal"><span class="pre">4.0</span> <span class="pre">+</span> <span class="pre">5.0</span></code>, which is <code class="docutils literal"><span class="pre">9.0</span></code>.</p>
+<p>You can also assign an <code class="docutils literal"><span class="pre">int</span></code> to a <code class="docutils literal"><span class="pre">float</span></code> without error, e.g.:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">float</span> <span class="n">temperature</span> <span class="o">=</span> <span class="mi">21</span><span class="o">;</span>   <span class="c1">// 21 is an int, but temperature is a float</span>
+</pre></div>
+</div>
+<p>This works because <a class="reference external" href="http://processing.org/">Processing</a> automatically converts <code class="docutils literal"><span class="pre">21</span></code> to <code class="docutils literal"><span class="pre">21.0</span></code>.</p>
+<p>By default, you cannot assign a <code class="docutils literal"><span class="pre">float</span></code> to an <code class="docutils literal"><span class="pre">int</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">age</span> <span class="o">=</span> <span class="mf">5.5</span><span class="o">;</span>  <span class="c1">// compiler error</span>
+</pre></div>
+</div>
+<p>This statement fails to compile because <code class="docutils literal"><span class="pre">5.5</span></code> is of type <code class="docutils literal"><span class="pre">float</span></code>, and you
+are not allowed to store a <code class="docutils literal"><span class="pre">float</span></code> in an <code class="docutils literal"><span class="pre">int</span></code> variable. However, you can
+explicitly convert <code class="docutils literal"><span class="pre">5.5</span></code> to a <code class="docutils literal"><span class="pre">float</span></code> like this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">age</span> <span class="o">=</span> <span class="kt">int</span><span class="o">(</span><span class="mf">5.5</span><span class="o">);</span>
+
+<span class="n">println</span><span class="o">(</span><span class="n">age</span><span class="o">);</span>  <span class="c1">// 5</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="summary-table">
+<h2>Summary Table<a class="headerlink" href="#summary-table" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="38%" />
+<col width="30%" />
+<col width="32%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">&nbsp;</th>
+<th class="head"><code class="docutils literal"><span class="pre">int</span></code></th>
+<th class="head"><code class="docutils literal"><span class="pre">float</span></code></th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Sample literals</td>
+<td>4, -5, 0</td>
+<td>-4.0, 3.14, 0,0</td>
+</tr>
+<tr class="row-odd"><td>Min</td>
+<td>-2147483648</td>
+<td>-3.4028235E38</td>
+</tr>
+<tr class="row-even"><td>Max</td>
+<td>2147483647</td>
+<td>3.4028235E38</td>
+</tr>
+<tr class="row-odd"><td>Smallest positive</td>
+<td>1</td>
+<td>1.4E-45</td>
+</tr>
+<tr class="row-even"><td>When dividing by 0</td>
+<td>run-time error</td>
+<td>infinity or NaN</td>
+</tr>
+<tr class="row-odd"><td>Special values</td>
+<td>none</td>
+<td>infinity, NaN</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Give an example of:</p>
+<ul class="simple">
+<li>a positive <code class="docutils literal"><span class="pre">int</span></code> literal</li>
+<li>a negative <code class="docutils literal"><span class="pre">int</span></code> literal</li>
+<li>an <code class="docutils literal"><span class="pre">int</span></code> literal that is neither positive nor negative</li>
+<li>statement that declares a new <code class="docutils literal"><span class="pre">int</span></code> variable and initializes it to 15</li>
+</ul>
+</li>
+<li><p class="first">What does this print?</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">println</span><span class="o">(</span><span class="mi">5</span> <span class="o">*</span> <span class="o">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">5</span><span class="o">));</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">In regular arithmetic,
+<span class="math">\(\frac{5}{\frac{1}{2}} = 5 \cdot \frac{2}{1} = 10\)</span>. What does the
+equivalent expression, <code class="docutils literal"><span class="pre">5</span> <span class="pre">/</span> <span class="pre">(1</span> <span class="pre">/</span> <span class="pre">2)</span></code>, evaluate to in <a class="reference external" href="http://processing.org/">Processing</a>?</p>
+</li>
+<li><p class="first">What is the biggest possible <code class="docutils literal"><span class="pre">int</span></code>? You answer should be accurate to
+within about 2 million.</p>
+</li>
+<li><p class="first">Suppose <code class="docutils literal"><span class="pre">n</span></code> is a positive <code class="docutils literal"><span class="pre">int</span></code>. Is the expression <code class="docutils literal"><span class="pre">n</span> <span class="pre">+</span> <span class="pre">1</span></code> always
+greater than 0? Why, or why not?</p>
+</li>
+<li><p class="first">What is the name of the <code class="docutils literal"><span class="pre">%</span></code> operator?</p>
+</li>
+<li><p class="first">What are the values of the following expressions?</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">8</span> <span class="pre">%</span> <span class="pre">2</span></code></li>
+<li><code class="docutils literal"><span class="pre">8</span> <span class="pre">%</span> <span class="pre">3</span></code></li>
+<li><code class="docutils literal"><span class="pre">17</span> <span class="pre">%</span> <span class="pre">4</span></code></li>
+<li><code class="docutils literal"><span class="pre">(100</span> <span class="pre">%</span> <span class="pre">2)</span> <span class="pre">+</span> <span class="pre">(100</span> <span class="pre">%</span> <span class="pre">3)</span> <span class="pre">+</span> <span class="pre">(100</span> <span class="pre">%</span> <span class="pre">4)</span></code></li>
+</ul>
+</li>
+<li><p class="first">Give an example of:</p>
+<ul class="simple">
+<li>a positive <code class="docutils literal"><span class="pre">float</span></code> literal greater than 100</li>
+<li>a positive <code class="docutils literal"><span class="pre">float</span></code> literal between 0 and 1</li>
+<li>statement that declares a new <code class="docutils literal"><span class="pre">float</span></code> variable and initializes it to
+3.14</li>
+</ul>
+</li>
+<li><p class="first">How many digits are there in the maximum possible <code class="docutils literal"><span class="pre">float</span></code> value? Your
+answer should be correct within 1 digit.</p>
+</li>
+<li><p class="first">What does <code class="docutils literal"><span class="pre">NaN</span></code> stand for?</p>
+</li>
+<li><p class="first">What does this print?</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">println</span><span class="o">(</span><span class="mf">91.22</span> <span class="o">/</span> <span class="mf">0.0</span><span class="o">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Give a simple example of an expression involving <code class="docutils literal"><span class="pre">float</span></code>s that suffers
+from a round-off error.</p>
+</li>
+<li><p class="first">What does this print?</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">println</span><span class="o">(</span><span class="mf">91.22</span> <span class="o">/</span> <span class="mi">0</span><span class="o">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">What does this print?</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">println</span><span class="o">(</span><span class="kt">int</span><span class="o">(</span><span class="mf">6.9</span><span class="o">)</span> <span class="o">+</span> <span class="mi">3</span><span class="o">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Answer &#8220;true&#8221; or &#8220;false&#8221; for each of the following questions:</p>
+<ol class="arabic simple">
+<li>If <code class="docutils literal"><span class="pre">n</span></code> is a positive <code class="docutils literal"><span class="pre">int</span></code>, then <code class="docutils literal"><span class="pre">n</span> <span class="pre">+</span> <span class="pre">1</span></code> is also a positive
+<code class="docutils literal"><span class="pre">int</span></code>.</li>
+<li>If <code class="docutils literal"><span class="pre">a</span></code> and <code class="docutils literal"><span class="pre">b</span></code> are both of type <code class="docutils literal"><span class="pre">int</span></code>, and <code class="docutils literal"><span class="pre">a</span> <span class="pre">&gt;</span> <span class="pre">b</span></code> is true, then
+<code class="docutils literal"><span class="pre">a</span> <span class="pre">+</span> <span class="pre">1</span> <span class="pre">&gt;</span> <span class="pre">b</span></code> is also true.</li>
+<li>If <code class="docutils literal"><span class="pre">n</span></code> is a positive <code class="docutils literal"><span class="pre">int</span></code>, then <code class="docutils literal"><span class="pre">n</span> <span class="pre">-</span> <span class="pre">n</span></code> is <code class="docutils literal"><span class="pre">0</span></code>.</li>
+<li>If <code class="docutils literal"><span class="pre">x</span></code> is a <code class="docutils literal"><span class="pre">float</span></code>, then <code class="docutils literal"><span class="pre">x</span> <span class="pre">-</span> <span class="pre">x</span></code> is <code class="docutils literal"><span class="pre">0.0</span></code>.</li>
+</ol>
+</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="simple_gravity.html" title="The Keyboard, the Mouse, and Gravity"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="logical_expressions.html" title="Logical Expressions"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Toby Donaldson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>
