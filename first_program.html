@@ -71,27 +71,25 @@
 <ul class="simple">
 <li>Enter and run a simple program in the <a class="reference external" href="http://processing.org/">Processing</a> editor.</li>
 <li>How to draw ellipses and rectangles.</li>
-<li>How to determine the position of the mouse.</li>
+<li>How to determine the position of the mouse pointer locations.</li>
 <li>How to clear the screen.</li>
 </ul>
 <div class="section" id="getting-processing">
 <h2>Getting Processing<a class="headerlink" href="#getting-processing" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="http://processing.org/">Processing</a> is a <a class="reference external" href="http://processing.org/download/">freely available</a> that
-comes with an easy-to-use programming. It works on Mac, Linux, and Windows
-systems.</p>
+comes with an easy-to-use programming. It works on Linux, Windows, and Mac OSes.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">You can expect <a class="reference external" href="http://processing.org/">Processing</a> to work essentially identically on
-different systems. Past students have used <a class="reference external" href="http://processing.org/">Processing</a> on all these systems
-with no almost no noticeable differences. This is a pretty impressive
-technical achievement that is due to <a class="reference external" href="http://en.wikipedia.org/wiki/Java_(programming_language)">Java</a>: <a class="reference external" href="http://en.wikipedia.org/wiki/Java_(programming_language)">Java</a> designed to make the same
+different systems. We are expecting students working on <a class="reference external" href="http://processing.org/">Processing</a> on all different systems
+with almost no noticeable differences. This is a pretty impressive technical achievement, thanks to <a class="reference external" href="http://en.wikipedia.org/wiki/Java_(programming_language)">Java</a> technology: <a class="reference external" href="http://en.wikipedia.org/wiki/Java_(programming_language)">Java</a> designed to make the same
 Java program run identically on any computer.</p>
 </div>
-<p><a class="reference external" href="http://processing.org/download/">Download</a> and install the most recent
+<p><a class="reference external" href="http://processing.org/download/">Download</a> and install (just extract the zip file, and run processing.exe) the most recent
 version of <a class="reference external" href="http://processing.org/">Processing</a> for your computer. We&#8217;ll be using the editor that comes
 with it throughout the course. When you first run it, it should look something
 like this:</p>
-<a class="reference internal image-reference" href="images/processing_editor.png"><img alt="Screenshot of the Processing editor." class="align-center" src="images/processing_editor.png" style="width: 375.0px; height: 450.0px;" /></a>
+<a class="reference internal image-reference" href="images/processing_editor.png"><img alt="Screenshot of the Processing editor." class="align-center" src="images/processing_editor.png" style="width: 375.0px;" /></a>
 </div>
 <div class="section" id="running-your-first-program">
 <h2>Running Your First Program<a class="headerlink" href="#running-your-first-program" title="Permalink to this headline">¶</a></h2>
@@ -117,8 +115,7 @@ the <em>File</em> menu). Move the mouse around, and you should see lots of circl
 e.g.:</p>
 <a class="reference internal image-reference" href="images/firstProgramOutput.png"><img alt="Sample output of our first Processing_ program." class="align-center" src="images/firstProgramOutput.png" style="width: 251.0px; height: 251.0px;" /></a>
 <p>After pressing play we say that the program is <strong>running</strong>, or <strong>executing</strong>.
-This particular program runs until you either click the &#8220;stop&#8221; button (the
-little square in the circle), or quit <a class="reference external" href="http://processing.org/">Processing</a> (e.g. by closing the
+This particular program runs until you either click the &#8220;stop&#8221; button (the little square in the circle), or quit <a class="reference external" href="http://processing.org/">Processing</a> (e.g. by closing the
 <a class="reference external" href="http://processing.org/">Processing</a> window, or choosing &#8220;quit&#8221; in the <em>File</em> menu).</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -175,7 +172,7 @@ to be the current coordinates of the mouse pointer on the screen.</p>
 </div>
 <div class="section" id="frame-rate">
 <h2>Frame Rate<a class="headerlink" href="#frame-rate" title="Permalink to this headline">¶</a></h2>
-<p>In one second, <a class="reference external" href="http://processing.org/">Processing</a> calls <code class="docutils literal"><span class="pre">draw()</span></code> approximately 60 times. We call
+<p>In a second, <a class="reference external" href="http://processing.org/">Processing</a> calls <code class="docutils literal"><span class="pre">draw()</span></code> approximately 60 times. We call
 this the program&#8217;s <a class="reference internal" href="glossary.html#term-frame-rate"><span class="xref std std-term">frame rate</span></a>, and the pre-defined <a class="reference external" href="http://processing.org/">Processing</a>
 variable <code class="docutils literal"><span class="pre">frameRate</span></code> is an estimate of a program&#8217;s current frame rate. The
 number of frames per second that a program runs at is often abbreviated
@@ -280,9 +277,9 @@ this:</p>
 <p>Notice a few important details:</p>
 <ul class="simple">
 <li>The name of the function is <code class="docutils literal"><span class="pre">ellipse</span></code>, and after the name comes an open
-bracket, i.e. a <code class="docutils literal"><span class="pre">(</span></code> character. A matching close-bracket, <code class="docutils literal"><span class="pre">)</span></code>, goes at
+parenthesis, i.e. a <code class="docutils literal"><span class="pre">(</span></code> character. A matching close-parenthesis, <code class="docutils literal"><span class="pre">)</span></code>, goes at
 the end of the line before the <code class="docutils literal"><span class="pre">;</span></code>.</li>
-<li>After the <code class="docutils literal"><span class="pre">(</span></code> bracket we list the function&#8217;s parameters. <em>Order matters</em>:
+<li>After the <code class="docutils literal"><span class="pre">(</span></code> parenthesis we list the function&#8217;s parameters. <em>Order matters</em>:
 first comes <code class="docutils literal"><span class="pre">x</span></code> and <code class="docutils literal"><span class="pre">y</span></code>, which specifies the (x, y) location of the
 center of the ellipse, and then <code class="docutils literal"><span class="pre">width</span></code> and <code class="docutils literal"><span class="pre">height</span></code> which specify the
 vertical and horizontal diameter of the ellipse (not the radius!).</li>
@@ -319,10 +316,9 @@ read about it <a class="reference external" href="http://processing.org/referenc
 </pre></div>
 </div>
 <p>Every time <code class="docutils literal"><span class="pre">draw()</span></code> is called the <code class="docutils literal"><span class="pre">background(200)</span></code> sets the color of the
-drawing window to be 200, which us a light shade of gray (a value closer to 0
-would make it darker). This erases everything on the screen. Since <code class="docutils literal"><span class="pre">draw()</span></code>
-is called about 60 times a second, the ellipse appears to move smoothly around
-without leaving a trail.</p>
+drawing window to be 200, which use a light shade of gray, the current background color. A value closer to 0
+would make it darker. This erases everything on the screen. Since <code class="docutils literal"><span class="pre">draw()</span></code>
+is called about 60 times a second, now the ellipse appears to move smoothly around without leaving a trail.</p>
 <p>This simple trick of re-drawing the screen background at the start of every
 call to <code class="docutils literal"><span class="pre">draw</span></code> is a key idea in computer animation. We&#8217;ll use it throughout
 this course as the basic technique for getting things to move on the screen.</p>
