@@ -1,0 +1,885 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Glossary</title>
+    
+    <link rel="stylesheet" href="static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+   
+        <li class="nav-item nav-item-0"><a href="index.html">Introduction to Programming for Game Development</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<!--  
+<h4>Previous topic</h4>
+  <p class="topless"><a href="mario_walk_more.html"
+                        title="previous chapter">Multi-image Animation Using an ArrayList</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="final.html"
+                        title="next chapter">Final Exam</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+-->
+
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="glossary">
+<h1>Glossary<a class="headerlink" href="#glossary" title="Permalink to this headline">¶</a></h1>
+<dl class="glossary docutils">
+<dt id="term-absolute-path-name">absolute path name</dt>
+<dd><p class="first">A way to name files in a <a class="reference internal" href="#term-file-system"><span class="xref std std-term">file system</span></a> by listing the
+folders that contain the file before the name of the file. For
+example, this is how an absolute path name would be written on
+Windows:</p>
+<div class="highlight-python"><div class="highlight"><pre>C:\Desktop\courses\fall2011\cmpt166\ball.gif
+</pre></div>
+</div>
+<p>And on a Mac or Linux system:</p>
+<div class="highlight-python"><div class="highlight"><pre>/Desktop/courses/fall2011/cmpt166/ball.gif
+</pre></div>
+</div>
+<p class="last">Compare to <a class="reference internal" href="#term-relative-path-name"><span class="xref std std-term">relative path name</span></a>.</p>
+</dd>
+<dt id="term-alpha-value">alpha value</dt>
+<dd><p class="first">In <a class="reference internal" href="#term-rgb-color"><span class="xref std std-term">RGB color</span></a>, the alpha value of a color typically
+specifies the transparency of that color. For example, this sets
+the fill color of a shape to be 127, which results in a
+transparency of about 50%:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">127</span><span class="p">);</span>
+</pre></div>
+</div>
+<p class="last">In <a class="reference external" href="http://processing.org/">Processing</a>, color alpha values range from 0 (totally
+transparent) to 255 (totally opaque).</p>
+</dd>
+<dt id="term-applications-programming">applications programming</dt>
+<dd><p class="first">Writing programs intended to be used as applications by
+non-technical users. For instance, word processors, email
+clients, and almost all smartphone apps are example of
+application programs.</p>
+<p class="last">Compare to <a class="reference internal" href="#term-systems-programming"><span class="xref std std-term">systems programming</span></a>.</p>
+</dd>
+<dt id="term-array">array</dt>
+<dd><p class="first">A contiguous sequence of 0 or more objects. For example, here
+are two arrays:</p>
+<div class="last highlight-python"><div class="highlight"><pre>int[] ages = {18, 18, 17, 19, 20};
+println(ages[3]);   // prints &quot;19&quot;
+
+
+float[] dist = new dist[3];
+dist[0] = 3.422;
+dist[1] = 1.08;
+dist[2] = 5.232;
+</pre></div>
+</div>
+</dd>
+<dt id="term-assembly-language">assembly language</dt>
+<dd>The lowest-level programming language that lets the programmer
+directly control the <a class="reference internal" href="#term-cpu"><span class="xref std std-term">CPU</span></a> and <a class="reference internal" href="#term-ram"><span class="xref std std-term">RAM</span></a>. Assembly
+language programs are often quite efficient, and take up little
+memory. However, assembly languages vary among <a class="reference internal" href="#term-cpu"><span class="xref std std-term">CPU</span></a>s,
+and reading assembly language is relatively difficult.</dd>
+<dt id="term-assignment">assignment</dt>
+<dd>See <a class="reference internal" href="#term-assignment-operator"><span class="xref std std-term">assignment operator</span></a>.</dd>
+<dt id="term-assignment-operator">assignment operator</dt>
+<dd><p class="first">The <code class="docutils literal"><span class="pre">=</span></code> symbol is know as the assignment operator in
+<a class="reference external" href="http://processing.org/">Processing</a>. For instance, this line of code assigns the value
+-2.01 to variable <code class="docutils literal"><span class="pre">y</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.01</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The assignment operator does <em>not</em> work like = in
+mathematics. For instance, you can write code like this in
+<a class="reference external" href="http://processing.org/">Processing</a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This adds 1 to <code class="docutils literal"><span class="pre">y</span></code>, which is a useful programming
+operation. But in mathematics the equation <span class="math">\(y = y + 1\)</span>
+isn&#8217;t very useful because it is equivalent to <span class="math">\(0 = 1\)</span>
+after you subtract <span class="math">\(y\)</span> from both sides.</p>
+<p class="last">The <a class="reference external" href="http://processing.org/">Processing</a> <code class="docutils literal"><span class="pre">==</span></code> operator works like the mathematical
+<span class="math">\(=\)</span>. <code class="docutils literal"><span class="pre">==</span></code> is the boolean equality operator, and
+expression like <code class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">y</span></code> is a <a class="reference internal" href="#term-boolean-expression"><span class="xref std std-term">boolean expression</span></a> that
+returns <code class="docutils literal"><span class="pre">true</span></code> if <code class="docutils literal"><span class="pre">x</span></code> and <code class="docutils literal"><span class="pre">y`</span> <span class="pre">have</span> <span class="pre">the</span> <span class="pre">same</span> <span class="pre">value,</span> <span class="pre">and</span>
+<span class="pre">``false</span></code> otherwise.</p>
+</dd>
+<dt id="term-assignment-statement">assignment statement</dt>
+<dd><p class="first">A statement that assigns a value to a variable, e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">dx</span><span class="p">;</span>
+</pre></div>
+</div>
+<p class="last">See <a class="reference internal" href="#term-assignment-operator"><span class="xref std std-term">assignment operator</span></a>.</p>
+</dd>
+<dt id="term-base-class">base class</dt>
+<dd>A class that is designed to be extended by other classes. Bases
+classes are often declared <code class="docutils literal"><span class="pre">abstract</span></code> so objects for them
+<em>cannot</em> be created using <code class="docutils literal"><span class="pre">new</span></code>.</dd>
+<dt id="term-binary-digit">binary digit</dt>
+<dd>See <a class="reference internal" href="#term-bit"><span class="xref std std-term">bit</span></a>.</dd>
+<dt id="term-bit">bit</dt>
+<dd><p class="first">A bit is the basic unit of information in computing. A bit has
+two possible distinct states, often called 0 and 1. Two
+consecutive bits can represent four distinct states: 00, 01, 10,
+and 11. Computer&#8217;s process all information in terms of bits.</p>
+<p class="last">Bit is short for &#8220;binary digit&#8221;, and was coined by the
+mathematician <a class="reference external" href="http://en.wikipedia.org/wiki/John_W._Tukey">John Tukey</a>.</p>
+</dd>
+<dt id="term-block-of-code">block of code</dt>
+<dd>In <a class="reference external" href="http://processing.org/">Processing</a>, a block of code consists of one or more
+statements grouped together inside a <code class="docutils literal"><span class="pre">{</span></code> and <code class="docutils literal"><span class="pre">}</span></code>. The
+statements are consistently indented so that they all start in
+the same column. If-statements, loops, functions, and classes
+all use blocks of code.</dd>
+<dt id="term-boolean-expression">boolean expression</dt>
+<dd><p class="first">An expression that evaluates to either <code class="docutils literal"><span class="pre">true</span></code> or
+<code class="docutils literal"><span class="pre">false</span></code>. For example, these are all boolean expressions:</p>
+<div class="last highlight-python"><div class="highlight"><pre>x &lt; 1
+y &gt;= 4 + a
+x == y
+x - 1 != 2 * y
+true
+false
+false || true
+</pre></div>
+</div>
+</dd>
+<dt id="term-bounding-box">bounding box</dt>
+<dd>The smallest rectangle that can be drawn around a graphical
+object (with sides parallel to the x-axis and y-axis). Often
+used to control the position and angle of the object.</dd>
+<dt id="term-braces">braces</dt>
+<dd><code class="docutils literal"><span class="pre">{</span></code> is an open brace, and <code class="docutils literal"><span class="pre">}</span></code> is a close brace.</dd>
+<dt id="term-byte">byte</dt>
+<dd>A byte is 8 <a class="reference internal" href="#term-bit"><span class="xref std std-term">bit</span></a>s.</dd>
+<dt id="term-character-literal">character literal</dt>
+<dd><p class="first">A character in a program beginning and ending with a <code class="docutils literal"><span class="pre">'</span></code>. For
+example, these are all character literals:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="s1">&#39;a&#39;</span>
+<span class="s1">&#39;K&#39;</span>
+<span class="s1">&#39;7&#39;</span>
+<span class="s1">&#39;+&#39;</span>
+<span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+<span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">&#39;</span>
+</pre></div>
+</div>
+<p>Note that <code class="docutils literal"><span class="pre">''</span></code> is <em>not</em> a character literal: there is no such
+thing as an empty character (although there is such a thing as
+an <a class="reference internal" href="#term-empty-string"><span class="xref std std-term">empty string</span></a>).</p>
+<p class="last">Be careful not to confuse character literals &#8212; which begin and
+end with <code class="docutils literal"><span class="pre">'</span></code> &#8212; with <a class="reference internal" href="#term-string-literal"><span class="xref std std-term">string literal</span></a>s &#8212; which
+begin and end with <code class="docutils literal"><span class="pre">&quot;</span></code>. For example, <cite>&#8216;A&#8217;</cite> is a character
+literal, while <cite>&#8220;A&#8221;</cite> is a <a class="reference internal" href="#term-string-literal"><span class="xref std std-term">string literal</span></a>.</p>
+</dd>
+<dt id="term-class">class</dt>
+<dd>A structure that lists all the variables and functions in a
+set of related objects.</dd>
+<dt id="term-code">code</dt>
+<dd>Short for <a class="reference internal" href="#term-source-code"><span class="xref std std-term">source code</span></a>.</dd>
+<dt id="term-collision-detection">collision detection</dt>
+<dd>See <a class="reference internal" href="#term-hit-detection"><span class="xref std std-term">hit detection</span></a>.</dd>
+<dt id="term-comment">comment</dt>
+<dd>See <a class="reference internal" href="#term-source-code-comment"><span class="xref std std-term">source code comment</span></a>.</dd>
+<dt id="term-comparison-operators">comparison operators</dt>
+<dd>In <a class="reference external" href="http://processing.org/">Processing</a>, the main comparison operators are <code class="docutils literal"><span class="pre">&gt;=</span></code>,
+<code class="docutils literal"><span class="pre">&lt;=</span></code>, <code class="docutils literal"><span class="pre">&lt;</span></code>, <code class="docutils literal"><span class="pre">&gt;</span></code>, <code class="docutils literal"><span class="pre">==</span></code>, and <code class="docutils literal"><span class="pre">!=</span></code>.</dd>
+<dt id="term-concatenation">concatenation</dt>
+<dd><p class="first">String concatenation is when two, or more strings, are combined
+to make a new string. For example:</p>
+<div class="last highlight-python"><div class="highlight"><pre>String firstName = &quot;Donald &quot;;
+String lastName = &quot;Knuth&quot;;
+String fullName = firstName + lastName;  // &quot;Donald Knuth&quot;
+</pre></div>
+</div>
+</dd>
+<dt id="term-console">console</dt>
+<dd>See <a class="reference internal" href="#term-console-window"><span class="xref std std-term">console window</span></a>.</dd>
+<dt id="term-console-window">console window</dt>
+<dd>The window where <code class="docutils literal"><span class="pre">print</span></code> and <code class="docutils literal"><span class="pre">println</span></code> statements get
+printed. In the <a class="reference external" href="http://processing.org/">Processing</a> editor, the console window is the
+small black space under the main editing window.</dd>
+<dt id="term-constructor">constructor</dt>
+<dd>A special function that is called when an object is create using
+<code class="docutils literal"><span class="pre">new</span></code>. A constructor always has the same name as the class it
+is in, and it has no return type. Usually, a constructor
+initializes all the variables within an object.</dd>
+<dt id="term-container-object">container object</dt>
+<dd>An object that stores other objects. For example, an
+<code class="docutils literal"><span class="pre">ArrayList&lt;String&gt;</span></code> object stores <code class="docutils literal"><span class="pre">String</span></code>s.</dd>
+<dt id="term-copy-constructor">copy constructor</dt>
+<dd><p class="first">A <a class="reference internal" href="#term-constructor"><span class="xref std std-term">constructor</span></a> that takes another object of the same type
+as input and makes a copy of it, e.g.:</p>
+<div class="last highlight-python"><div class="highlight"><pre>class Point {
+   int x;
+   int y;
+
+   Point(Point p) {  // copy constructor
+      x = p.x;
+      y = p.y;
+   }
+}
+</pre></div>
+</div>
+</dd>
+<dt id="term-cpu">CPU</dt>
+<dd>Short for <em>central processing unit</em>. The CPU is the &#8220;brain&#8221; of
+the computer, and is responsible for executing low-level
+instructions related to logic and arithmetic.</dd>
+<dt id="term-current-working-directory">current working directory</dt>
+<dd>See <a class="reference internal" href="#term-current-working-folder"><span class="xref std std-term">current working folder</span></a>.</dd>
+<dt id="term-current-working-folder">current working folder</dt>
+<dd><p class="first">When specifying the name of a file using a <a class="reference internal" href="#term-relative-path-name"><span class="xref std std-term">relative path
+name</span></a>, the current working <a class="reference internal" href="#term-folder"><span class="xref std std-term">folder</span></a> is the name of the
+top-most folder that will be searched.</p>
+<p class="last">Also know as the <em>current working directory</em>, or <em>present
+working directory</em>.</p>
+</dd>
+<dt id="term-data-structure">data structure</dt>
+<dd>A way of storing organizing data stored in a computer. Common
+data structures include strings, arrays, objects, stacks,
+queues, and trees.</dd>
+<dt id="term-data-type">data type</dt>
+<dd>See <a class="reference internal" href="#term-type"><span class="xref std std-term">type</span></a>.</dd>
+<dt id="term-default-constructor">default constructor</dt>
+<dd><p class="first">A <a class="reference internal" href="#term-constructor"><span class="xref std std-term">constructor</span></a> that takes no input parameters, e.g.:</p>
+<div class="last highlight-python"><div class="highlight"><pre>class Point {
+   int x;
+   int y;
+
+   Point() {  // default constructor
+      x = 0;
+      y = 0;
+   }
+}
+</pre></div>
+</div>
+</dd>
+<dt id="term-directory">directory</dt>
+<dd>Another name for a <a class="reference internal" href="#term-folder"><span class="xref std std-term">folder</span></a>.</dd>
+<dt id="term-dot-notation">dot notation</dt>
+<dd><p class="first">A way of accessing the variables and functions in an object. For
+example:</p>
+<div class="highlight-python"><div class="highlight"><pre>String s = &quot;hello&quot;;
+String t = s.trim();
+</pre></div>
+</div>
+<p class="last">The expression <code class="docutils literal"><span class="pre">s.trim()</span></code> uses dot notation to call the
+<code class="docutils literal"><span class="pre">trim()</span></code> function that belongs to <code class="docutils literal"><span class="pre">s</span></code>.</p>
+</dd>
+<dt id="term-easing">easing</dt>
+<dd>An animation technique where an animated object&#8217;s velocity is
+proportional to thing it is moving towards (or away from). For
+instance, an animated spaceship docking with a space station
+slows down as approaches the space station: it <em>eases</em> its way
+into the station&#8217;s docking bay.</dd>
+<dt id="term-empty-string">empty string</dt>
+<dd>The string <code class="docutils literal"><span class="pre">&quot;&quot;</span></code>. It has 0 characters in it.</dd>
+<dt id="term-escape-character">escape character</dt>
+<dd><p class="first">In a string, an escape character is a special code for a
+character that cannot be directly typed into the string. For
+example, <code class="docutils literal"><span class="pre">\n</span></code> is the newline character, and there is no
+standard symbol for a newline.</p>
+<p>Even though an escape character is more than one character long,
+it only counts as one character in the string. For example, the
+string <code class="docutils literal"><span class="pre">&quot;a\nb\NC&quot;</span></code> is exactly 5 characters long.</p>
+<p>When you print a string with <code class="docutils literal"><span class="pre">\n</span></code>s in it, they cause the
+cursor to move to the next line. For example,
+<code class="docutils literal"><span class="pre">println(&quot;a\nb\nc&quot;)</span></code> prints this on the console:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">a</span>
+<span class="n">b</span>
+<span class="n">c</span>
+</pre></div>
+</div>
+<p class="last">The most common escape characters are <code class="docutils literal"><span class="pre">\n</span></code> (newline), <code class="docutils literal"><span class="pre">\\</span></code>,
+<code class="docutils literal"><span class="pre">\&quot;</span></code>, <code class="docutils literal"><span class="pre">\t</span></code> (tab), etc.</p>
+</dd>
+<dt id="term-file">file</dt>
+<dd>A named collection of data on a disk.</dd>
+<dt id="term-file-system">file system</dt>
+<dd>The <a class="reference internal" href="#term-file"><span class="xref std std-term">file</span></a>s, <a class="reference internal" href="#term-folder"><span class="xref std std-term">folder</span></a>s, and <a class="reference internal" href="#term-software"><span class="xref std std-term">software</span></a> used
+to store and retrieve data on a computer disk.</dd>
+<dt id="term-float-literal">float literal</dt>
+<dd>A number of type <code class="docutils literal"><span class="pre">float</span></code>, such as 5.3, -3.81, 0.0, or 392.90.</dd>
+<dt id="term-flow-chart">flow chart</dt>
+<dd><p class="first">A visual notation for describing the simple computer
+programs. For example, the following flow chart shows how
+<a class="reference external" href="http://processing.org/">Processing</a>s <code class="docutils literal"><span class="pre">setup()</span></code> and <code class="docutils literal"><span class="pre">draw()</span></code> functions are called:</p>
+<a class="last reference internal image-reference" href="images/drawSetupFlowchart.png"><img alt="Flow chart showing when setup() and draw() are called." class="align-center" src="images/drawSetupFlowchart.png" style="width: 199.0px; height: 372.0px;" /></a>
+</dd>
+<dt id="term-folder">folder</dt>
+<dd>A named collection of <a class="reference internal" href="#term-file"><span class="xref std std-term">file</span></a>s and other folders.</dd>
+<dt id="term-for-each-loop">for-each loop</dt>
+<dd><p class="first">A <a class="reference external" href="http://processing.org/">Processing</a> construct that can be used to access every element
+in a &#8220;term:<cite>container object</cite> such as an <code class="docutils literal"><span class="pre">ArrayList</span></code>. For
+example, this code prints every string in <code class="docutils literal"><span class="pre">names</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre>// names in ArrayList&lt;String&gt; object
+
+for(String s : names) {
+   println(s);
+}
+</pre></div>
+</div>
+<p class="last">The <code class="docutils literal"><span class="pre">:</span></code> inside the loop header can be read as &#8220;in&#8221;.</p>
+</dd>
+<dt id="term-for-loop">for-loop</dt>
+<dd><p class="first">A <a class="reference external" href="http://processing.org/">Processing</a> construct that repeats a block of code. For
+example, this code prints then numbers from 1 to 100:</p>
+<div class="last highlight-python"><div class="highlight"><pre>for(int i = 1; i &lt; 101; ++i) {
+   println(i);
+}
+</pre></div>
+</div>
+</dd>
+<dt id="term-fps">fps</dt>
+<dd>Short for <a class="reference internal" href="#term-frames-per-second"><span class="xref std std-term">frames per second</span></a>. See <a class="reference internal" href="#term-frame-rate"><span class="xref std std-term">frame rate</span></a>.</dd>
+<dt id="term-frame-rate">frame rate</dt>
+<dd><p class="first">The number of times per second that <code class="docutils literal"><span class="pre">draw()</span></code> is called by a
+<a class="reference external" href="http://processing.org/">Processing</a> program. As long as it doesn&#8217;t take too long for
+<code class="docutils literal"><span class="pre">draw()</span></code> to run, <a class="reference external" href="http://processing.org/">Processing</a> calls <code class="docutils literal"><span class="pre">draw()</span></code> about 60 times
+per second by default. The variable <code class="docutils literal"><span class="pre">frameRate</span></code> is an estimate
+of the current frame rate for a <a class="reference external" href="http://processing.org/">Processing</a> program.</p>
+<p>You can change the frame rate using the <code class="docutils literal"><span class="pre">frameRate()</span></code>
+function. For example, this sets the frame rate to be 30 frames
+per second:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="n">frameRate</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd>
+<dt id="term-frames-per-second">frames per second</dt>
+<dd>See <a class="reference internal" href="#term-frame-rate"><span class="xref std std-term">frame rate</span></a>.</dd>
+<dt id="term-function">function</dt>
+<dd>A named <a class="reference internal" href="#term-block-of-code"><span class="xref std std-term">block of code</span></a> consisting of a <a class="reference internal" href="#term-function-header"><span class="xref std std-term">function
+header</span></a> and <a class="reference internal" href="#term-function-body"><span class="xref std std-term">function body</span></a>.</dd>
+<dt id="term-function-body">function body</dt>
+<dd><p class="first">The statements that get executed when a function is called. For
+example, the function body of <code class="docutils literal"><span class="pre">pointInCircle</span></code> is the code
+block after the <a class="reference internal" href="#term-function-header"><span class="xref std std-term">function header</span></a> (i.e. the first line):</p>
+<div class="last highlight-python"><div class="highlight"><pre>boolean pointInCircle(float x, float y, float a, float b, float r)  // function header
+{                                  //
+  if (dist(x, y, a, b) &lt;= r) {     //
+    return true;                   //
+  } else {                         //  function body
+    return false;                  //
+  }                                //
+}                                  //
+</pre></div>
+</div>
+</dd>
+<dt id="term-function-header">function header</dt>
+<dd><p class="first">The first line of a function that declares the function&#8217;s return
+type, name, and input parameters. For example:</p>
+<div class="last highlight-python"><div class="highlight"><pre>boolean pointInCircle(float x, float y, float a, float b, float r)  // function header
+{
+   // ... function body ...
+}
+</pre></div>
+</div>
+</dd>
+<dt id="term-gigabyte">gigabyte</dt>
+<dd>A gigabyte (GB) is 1 billion <a class="reference internal" href="#term-byte"><span class="xref std std-term">byte</span></a>s. Computer
+<a class="reference internal" href="#term-ram"><span class="xref std std-term">RAM</span></a> is often measured in terms of gigabytes.</dd>
+<dt id="term-gigahertz">gigahertz</dt>
+<dd><p class="first">1 gigahertz (GHz) equals 1000 megahertz (MHz), or one <em>billion</em>
+hertz (Hz). One hertz means one cycle per second, and so 1
+gigahertz means 1 billion cycles per second. If a computer
+<a class="reference internal" href="#term-cpu"><span class="xref std std-term">CPU</span></a> runs at a speed of 1 gigahertz, then that means it
+can do 1 billion low-level operations (like addition or
+multiplication) per second.</p>
+<p class="last">Modern <a class="reference internal" href="#term-cpu"><span class="xref std std-term">CPU</span></a> speeds are often in gigahertz. For instance,
+if your computer runs at 2.5 GHz, then it does about two and a
+half billion low-level operations per second.</p>
+</dd>
+<dt id="term-global-variable">global variable</dt>
+<dd><p class="first">A <a class="reference internal" href="#term-variable"><span class="xref std std-term">variable</span></a> that can be accessed by any function. In
+<a class="reference external" href="http://processing.org/">Processing</a>, global variables are variables defined outside of
+any function. For example, <code class="docutils literal"><span class="pre">c</span></code> is a global variable in the
+following program:</p>
+<div class="highlight-python"><div class="highlight"><pre>color c = color(255, 0, 0);
+
+void setup() {
+   size(500, 500);
+   // ...
+}
+
+void draw() {
+   // ...
+}
+</pre></div>
+</div>
+<p class="last">Compare this to <a class="reference internal" href="#term-local-variable"><span class="xref std std-term">local variable</span></a>.</p>
+</dd>
+<dt id="term-grayscale">grayscale</dt>
+<dd>A restricted set of colors, often varying shades of gray. In
+<a class="reference internal" href="#term-rgb"><span class="xref std std-term">RGB</span></a>, gray colors have the form (n, n, n).</dd>
+<dt id="term-high-level-programming-language">high-level programming language</dt>
+<dd>A programming language, such as <a class="reference external" href="http://processing.org/">Processing</a>, <a class="reference external" href="http://en.wikipedia.org/wiki/Java_(programming_language)">Java</a>, C++, or
+Python, that lets programmers write code that looks somewhat
+like English.</dd>
+<dt id="term-hit-box">hit box</dt>
+<dd>A rectangle, usually drawn around an image, that is used to
+determine if the image has hit another geometric object. They
+tend not to be very accurate for curved shapes, and in more
+complex programs multiple hit boxes are sometimes used to more
+accurately cover an image. Hit boxes are a common solution to
+the <a class="reference internal" href="#term-hit-detection"><span class="xref std std-term">hit detection</span></a> problems.</dd>
+<dt id="term-hit-detection">hit detection</dt>
+<dd>The problem of determining if two (or more) geometric objects
+intersect. Checking this depends on the objects involved, and in
+general is quite tricky to do correctly and efficiently. For
+many simple cases, though, such as rectangles, or points and
+circles, hit detection is straightforward.</dd>
+<dt id="term-if-else-statement">if-else statement</dt>
+<dd><p class="first">An <a class="reference internal" href="#term-if-statement"><span class="xref std std-term">if-statement</span></a> with an <code class="docutils literal"><span class="pre">else</span></code> clause, e.g.:</p>
+<div class="last highlight-python"><div class="highlight"><pre>if (dist(mouseX, mouseY, x, y) &lt;= radius) {
+  ball_color = color(255, 0, 0);
+} else {
+  ball_color = orange;
+}
+</pre></div>
+</div>
+</dd>
+<dt id="term-if-else-if-statement">if-else-if statement</dt>
+<dd><p class="first">An <a class="reference internal" href="#term-if-statement"><span class="xref std std-term">if-statement</span></a> with an <code class="docutils literal"><span class="pre">else</span> <span class="pre">if</span></code> clause, e.g.:</p>
+<div class="last highlight-python"><div class="highlight"><pre>if (d &lt; 1) {
+  moving = false;
+} else if (d &lt; easingLimit) {
+  speed = d * maxSpeed / easingLimit;
+}
+</pre></div>
+</div>
+</dd>
+<dt id="term-if-statement">if-statement</dt>
+<dd><p class="first">A kind of statement that makes a decision about whether or not
+to execute a <a class="reference internal" href="#term-block-of-code"><span class="xref std std-term">block of code</span></a>. For example:</p>
+<div class="last highlight-python"><div class="highlight"><pre>if (x == 0) {
+   println(&quot;x is 0&quot;);
+} else if (x &lt; 0) {
+   println(&quot;x is negative&quot;);
+} else {
+   println(&quot;x is positive&quot;);
+}
+</pre></div>
+</div>
+</dd>
+<dt id="term-index-variable">index variable</dt>
+<dd><p class="first">Usually, the variable declared inside a <a class="reference internal" href="#term-for-loop"><span class="xref std std-term">for-loop</span></a>
+header. For instance, in the following code <code class="docutils literal"><span class="pre">i</span></code> is the index
+variable:</p>
+<div class="last highlight-python"><div class="highlight"><pre>for(int i = 1; i &lt; 101; ++i) {
+   println(i);
+}
+</pre></div>
+</div>
+</dd>
+<dt id="term-infinite-loop">infinite loop</dt>
+<dd>See <a class="reference internal" href="#term-infinite-loop"><span class="xref std std-term">infinite loop</span></a>.</dd>
+<dt id="term-inheritance">inheritance</dt>
+<dd>An <a class="reference internal" href="#term-object-oriented-programming"><span class="xref std std-term">object-oriented programming</span></a> technique that lets you
+create new classes by extending old ones.</dd>
+<dt id="term-inner-class">inner class</dt>
+<dd>A class declared inside another class.</dd>
+<dt id="term-int-literal">int literal</dt>
+<dd>A number of type <code class="docutils literal"><span class="pre">int</span></code>, such as 53, -3, 0, or 39290.</dd>
+<dt id="term-interpenetration">interpenetration</dt>
+<dd><p class="first">When two or more animated objects intersect. For example:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="images/overlapBall.png"><img alt="Interpenetrating ball." class="align-center" src="images/overlapBall.png" style="width: 373.0px; height: 153.0px;" /></a>
+</div></blockquote>
+<p>Here we say that the ball interpenetrates the wall.</p>
+<p class="last">Interpenetration is not allowed when objects are meant to be
+solid. One common technique for fixing object interpenetration
+is to adjust the position of the objects so they no longer
+intersect.</p>
+</dd>
+<dt id="term-kilobyte">kilobyte</dt>
+<dd>A kilobyte (KB) is 1 thousand <a class="reference internal" href="#term-byte"><span class="xref std std-term">byte</span></a>s.</dd>
+<dt id="term-local-variable">local variable</dt>
+<dd><p class="first">A <a class="reference internal" href="#term-variable"><span class="xref std std-term">variable</span></a> declared inside a function. In <a class="reference external" href="http://processing.org/">Processing</a>, a
+local variable can only be accessed by code in the function that
+comes after the declaration. For example, in the following
+program <code class="docutils literal"><span class="pre">c</span></code> is a local variable in <code class="docutils literal"><span class="pre">draw()</span></code>, which means it
+can only be used in the body of <code class="docutils literal"><span class="pre">draw()</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre>void setup() {
+   size(500, 500);
+   // ...
+}
+
+void draw() {
+   color c = color(255, 0, 0);
+   // ...
+}
+</pre></div>
+</div>
+<p class="last">Compare this to <a class="reference internal" href="#term-global-variable"><span class="xref std std-term">global variable</span></a>.</p>
+</dd>
+<dt id="term-logical-operators">logical operators</dt>
+<dd><a class="reference external" href="http://processing.org/">Processing</a> has three main logical operators. Assuming <code class="docutils literal"><span class="pre">a</span></code> and
+<code class="docutils literal"><span class="pre">b`</span> <span class="pre">are</span> <span class="pre">both</span> <span class="pre">:term:`boolean</span> <span class="pre">expression`\</span> <span class="pre">s,</span> <span class="pre">then</span> <span class="pre">``!a</span></code> (not),
+<code class="docutils literal"><span class="pre">a</span> <span class="pre">&amp;&amp;</span> <span class="pre">b</span></code> (and), and <code class="docutils literal"><span class="pre">a</span> <span class="pre">||</span> <span class="pre">b</span></code> (or) are also <a class="reference internal" href="#term-boolean-expression"><span class="xref std std-term">boolean
+expression</span></a>s.</dd>
+<dt id="term-low-level-programming-language">low-level programming language</dt>
+<dd>A programming language, such as <a class="reference internal" href="#term-assembly-language"><span class="xref std std-term">assembly language</span></a>, that
+lets programmers directly manipulate the computer hardware. Such
+languages are often useful in <a class="reference internal" href="#term-systems-programming"><span class="xref std std-term">systems programming</span></a>.</dd>
+<dt id="term-mod-operator">mod operator</dt>
+<dd>See <a class="reference internal" href="#term-remainder-operator"><span class="xref std std-term">remainder operator</span></a>.</dd>
+<dt id="term-newline">newline</dt>
+<dd>See <a class="reference internal" href="#term-escape-character"><span class="xref std std-term">escape character</span></a>.</dd>
+<dt id="term-object">object</dt>
+<dd>Data that contains variable values and functions that can
+operate on those values. In <a class="reference internal" href="#term-object-oriented-programming"><span class="xref std std-term">object-oriented programming</span></a>,
+new kinds of objects can be created by the programmer.</dd>
+<dt id="term-object-oriented-programming">object-oriented programming</dt>
+<dd>A popular style of programming that uses <em>classes</em> and <em>objects</em>
+to group together related variables and functions. This has
+proved to be a good way to design libraries of utility
+functions, and the resulting code is often relatively easy to
+read and maintain.</dd>
+<dt id="term-off-by-one-error">off-by-one error</dt>
+<dd><p class="first">A common programming error where the, typically, the value of a
+variable is thought to be one more, or less, than its true
+value. This often occurs in loops. For example, the following
+loop contains an off-by-one error:</p>
+<div class="highlight-python"><div class="highlight"><pre>int[] arr = new int[6];
+
+for(int i = 0; i &lt;= 6; ++i) {  // oops: i gets too big
+   println(arr[i]);
+}
+</pre></div>
+</div>
+<p class="last">This loop tries to access <code class="docutils literal"><span class="pre">arr[6]</span></code>, which does not exist.</p>
+</dd>
+<dt id="term-oop">OOP</dt>
+<dd>See <a class="reference internal" href="#term-object-oriented-programming"><span class="xref std std-term">object-oriented programming</span></a>.</dd>
+<dt id="term-operating-system">operating system</dt>
+<dd>The set of programs on a computer that control its
+resources. For example, an operating system <a class="reference internal" href="#term-software"><span class="xref std std-term">software</span></a> is
+responsible for running programmings, and reading and writing
+files on disk.</dd>
+<dt id="term-parallel-program">parallel program</dt>
+<dd>A program that sometimes performs more than one action at a
+time. For example, using the <a class="reference external" href="http://code.compartmental.net/tools/minim/">Minim</a> library Processing programs
+can play music and sound effects at the same time as drawing on
+the screen.</dd>
+<dt id="term-parameter">parameter</dt>
+<dd>An input to a function.</dd>
+<dt id="term-pixel">pixel</dt>
+<dd>The smallest changeable region color on a computer monitor or image.</dd>
+<dt id="term-present-working-directory">present working directory</dt>
+<dd>See <a class="reference internal" href="#term-current-working-folder"><span class="xref std std-term">current working folder</span></a>.</dd>
+<dt id="term-primitive-value">primitive value</dt>
+<dd>In <a class="reference external" href="http://processing.org/">Processing</a>, a primitive value is a value of one of the basic
+built-in types, such as <code class="docutils literal"><span class="pre">int</span></code>, <code class="docutils literal"><span class="pre">float</span></code>, <code class="docutils literal"><span class="pre">char</span></code>, <code class="docutils literal"><span class="pre">color</span></code>,
+etc. Importantly, you use the <code class="docutils literal"><span class="pre">==</span></code> operator to test if two
+primitive values are the same. To test if non-primitive values
+are the same (e.g. strings are non-primitive values in
+<a class="reference external" href="http://processing.org/">Processing</a>), you usually use the <code class="docutils literal"><span class="pre">.equals</span></code> function that
+comes with the value.</dd>
+<dt id="term-procedural-programming">procedural programming</dt>
+<dd>A style of programming that emphasizes the procedures &#8212;
+e.g. statements and expressions &#8212; of programming. Compare this
+to <a class="reference internal" href="#term-object-oriented-programming"><span class="xref std std-term">object-oriented programming</span></a>.</dd>
+<dt id="term-program">program</dt>
+<dd>A series of instructions that tell a compute what to do.</dd>
+<dt id="term-programming-language">programming language</dt>
+<dd>An artificial language for telling computers what to
+do. Thousands of programming languages have been created over
+the years, although only a relatively few have been widely
+adopted.</dd>
+<dt id="term-pseudocode">pseudocode</dt>
+<dd>Semi-formal English used to describe programs and algorithms.</dd>
+<dt id="term-radians">radians</dt>
+<dd><p class="first">The natural unit for measuring angles and rotations. To convert
+degrees into radians, use this formula:</p>
+<div class="math">
+\[\textrm{deg} = \textrm{rad}\cdot\frac{\pi}{180^\circ}\]</div>
+<p>It is already implemented in <a class="reference external" href="http://processing.org/">Processing</a> as <code class="docutils literal"><span class="pre">degrees</span></code>, e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre>float rad = PI/4;
+float deg = degrees(rad);
+println(rad + &quot; radians is &quot; + deg + &quot; degrees&quot;);
+</pre></div>
+</div>
+<p>And this formula converts radians into degrees:</p>
+<div class="math">
+\[\textrm{rad} = \textrm{deg}\cdot\frac{180^\circ}{\pi}\]</div>
+<p>It is already implemented in <a class="reference external" href="http://processing.org/">Processing</a> as <code class="docutils literal"><span class="pre">radians</span></code>, e.g.:</p>
+<div class="last highlight-python"><div class="highlight"><pre>float deg = 45.0;
+float rad = radians(deg);
+println(deg + &quot; degrees is &quot; + rad + &quot; radians&quot;);
+</pre></div>
+</div>
+</dd>
+<dt id="term-ram">RAM</dt>
+<dd>Short for <em>random access memory</em>. This is the computer&#8217;s main
+memory. The phrase &#8220;random access&#8221; means that any location in
+memory can be written to, or read from, at any time.</dd>
+<dt id="term-relational-operators">relational operators</dt>
+<dd>See <a class="reference internal" href="#term-comparison-operators"><span class="xref std std-term">comparison operators</span></a>.</dd>
+<dt id="term-relative-path-name">relative path name</dt>
+<dd>A way to name files in a <a class="reference internal" href="#term-file-system"><span class="xref std std-term">file system</span></a>. One folder is
+designated the <a class="reference internal" href="#term-current-working-folder"><span class="xref std std-term">current working folder</span></a>, and all file
+names are assumed to be in that folder. Relative path names are
+usually shorter than <a class="reference internal" href="#term-absolute-path-name"><span class="xref std std-term">absolute path name</span></a>s, and can be
+more easily re-used on file systems with different folder
+structures.</dd>
+<dt id="term-remainder-operator">remainder operator</dt>
+<dd><p class="first"><code class="docutils literal"><span class="pre">%</span></code> is the remainder, or mod, operator, and the expression <code class="docutils literal"><span class="pre">a</span>
+<span class="pre">%</span> <span class="pre">b</span></code> evaluates to the remainder when <code class="docutils literal"><span class="pre">a</span></code> is divided by
+<code class="docutils literal"><span class="pre">b</span></code>. The expression <code class="docutils literal"><span class="pre">a</span> <span class="pre">%</span> <span class="pre">b</span></code> is often read as &#8220;<code class="docutils literal"><span class="pre">a</span></code> mod
+<code class="docutils literal"><span class="pre">b</span></code>&#8221;. It is usually assumed that both <code class="docutils literal"><span class="pre">a</span></code> and <code class="docutils literal"><span class="pre">b</span></code> are
+integers, and that <code class="docutils literal"><span class="pre">b</span></code> is both less than, or equal to, <code class="docutils literal"><span class="pre">a</span></code>,
+and greater than 0.</p>
+<p>For example:</p>
+<div class="last highlight-python"><div class="highlight"><pre>10 % 1 evaluates to 0
+10 % 2 evaluates to 0
+10 % 3 evaluates to 1
+10 % 4 evaluates to 2
+10 % 5 evaluates to 0
+10 % 6 evaluates to 4
+10 % 7 evaluates to 3
+10 % 8 evaluates to 2
+10 % 9 evaluates to 1
+10 % 10 evaluates to 0
+</pre></div>
+</div>
+</dd>
+<dt id="term-resolution">resolution</dt>
+<dd>The width and height of a computer monitor (in pixels).</dd>
+<dt id="term-return-value">return value</dt>
+<dd>The value calculated by a function. We say that this value
+<em>returned</em> to the point in the program where the function
+was called.</dd>
+<dt id="term-rgb">RGB</dt>
+<dd>See <a class="reference internal" href="#term-rgb-color"><span class="xref std std-term">RGB color</span></a>.</dd>
+<dt id="term-rgb-color">RGB color</dt>
+<dd>A popular computer color scheme where every color is represent
+as a triple of numbers of the form (r, g, b). For example, the
+RGB triple for orange is (255, 165, 0). The r, g, and b values
+specify the intensity of red, green, and blue respectively. In
+<a class="reference external" href="http://processing.org/">Processing</a>, r, g, and b must each be greater than or equal to
+0, and less than or equal to 255.</dd>
+<dt id="term-rgb-triplet">RGB triplet</dt>
+<dd>See <a class="reference internal" href="#term-rgb-color"><span class="xref std std-term">RGB color</span></a>.</dd>
+<dt id="term-scaling">scaling</dt>
+<dd>In graphics, scaling refers to the process of making an image
+bigger or smaller. <a class="reference external" href="http://processing.org/">Processing</a> provides a <code class="docutils literal"><span class="pre">scale</span></code> function to
+do this, but you often get better results if you do the scaling
+use special-purpose image processing <a class="reference internal" href="#term-software"><span class="xref std std-term">software</span></a> like
+Photoshop.</dd>
+<dt id="term-scripting">scripting</dt>
+<dd>A kind of programming that is typically used to automate
+repetitive tasks. Programs are called <em>scripts</em>, and they are
+often relatively short and easy to create as compared to
+non-scripting languages. An example of a popular scripting
+language is Python, which provides numerous practical code
+libraries that make it easy to automate all kinds of
+computer-related tasks.</dd>
+<dt id="term-sequential-program">sequential program</dt>
+<dd>A program that performs one action at a time. Most of the
+programs we write in <a class="reference external" href="http://processing.org/">Processing</a> are sequential.</dd>
+<dt id="term-sketchbook">sketchbook</dt>
+<dd>The term <a class="reference external" href="http://processing.org/">Processing</a> uses to refer to a folder that contains
+<a class="reference external" href="http://processing.org/">Processing</a> programs. You can change the sketchbook folder in
+the <a class="reference external" href="http://processing.org/">Processing</a> editor by going to the <em>Preferences</em> dialog box
+in the <em>File</em> menu (or by pressing ctrl-comma).</dd>
+<dt id="term-software">software</dt>
+<dd>A collection of <a class="reference internal" href="#term-program"><span class="xref std std-term">program</span></a>s and related data.</dd>
+<dt id="term-source-code">source code</dt>
+<dd>The textual instructions that make up a program. Source code is
+typically stored in a text file and edited with either a plain
+text editor, or a special-purpose programming editor that
+provides useful features such as syntax coloring.</dd>
+<dt id="term-source-code-comment">source code comment</dt>
+<dd><p class="first">Text that appears in the source code of a program that is meant
+as a note to a reader of the source code. Comments have no
+effect on the program itself, and are automatically stripped out
+when the program is compiled.</p>
+<p><a class="reference external" href="http://processing.org/">Processing</a> allows two kinds of source code comments:</p>
+<div class="last highlight-python"><div class="highlight"><pre>// this is a single-line comment
+
+/*
+   This is a multi-line comment.
+   It can span more than one line.
+*/
+</pre></div>
+</div>
+</dd>
+<dt id="term-sprite">sprite</dt>
+<dd>An animated object.</dd>
+<dt id="term-sprite-sheet">sprite sheet</dt>
+<dd>A collection of <a class="reference internal" href="#term-sprite"><span class="xref std std-term">sprite</span></a> images in a single image file.</dd>
+<dt id="term-statement">statement</dt>
+<dd>A single line of code such as a function call or assignment. In
+<a class="reference external" href="http://processing.org/">Processing</a>, most statements end with a <code class="docutils literal"><span class="pre">;</span></code>.</dd>
+<dt id="term-string">string</dt>
+<dd>A sequence of 0 or more characters.</dd>
+<dt id="term-string-literal">string literal</dt>
+<dd><p class="first">A string in a program beginning and ending with a <code class="docutils literal"><span class="pre">&quot;</span></code>. For
+example, these are all string literals:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="s2">&quot;mouse&quot;</span>
+<span class="s2">&quot;Once upon a time ...&quot;</span>
+<span class="s2">&quot;604-555-3536&quot;</span>
+<span class="s2">&quot;X&quot;</span>
+<span class="s2">&quot;1</span><span class="se">\n</span><span class="s2">two</span><span class="se">\n</span><span class="s2">three&quot;</span>
+<span class="s2">&quot;Her name is </span><span class="se">\&quot;</span><span class="s2">Mary</span><span class="se">\&quot;</span><span class="s2">&quot;</span>
+<span class="s2">&quot;</span><span class="se">\\</span><span class="s2">n is a return character&quot;</span>
+<span class="s2">&quot;&quot;</span>
+</pre></div>
+</div>
+</dd>
+<dt id="term-syntax">syntax</dt>
+<dd>The rules that determine what symbols go where in a program.</dd>
+<dt id="term-systems-programming">systems programming</dt>
+<dd><p class="first">Writing programs related to a computer&#8217;s <a class="reference internal" href="#term-operating-system"><span class="xref std std-term">operating
+system</span></a>. Systems programs often do not interact with the user
+directly, and instead interface with the operating system. The
+Cs and C++ languages are popular choices for systems
+programming.</p>
+<p class="last">Compare to <a class="reference internal" href="#term-applications-programming"><span class="xref std std-term">applications programming</span></a>.</p>
+</dd>
+<dt id="term-token">token</dt>
+<dd><p class="first">A programming language token is a string of 1 or more characters
+that has some special meaning in the language. For instance,
+these are all <a class="reference external" href="http://processing.org/">Processing</a> tokens:</p>
+<div class="last highlight-python"><div class="highlight"><pre>=
+==
++
+-453.2
+dx
+if
+for
+void
+//
+</pre></div>
+</div>
+</dd>
+<dt id="term-truth-table">truth-table</dt>
+<dd><p class="first">A way of defining logical operators, e.g.:</p>
+<blockquote class="last">
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">a</th>
+<th class="head">b</th>
+<th class="head">!a</th>
+<th class="head">a &amp;&amp; b</th>
+<th class="head">a || b</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>false</td>
+<td>false</td>
+<td>true</td>
+<td>false</td>
+<td>false</td>
+</tr>
+<tr class="row-odd"><td>false</td>
+<td>true</td>
+<td>true</td>
+<td>false</td>
+<td>true</td>
+</tr>
+<tr class="row-even"><td>true</td>
+<td>false</td>
+<td>false</td>
+<td>false</td>
+<td>true</td>
+</tr>
+<tr class="row-odd"><td>true</td>
+<td>true</td>
+<td>false</td>
+<td>true</td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</dd>
+<dt id="term-type">type</dt>
+<dd><p class="first">In <a class="reference external" href="http://processing.org/">Processing</a>, the type of an object specifies what kind of
+object it is. For example, some of the built-in numeric types
+are <code class="docutils literal"><span class="pre">int</span></code> (for whole numbers) and <code class="docutils literal"><span class="pre">float</span></code> (for decimal
+numbers). Just by looking at types, <a class="reference external" href="http://processing.org/">Processing</a> can often detect
+errors without having to run the program, e.g.:</p>
+<div class="last highlight-python"><div class="highlight"><pre>float x = &quot;3.14&quot;;  // type error: can&#39;t assign a string to a float
+</pre></div>
+</div>
+</dd>
+<dt id="term-value">value</dt>
+<dd>Things like numbers, strings, and objects. In <a class="reference external" href="http://processing.org/">Processing</a>, all
+values have a type. For example, <code class="docutils literal"><span class="pre">-65</span></code> is an <code class="docutils literal"><span class="pre">int</span></code> value,
+<code class="docutils literal"><span class="pre">3.14</span></code> is a <code class="docutils literal"><span class="pre">float</span></code> value, <code class="docutils literal"><span class="pre">&quot;cheese&quot;</span></code> is a string value.</dd>
+<dt id="term-variable">variable</dt>
+<dd><p class="first">A named value. For example, this line declares <code class="docutils literal"><span class="pre">n</span></code> to be a
+variable of type <code class="docutils literal"><span class="pre">int</span></code>:</p>
+<div class="last highlight-python"><div class="highlight"><pre>int n = 5;
+</pre></div>
+</div>
+</dd>
+</dl>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+       
+        <li class="nav-item nav-item-0"><a href="index.html">Introduction to Programming for Game Development</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  </body>
+</html>
