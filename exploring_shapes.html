@@ -6,10 +6,10 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Exploring Shapes &mdash; CMPT 166 Fall 2016 1 documentation</title>
+    <title>Exploring Shapes</title>
     
-    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -20,9 +20,9 @@
         HAS_SOURCE:  true
       };
     </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="CMPT 166 Fall 2016 1 documentation" href="index.html" />
     <link rel="next" title="Coordinates and Modes" href="coordinates.html" />
@@ -32,16 +32,8 @@
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="coordinates.html" title="Coordinates and Modes"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="first_program.html" title="Our First Program"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+        
+        <li class="nav-item nav-item-0"><a href="index.html">Introduction to Programming for Game Development</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -59,8 +51,9 @@
 </li>
 <li><a class="reference internal" href="#drawing-curves">Drawing Curves</a><ul>
 <li><a class="reference internal" href="#arcs">Arcs</a></li>
+<!--
 <li><a class="reference internal" href="#curves">Curves</a></li>
-<li><a class="reference internal" href="#bezier-curves">Bezier Curves</a></li>
+<li><a class="reference internal" href="#bezier-curves">Bezier Curves</a></li>-->
 </ul>
 </li>
 <li><a class="reference internal" href="#drawing-more-complex-shapes">Drawing More Complex Shapes</a></li>
@@ -70,24 +63,6 @@
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="first_program.html"
-                        title="previous chapter">Our First Program</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="coordinates.html"
-                        title="next chapter">Coordinates and Modes</a></p>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
-</div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
@@ -101,8 +76,8 @@
 <h1>Exploring Shapes<a class="headerlink" href="#exploring-shapes" title="Permalink to this headline">¶</a></h1>
 <p>In these notes you will learn how to draw:</p>
 <ul class="simple">
-<li>Straight-line shapes such as points, lines, ellipses, rectangles, and quads.</li>
-<li>Curves using the <code class="docutils literal"><span class="pre">arc()</span></code>, <code class="docutils literal"><span class="pre">curve()</span></code>, and <code class="docutils literal"><span class="pre">bezier()</span></code> functions.</li>
+<li>Straight-line shapes such as points, lines, ellipses, rectangles, and quads (quadrilaterals, i.e. polygons with 4 sides).</li>
+<li>Curves using the <code class="docutils literal"><span class="pre">arc()</span></code> function <!--, <code class="docutils literal"><span class="pre">curve()</span></code>, and <code class="docutils literal"><span class="pre">bezier()</span></code> functions.--></li>
 <li>More complex shapes using <code class="docutils literal"><span class="pre">beginShape()</span></code>, <code class="docutils literal"><span class="pre">vertex()</span></code>, and
 <code class="docutils literal"><span class="pre">endShape()</span></code>.</li>
 </ul>
@@ -140,7 +115,7 @@ that draws some &#8220;line art&#8221;:</p>
 <span class="o">}</span>
 
 <span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
-  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span> <span class="c1">// make the background white</span>
 
   <span class="n">line</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span> <span class="o">*</span> <span class="mi">50</span><span class="o">,</span> <span class="mi">0</span> <span class="o">*</span> <span class="mi">50</span><span class="o">,</span> <span class="mi">450</span><span class="o">);</span>
   <span class="n">line</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">1</span> <span class="o">*</span> <span class="mi">50</span><span class="o">,</span> <span class="mi">1</span> <span class="o">*</span> <span class="mi">50</span><span class="o">,</span> <span class="mi">450</span><span class="o">);</span>
@@ -165,7 +140,7 @@ has been replaced by <code class="docutils literal"><span class="pre">mouseX</sp
 <span class="o">}</span>
 
 <span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
-  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span> 
 
   <span class="n">line</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="mi">0</span> <span class="o">*</span> <span class="mi">50</span><span class="o">,</span> <span class="mi">0</span> <span class="o">*</span> <span class="mi">50</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">);</span>
   <span class="n">line</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="mi">1</span> <span class="o">*</span> <span class="mi">50</span><span class="o">,</span> <span class="mi">1</span> <span class="o">*</span> <span class="mi">50</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">);</span>
@@ -345,6 +320,8 @@ are connected with a line:</p>
 </pre></div>
 </div>
 </div>
+
+<!--
 <div class="section" id="curves">
 <h3>Curves<a class="headerlink" href="#curves" title="Permalink to this headline">¶</a></h3>
 <p>Another way to draw curves with <a class="reference external" href="http://processing.org/">Processing</a> is to use the <code class="docutils literal"><span class="pre">curve</span></code> function,
@@ -409,6 +386,7 @@ curves:</p>
 interested in learning more about them.</p>
 </div>
 </div>
+-->
 <div class="section" id="drawing-more-complex-shapes">
 <h2>Drawing More Complex Shapes<a class="headerlink" href="#drawing-more-complex-shapes" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="http://processing.org/">Processing</a> provides a few ways to draw shapes made up of multiple points. For
@@ -464,30 +442,32 @@ mode) like this:</p>
 <div class="section" id="programming-questions">
 <span id="exploring-shapes-program-programming-questions-label"></span><h2>Programming Questions<a class="headerlink" href="#programming-questions" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic">
+<!--
 <li><p class="first">Combine the sample program for the Catmull-Rom spline and the sample
 program for Bezier curves into a single program so that both curves are on
 the screen at the same time. Use <code class="docutils literal"><span class="pre">fill</span></code> to make them different colors,
 e.g. put <code class="docutils literal"><span class="pre">fill(255,</span> <span class="pre">0,</span> <span class="pre">0);</span></code> just before the first curve, and <code class="docutils literal"><span class="pre">fill(0,</span> <span class="pre">0,</span>
 <span class="pre">255);</span></code> just before the second curve.</p>
 </li>
+-->
 <li><p class="first">Write a program that draws this shape centered at the mouse pointer:</p>
-<a class="reference internal image-reference" href="_images/threeCircles.png"><img alt="Three circles centered at the mouse pointer." class="align-center" src="_images/threeCircles.png" style="width: 70.5px; height: 70.5px;" /></a>
+<a class="reference internal image-reference" href="images/threeCircles.png"><img alt="Three circles centered at the mouse pointer." class="align-center" src="images/threeCircles.png" style="width: 70.5px; height: 70.5px;" /></a>
 <p>It should <em>not</em> leave a trail when it moves.</p>
 </li>
 <li><p class="first">Draw the following figure, consisting of 9 small squares, using exactly <strong>3
 calls</strong> to <code class="docutils literal"><span class="pre">rect</span></code>:</p>
-<a class="reference internal image-reference" href="_images/nineSquares.png"><img alt="Nine squares drawn with three calls to rect." class="align-center" src="_images/nineSquares.png" style="width: 251.0px; height: 251.0px;" /></a>
+<a class="reference internal image-reference" href="images/nineSquares.png"><img alt="Nine squares drawn with three calls to rect." class="align-center" src="images/nineSquares.png" style="width: 251.0px; height: 251.0px;" /></a>
 <p>There&#8217;s no animation in this question: just write the code that draws this
 diagram.</p>
 <p><strong>Important</strong>: you must make only 3 calls to <code class="docutils literal"><span class="pre">rect</span></code>!</p>
 <p>You might want to use the <a class="reference external" href="https://processing.org/reference/noFill_.html">noFill function</a> in this program.</p>
 </li>
-<li><p class="first">Make an animation of <a class="reference external" href="https://www.google.ca/search?tbm=isch&amp;q=pacman&amp;ei=6YlVVc2iCszbsATrw4GYCA">Pac Man</a> using the <code class="docutils literal"><span class="pre">arc</span></code> function. How exactly Pac
+<!--<li><p class="first">Make an animation of <a class="reference external" href="https://www.google.ca/search?tbm=isch&amp;q=pacman&amp;ei=6YlVVc2iCszbsATrw4GYCA">Pac Man</a> using the <code class="docutils literal"><span class="pre">arc</span></code> function. How exactly Pac
 Man moves is up to you.</p>
-</li>
+</li>-->
 <li><p class="first">Use the <code class="docutils literal"><span class="pre">arc</span></code> function to create a pie chart that is divided into 3
 slices: one slices is 50% of the pie, another slice is 30% of the pie, and
-the final slice is 20% of the pie. Make the slices different colors.</p>
+the final slice is 20% of the pie. Make the slices different colors. For colors, use <a class="reference external" href="https://processing.org/reference/fill_.html">fill function</a>.</p>
 </li>
 <li><p class="first">Write a program that animates (without a trail) two squares. The first
 square moves horizontally across the screen following the x-coordinate of
@@ -499,11 +479,11 @@ the y-coordinate of the mouse.</p>
 intersect at the mouse pointer. The lines should go all the way across the
 screen, and move (without leaving a trail) as the mouse moves. Turn off the
 mouse pointer using <a class="reference external" href="https://processing.org/reference/noCursor_.html">the noCursor() function</a>.</p>
-<a class="reference internal image-reference" href="_images/axes.png"><img alt="Two lines intersecting at the mouse pointer." class="align-center" src="_images/axes.png" style="width: 248.0px; height: 246.0px;" /></a>
+<a class="reference internal image-reference" href="images/axes.png"><img alt="Two lines intersecting at the mouse pointer." class="align-center" src="images/axes.png" style="width: 248.0px; height: 246.0px;" /></a>
 </li>
 <li><p class="first">Draw the following figure using only <em>four</em> calls to the <code class="docutils literal"><span class="pre">triangle</span></code>
 function:</p>
-<a class="reference internal image-reference" href="_images/nineTriangles.png"><img alt="Nine triangles drawn with four calls to triangle." class="align-center" src="_images/nineTriangles.png" style="width: 246.0px; height: 212.25px;" /></a>
+<a class="reference internal image-reference" href="images/nineTriangles.png"><img alt="Nine triangles drawn with four calls to triangle." class="align-center" src="images/nineTriangles.png" style="width: 246.0px; height: 212.25px;" /></a>
 <p>There&#8217;s no animation in this question, just a single static image.</p>
 <p><strong>Important</strong>: you must make only 4 calls to <code class="docutils literal"><span class="pre">triangle</span></code>!</p>
 <p>You might want to use the <a class="reference external" href="https://processing.org/reference/noFill_.html">noFill function</a> in this program.</p>
@@ -528,21 +508,10 @@ kid for a minute or two.</p>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="coordinates.html" title="Coordinates and Modes"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="first_program.html" title="Our First Program"
-             >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">CMPT 166 Fall 2016 1 documentation</a> &raquo;</li> 
+
+        <li class="nav-item nav-item-0"><a href="index.html">Introduction to Programming for Game Development</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer" role="contentinfo">
-        &copy; Copyright 2016, Toby Donaldson.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
-    </div>
+
   </body>
 </html>
