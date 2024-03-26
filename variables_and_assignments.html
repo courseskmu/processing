@@ -1,0 +1,343 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Basic Numeric Literals and Variables</title>
+    
+    <link rel="stylesheet" href="static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+
+        <li class="nav-item nav-item-0"><a href="index.html">Introduction to Programming for Game Development</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Basic Numeric Literals and Variables</a><ul>
+<li><a class="reference internal" href="#using-variables">Using Variables</a></li>
+<li><a class="reference internal" href="#defining-new-variables">Defining New Variables</a></li>
+<li><a class="reference internal" href="#assigning-values-to-variables">Assigning Values to Variables</a></li>
+<li><a class="reference internal" href="#literals-for-numbers">Literals for Numbers</a></li>
+<li><a class="reference internal" href="#mixing-floats-and-ints">Mixing floats and ints</a></li>
+<li><a class="reference internal" href="#questions">Questions</a></li>
+</ul>
+</li>
+</ul>
+
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="basic-numeric-literals-and-variables">
+<h1>Basic Numeric Literals and Variables<a class="headerlink" href="#basic-numeric-literals-and-variables" title="Permalink to this headline">¶</a></h1>
+<p>One of the major aspects of a computer is that you can read or write values in
+its main memory. A computer&#8217;s main memory is often referred to as <strong>RAM</strong>,
+which stands for <strong>random access memory</strong>.</p>
+<p>At the lowest level, RAM is just a series of millions and millions of 0s and
+1s (<strong>bits</strong>) that the CPU can quickly change whenever it wants.</p>
+<p>For example, a 64-bit computers would typically represent the number 65 as a
+series of 64 bits:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0100</span> <span class="mo">0001</span>
+</pre></div>
+</div>
+<p>This is an example of a <strong>binary</strong>, or <strong>base 2</strong>, number. Everyday numbers
+like 65 are <strong>decimal</strong>, or <strong>base 10</strong>.</p>
+<p>Binary works great for computers because it is so simple, but humans don&#8217;t
+like it as much. People find it hard to read and write all those 1s and 0s,
+making it both error-prone and tedious to use.</p>
+<p>So instead, high-level programming languages like <a class="reference external" href="http://processing.org/">Processing</a> do their best to
+use more human-friendly data. This includes base 10 numbers, ordinary
+characters, and even images and fonts.</p>
+<div class="section" id="using-variables">
+<h2>Using Variables<a class="headerlink" href="#using-variables" title="Permalink to this headline">¶</a></h2>
+<p>To understand how make and use variables in <a class="reference external" href="http://processing.org/">Processing</a>, we&#8217;ll focus just on
+the the <code class="docutils literal"><span class="pre">int</span></code> and <code class="docutils literal"><span class="pre">float</span></code> types. Let start with this simple example:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">age</span> <span class="o">=</span> <span class="mi">18</span><span class="o">;</span>
+<span class="n">println</span><span class="o">(</span><span class="n">age</span><span class="o">);</span>
+</pre></div>
+</div>
+<p>This code fragment prints 18 on the screen when you run it. Lets look at it in
+detail:</p>
+<ul class="simple">
+<li>It consists of two individual statements, each ending with a <code class="docutils literal"><span class="pre">;</span></code>.</li>
+<li>The first statement defines <code class="docutils literal"><span class="pre">age</span></code> to be a new variable of type <code class="docutils literal"><span class="pre">int</span></code>,
+and then immediately assigns it the initial value of 18.</li>
+<li>The second statement prints the contents of <code class="docutils literal"><span class="pre">age</span></code> to the screen.</li>
+</ul>
+<p>The order of the statements is important. This <strong>won&#8217;t</strong> work:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">println</span><span class="o">(</span><span class="n">age</span><span class="o">);</span>   <span class="c1">// Oops: age is not yet defined!</span>
+<span class="kt">int</span> <span class="n">age</span> <span class="o">=</span> <span class="mi">18</span><span class="o">;</span>
+</pre></div>
+</div>
+<p>Running this causes <a class="reference external" href="http://processing.org/">Processing</a> to report an error in the first statement: it
+doesn&#8217;t know what <code class="docutils literal"><span class="pre">age</span></code> is in the first line because it hasn&#8217;t been defined
+yet. This is important: undefined variables in <a class="reference external" href="http://processing.org/">Processing</a> always cause
+errors!</p>
+<p>Another subtle but important detail is that the <em>case</em> of letters in a
+variable matter. For example:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">age</span> <span class="o">=</span> <span class="mi">18</span><span class="o">;</span>
+<span class="n">println</span><span class="o">(</span><span class="n">Age</span><span class="o">);</span>   <span class="c1">// Oops: Age is not the same as age!</span>
+</pre></div>
+</div>
+<p>When you run this, <a class="reference external" href="http://processing.org/">Processing</a> reports an error in the second statement: it
+does not know of any variable called <code class="docutils literal"><span class="pre">Age</span></code>.</p>
+</div>
+<div class="section" id="defining-new-variables">
+<h2>Defining New Variables<a class="headerlink" href="#defining-new-variables" title="Permalink to this headline">¶</a></h2>
+<p>Now lets look just at the first statement:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">age</span> <span class="o">=</span> <span class="mi">18</span><span class="o">;</span>
+</pre></div>
+</div>
+<p>This declares <code class="docutils literal"><span class="pre">age</span></code> to be a new variable. All variable&#8217;s in <a class="reference external" href="http://processing.org/">Processing</a> have
+a <strong>type</strong>, and <code class="docutils literal"><span class="pre">age</span></code> has the <code class="docutils literal"><span class="pre">int</span></code>. That means that <code class="docutils literal"><span class="pre">age</span></code> can only be
+assigned integer values, like 18 or -762.</p>
+<p>In addition to declaring that <code class="docutils literal"><span class="pre">age</span></code> is a new variable, this statement also
+assigns it the initial value of 18. This is important, because in programming
+you always want to know what value a variable contains.</p>
+<p>It&#8217;s often useful to imagine variable pictorially as boxes that contain a
+value. For example:</p>
+<div class="highlight-java"><div class="highlight"><pre>    <span class="o">+----+</span>
+<span class="n">age</span> <span class="o">|</span> <span class="mi">18</span> <span class="o">|</span>
+    <span class="o">+----+</span>
+     <span class="kt">int</span>
+</pre></div>
+</div>
+<p>Be careful: you cannot declare two (or more) variables with the same name in
+the same part of your program. For instance, this doesn&#8217;t work:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">age</span> <span class="o">=</span> <span class="mi">18</span><span class="o">;</span>
+<span class="kt">int</span> <span class="n">age</span> <span class="o">=</span> <span class="mi">19</span><span class="o">;</span>  <span class="c1">// Oops: age is already declared!</span>
+</pre></div>
+</div>
+<p>If you run this in <a class="reference external" href="http://processing.org/">Processing</a>, it will report that the second declaration of
+<code class="docutils literal"><span class="pre">age</span></code> is a duplicate definition.</p>
+<p>Here&#8217;s an interesting example:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">age</span><span class="o">;</span>      <span class="c1">// oops: age not given an initial value</span>
+<span class="n">println</span><span class="o">(</span><span class="n">age</span><span class="o">);</span>
+</pre></div>
+</div>
+<p>Here, the <a class="reference external" href="http://processing.org/">Processing</a> compiler reports an error, namely that <code class="docutils literal"><span class="pre">age</span></code> might not
+be defined. The problem is it doesn&#8217;t know what initial value to give to
+<code class="docutils literal"><span class="pre">age</span></code>.</p>
+</div>
+<div class="section" id="assigning-values-to-variables">
+<h2>Assigning Values to Variables<a class="headerlink" href="#assigning-values-to-variables" title="Permalink to this headline">¶</a></h2>
+<p>Assignment statements are used to assign new values to variables. For
+example:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">age</span> <span class="o">=</span> <span class="mi">18</span><span class="o">;</span>   <span class="c1">// variable definition</span>
+
+<span class="n">age</span> <span class="o">=</span> <span class="mi">19</span><span class="o">;</span>       <span class="c1">// variable assignment</span>
+</pre></div>
+</div>
+<p>This assignment statement over-writes the value in <code class="docutils literal"><span class="pre">age</span></code> and replaces it
+with 19.</p>
+<p>Assignment statements look similar to definitions, but they <em>don&#8217;t</em> have a
+type in from of the variable.</p>
+<p>It is unfortunate that <a class="reference external" href="http://processing.org/">Processing</a> uses <code class="docutils literal"><span class="pre">=</span></code> to mean assignment. In
+mathematics, <code class="docutils literal"><span class="pre">=</span></code> means equality, i.e. a mathematical statement like <code class="docutils literal"><span class="pre">x</span> <span class="pre">=</span>
+<span class="pre">y</span></code> means &#8220;the value of <code class="docutils literal"><span class="pre">x</span></code> is the same as the value of <code class="docutils literal"><span class="pre">y</span></code>&#8221;. But <code class="docutils literal"><span class="pre">=</span></code> in
+<a class="reference external" href="http://processing.org/">Processing</a> does <strong>not</strong> mean equality: <code class="docutils literal"><span class="pre">=</span></code> means <strong>assignment</strong> in
+<a class="reference external" href="http://processing.org/">Processing</a>. Instead, <code class="docutils literal"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">y</span></code> means &#8220;put a copy of the value of <code class="docutils literal"><span class="pre">y</span></code> into
+<code class="docutils literal"><span class="pre">x</span></code>&#8221;.</p>
+<p>Here&#8217;s an interesting example of assignment statements:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">5</span><span class="o">;</span>
+<span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">7</span><span class="o">;</span>
+
+<span class="kt">int</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">a</span><span class="o">;</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">b</span><span class="o">;</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">temp</span><span class="o">;</span>
+
+<span class="n">println</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>  <span class="c1">// prints 7</span>
+<span class="n">println</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>  <span class="c1">// prints 5</span>
+</pre></div>
+</div>
+<p>The three statements in the middle show how you can swap the values of any two
+<code class="docutils literal"><span class="pre">int</span></code> variables, no matter their value. You should walk through every
+statement of this example, making sure you understand every step!</p>
+</div>
+<div class="section" id="literals-for-numbers">
+<h2>Literals for Numbers<a class="headerlink" href="#literals-for-numbers" title="Permalink to this headline">¶</a></h2>
+<p>Both <code class="docutils literal"><span class="pre">int</span></code>s and <code class="docutils literal"><span class="pre">float</span></code>s have pre-defined <strong>literal notations</strong> in
+<a class="reference external" href="http://processing.org/">Processing</a>, i.e. ways of directly writing them as sequences of characters.</p>
+<p>For example, these are all <code class="docutils literal"><span class="pre">int</span></code> literals: <code class="docutils literal"><span class="pre">365</span></code>, <code class="docutils literal"><span class="pre">-41</span></code>, <code class="docutils literal"><span class="pre">0</span></code>.</p>
+<p>And these are some examples of <code class="docutils literal"><span class="pre">float</span></code> literals: <code class="docutils literal"><span class="pre">3.14</span></code>, <code class="docutils literal"><span class="pre">365.0</span></code>,
+<code class="docutils literal"><span class="pre">0.0</span></code>, <code class="docutils literal"><span class="pre">-88.1</span></code>, <code class="docutils literal"><span class="pre">3.5e3</span></code>. <code class="docutils literal"><span class="pre">float</span></code> literals always contain a decimal
+point, which is necessary to distinguish numbers like <code class="docutils literal"><span class="pre">365.0</span></code> and <code class="docutils literal"><span class="pre">365</span></code>.
+The last example, <code class="docutils literal"><span class="pre">3.5e3</span></code> is an example of scientific notation. It means 3.5
+times <span class="math">\(10^3\)</span>, and so is equivalent to <code class="docutils literal"><span class="pre">3500.0</span></code>.</p>
+<p>In this statement, we see both an <code class="docutils literal"><span class="pre">int</span></code> variable <code class="docutils literal"><span class="pre">age</span></code> and an <code class="docutils literal"><span class="pre">int</span></code>
+literal <code class="docutils literal"><span class="pre">18</span></code>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">age</span> <span class="o">=</span> <span class="mi">18</span><span class="o">;</span>
+</pre></div>
+</div>
+<p>Informally, we will often say that both <code class="docutils literal"><span class="pre">age</span></code> and <code class="docutils literal"><span class="pre">18</span></code> are <code class="docutils literal"><span class="pre">int</span></code>s. If
+it matters, though, we will be careful to specify if we are talking about an
+<code class="docutils literal"><span class="pre">int</span></code> variable or an <code class="docutils literal"><span class="pre">int</span></code> literal.</p>
+<p>A basic fact about literals that is often left unmentioned because it is so
+fundamental, is that <strong>literals cannot change</strong>. Literals are constant values
+and so cannot be modified, so you are never allowed to write statements like
+these:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="mi">18</span> <span class="o">=</span> <span class="n">age</span><span class="o">;</span>  <span class="c1">// oops: cannot assign a variable to a literal!</span>
+
+<span class="mi">1</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>     <span class="c1">// oops: cannot assign a literal to a literal!</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mixing-floats-and-ints">
+<h2>Mixing floats and ints<a class="headerlink" href="#mixing-floats-and-ints" title="Permalink to this headline">¶</a></h2>
+<p>Consider this example:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">float</span> <span class="n">temperature</span> <span class="o">=</span> <span class="mi">5</span><span class="o">;</span>   <span class="c1">// 5 is an int, but temperature is a float</span>
+
+<span class="n">println</span><span class="o">(</span><span class="n">temperature</span><span class="o">);</span>    <span class="c1">// prints 5.0</span>
+</pre></div>
+</div>
+<p>The first line assigns the literal <code class="docutils literal"><span class="pre">int</span></code> 5 to the <code class="docutils literal"><span class="pre">float</span></code> variable
+<code class="docutils literal"><span class="pre">temperature</span></code>. Since <code class="docutils literal"><span class="pre">int</span></code>s and <code class="docutils literal"><span class="pre">float</span></code>s are different, <a class="reference external" href="http://processing.org/">Processing</a>
+automatically converts 5 to 5.0. This is called <strong>casting</strong>: the <code class="docutils literal"><span class="pre">int</span></code> 5 is
+cast to the <code class="docutils literal"><span class="pre">float</span></code> 5.0, which is then stored in <code class="docutils literal"><span class="pre">temperature</span></code>.</p>
+<p>It&#8217;s possible to explicitly cast an <code class="docutils literal"><span class="pre">int</span></code> to a <code class="docutils literal"><span class="pre">float</span></code> using <code class="docutils literal"><span class="pre">float</span></code>
+like this:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">float</span> <span class="n">temperature</span> <span class="o">=</span> <span class="kt">float</span><span class="o">(</span><span class="mi">5</span><span class="o">);</span>  <span class="c1">// float(5) casts 5 to 5.0</span>
+</pre></div>
+</div>
+<p>You can also cast an <code class="docutils literal"><span class="pre">int</span></code> to a <code class="docutils literal"><span class="pre">float</span></code>, but it must always be done
+explicitly in <a class="reference external" href="http://processing.org/">Processing</a>:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="kt">int</span><span class="o">(</span><span class="mf">3.0</span><span class="o">);</span>  <span class="c1">// int(3.0) casts 3.0 to 3</span>
+
+<span class="n">println</span><span class="o">(</span><span class="n">count</span><span class="o">);</span>        <span class="c1">// prints 3</span>
+</pre></div>
+</div>
+<p>You must write <code class="docutils literal"><span class="pre">int(3.0)</span></code>, otherwise you will have a compiler error. For
+example, this program does not compile:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mf">3.0</span><span class="o">;</span>  <span class="c1">// oops, compiler error: cannot assign a float to an int</span>
+<span class="n">println</span><span class="o">(</span><span class="n">count</span><span class="o">);</span>
+</pre></div>
+</div>
+<p>Casting an <code class="docutils literal"><span class="pre">float</span></code> to an <code class="docutils literal"><span class="pre">int</span></code> will chop off any digits after the decimal
+point. For example:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="kt">int</span><span class="o">(</span><span class="mf">3.999</span><span class="o">);</span>
+<span class="n">println</span><span class="o">(</span><span class="n">count</span><span class="o">);</span>  <span class="c1">// prints 3</span>
+</pre></div>
+</div>
+<p>When you cast with <code class="docutils literal"><span class="pre">int</span></code>, no rounding is done. Instead, digits after the
+decimal point are always chopped off.</p>
+</div>
+<div class="section" id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Explain the difference between the statement <code class="docutils literal"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">y</span></code> in mathematics, and
+the statement <code class="docutils literal"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">y</span></code> in <a class="reference external" href="http://processing.org/">Processing</a>.</p>
+</li>
+<li><p class="first">Explain the difference between an <code class="docutils literal"><span class="pre">int</span></code> literal and an <code class="docutils literal"><span class="pre">int</span></code> variable.</p>
+</li>
+<li><p class="first">Both the <code class="docutils literal"><span class="pre">int</span></code> type and the <code class="docutils literal"><span class="pre">float</span></code> type are used to represent numbers.
+What, exactly, is the difference between them?</p>
+</li>
+<li><p class="first">Each of the following code fragments has an error. Say what the error is,
+and show how to fix it:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// fragment 1</span>
+<span class="n">println</span><span class="o">(</span><span class="n">x</span><span class="o">);</span>
+<span class="kt">float</span> <span class="n">x</span> <span class="o">=</span> <span class="mf">12.4</span><span class="o">;</span>
+
+<span class="c1">// fragment 2</span>
+<span class="kt">float</span> <span class="n">eps</span><span class="o">;</span>
+<span class="n">println</span><span class="o">(</span><span class="n">eps</span><span class="o">);</span>
+
+<span class="c1">// fragment 3</span>
+<span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+<span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
+<span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;</span>
+<span class="n">println</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+<span class="n">println</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+
+<span class="c1">// fragment 4</span>
+<span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+<span class="mi">2</span> <span class="o">=</span> <span class="n">c</span><span class="o">;</span>
+<span class="n">println</span><span class="o">(</span><span class="n">c</span><span class="o">);</span>
+
+<span class="c1">// fragment 5</span>
+<span class="kt">float</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;</span>
+<span class="n">println</span><span class="o">(</span><span class="kt">int</span><span class="o">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Explain what casting is in <a class="reference external" href="http://processing.org/">Processing</a>. Give an example if an implicit
+cast, and an explicit cast (using <code class="docutils literal"><span class="pre">int</span></code> or <code class="docutils literal"><span class="pre">float</span></code>).</p>
+</li>
+<li><p class="first">What do each of the following code fragments print? If the code fragment
+does not compile, then say &#8220;compiler error&#8221;.</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// fragment 1</span>
+<span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="kt">int</span><span class="o">(-</span><span class="mf">2.0</span><span class="o">);</span>
+<span class="n">println</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+
+<span class="c1">// fragment 2</span>
+<span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="kt">int</span><span class="o">(-</span><span class="mf">2.9</span><span class="o">);</span>
+<span class="n">println</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+
+<span class="c1">// fragment 3</span>
+<span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.0</span><span class="o">;</span>
+<span class="n">println</span><span class="o">(</span><span class="n">c</span><span class="o">);</span>
+
+<span class="c1">// fragment 4</span>
+<span class="kt">int</span> <span class="n">d</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.5</span><span class="o">;</span>
+<span class="n">println</span><span class="o">(</span><span class="n">d</span><span class="o">);</span>
+
+<span class="c1">// fragment 5</span>
+<span class="kt">float</span> <span class="n">e</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
+<span class="n">println</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
+
+<span class="c1">// fragment 6</span>
+<span class="kt">float</span> <span class="n">f</span> <span class="o">=</span> <span class="kt">int</span><span class="o">(</span><span class="mf">4.2</span><span class="o">);</span>
+<span class="n">println</span><span class="o">(</span><span class="n">f</span><span class="o">);</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+
+        <li class="nav-item nav-item-0"><a href="index.html">Introduction to Programming for Game Development</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  </body>
+</html>
